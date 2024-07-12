@@ -8,8 +8,7 @@
 <h1>
 	Hello world!  
 </h1>
-<h1>코둑</h1>
-<h1>코둑e</h1>
+<h1>은조씨</h1>
 <P>  The time on the server is ${serverTime}. </P>
 </body>
 </html>
