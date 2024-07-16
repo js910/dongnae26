@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
- 
- <!-- BoardMapper 인터페이스를 구현한다는 의미 --> 
+  	
   <mapper namespace="org.spring.persistence.UserMapper">
- 
- 	
-  </mapper>
-  
+	
+	<!-- 로그인 -->
+	<sql id= "memberCols">
+		user_email,
+		user_pw
+	</sql>
+	<select id="validateUser" 
+	resultType="org.spring.domain.UserDTO" 
+	parameterType="map">
+		SELECT user_email, user_pw
+		FROM user WHERE user_email LIKE #{user_email} 
+		AND user_pw LIKE #{user_pw}
+	</select>
+	
+	<!-- 네이버 로그인 -->
+	<insert id="insert" parameterType="org.spring.domain.UserDTO">
+		INSERT INTO user (user_email, user_name, user_phone) VALUES (#{user_email},#{user_name},#{user_phone})
+	</insert>
+	
+	
+	<!-- 구글 로그인 -->
+	<insert id="insertOrUpdate" parameterType="org.spring.domain.UserDTO">
+    	INSERT INTO user (social_user_email, user_name)
+    	VALUES (#{email}, #{name})
+    	ON DUPLICATE KEY UPDATE user_name = VALUES(user_name)
+	</insert>
+	
+	<!-- 회원가입 -->
+	<insert id="registerUser" parameterType="org.spring.domain.RegisterDTO">
+		INSERT INTO user (user_email,user_pw,user_name,user_phone)
+		VALUES (#{user_email},#{user_pw},#{user_name},#{user_phone})
+	</insert>
+	
+	<!-- 중복 확인 -->
+	<select id="checkId" resultType="boolean">
+		SELECT COUNT(user_email) FROM user WHERE user_email LIKE #{user_email};
+	</select>
+	
+	<!--  -->
+	<select id="searchId" resultType="string">
+		SELECT user_email FROM user 
+		WHERE user_name LIKE #{user_name} AND user_phone LIKE #{user_phone};
+	</select>
+	
+</mapper>

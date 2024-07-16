@@ -12,24 +12,25 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<!-- 히카리씨피 : 커넥션 풀을 사용하기 위해 쓰는 라이브러리 - DB연결 관리 -->
+	<!-- hikariCP : 커넥션 풀 라이브러리 - DB연결 관리  -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/woori_db?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;
-		useUnicode=true&amp;serverTimezone=Asia/Seoul"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/woori_db?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;useUnicode=true&amp;serverTimezone=Asia/Seoul"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="0000"></property>
-	</bean>	
+	</bean>
 	
-	<!-- 히카리씨피 사용하여 datapool 만듬 -->
+	<!-- hikariCP사용하여 DataPool을 만듬  -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig"/>
 	</bean>
 	
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		  <property name="dataSource" ref="dataSource"></property>	
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 	
 	<context:component-scan base-package="org.spring.service"/>
 	<mybatis-spring:scan base-package="org.spring.persistence"/>
+		
 </beans>
