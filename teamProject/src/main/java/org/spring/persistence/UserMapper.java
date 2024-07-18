@@ -27,5 +27,6 @@ public interface UserMapper {
 	
 	// 이름 번호로 아이디 찾기
 	public String searchId(@Param("user_name") String user_name, @Param("user_phone") String user_phone);
+
 	
 }

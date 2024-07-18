@@ -19,23 +19,25 @@
 		AND user_pw LIKE #{user_pw}
 	</select>
 	
-	<!-- 네이버 로그인 -->
+	<!-- 네이버 로그인 
 	<insert id="insert" parameterType="org.spring.domain.UserDTO">
 		INSERT INTO user (user_email, user_name, user_phone) VALUES (#{user_email},#{user_name},#{user_phone})
-	</insert>
+	</insert>-->
 	
 	
 	<!-- 구글 로그인 -->
 	<insert id="insertOrUpdate" parameterType="org.spring.domain.UserDTO">
     	INSERT INTO user (social_user_email, user_name)
-    	VALUES (#{email}, #{name})
-    	ON DUPLICATE KEY UPDATE user_name = VALUES(user_name)
+    	VALUES (#{user_email}, #{user_name})
+    	ON DUPLICATE KEY UPDATE user_name = VALUES(user_name),user_num = LAST_INSERT_ID(user_num)
 	</insert>
 	
 	<!-- 회원가입 -->
 	<insert id="registerUser" parameterType="org.spring.domain.RegisterDTO">
 		INSERT INTO user (user_email,user_pw,user_name,user_phone)
 		VALUES (#{user_email},#{user_pw},#{user_name},#{user_phone})
+		ON DUPLICATE KEY UPDATE 
+        user_email = VALUES(user_email)
 	</insert>
 	
 	<!-- 중복 확인 -->
@@ -43,10 +45,11 @@
 		SELECT COUNT(user_email) FROM user WHERE user_email LIKE #{user_email};
 	</select>
 	
-	<!--  -->
+	<!-- 아이디 찾기 -->
 	<select id="searchId" resultType="string">
 		SELECT user_email FROM user 
 		WHERE user_name LIKE #{user_name} AND user_phone LIKE #{user_phone};
 	</select>
+	
 	
 </mapper>

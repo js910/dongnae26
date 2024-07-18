@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.spring.domain.UserDTO;
@@ -58,8 +59,7 @@ public class GoogleLoginController {
         System.out.println("Authorization Code: " + code);
 
         OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-        AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(),
-                null);
+        AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
 
         String accessToken = accessGrant.getAccessToken();
         System.out.println("Access Token: " + accessToken);
@@ -75,11 +75,6 @@ public class GoogleLoginController {
             session.setAttribute("loginType", "google");
             System.out.println("세션에 토큰 저장");
             
-            // 쿠키에 액세스 토큰 저장
-//            Cookie cookie = new Cookie("accessToken", accessToken);
-//            cookie.setHttpOnly(true);
-//            cookie.setMaxAge(60 * 60 * 24); // 1일 동안 유효
-//            response.addCookie(cookie);
         }
 
         try {
@@ -94,12 +89,26 @@ public class GoogleLoginController {
             System.out.println("User Profile: " + profile);
 
             ObjectMapper objectMapper = new ObjectMapper();
-            UserDTO userProfile = objectMapper.readValue(profile, UserDTO.class);
+            JsonNode rootNode = objectMapper.readTree(profile);
+
+            // 사용자 정보를 UserDTO에 매핑
+            UserDTO userProfile = new UserDTO();
+            userProfile.setUser_email(rootNode.path("email").asText());
+            userProfile.setUser_name(rootNode.path("name").asText());
+            //userProfile.setSocial_user_email(rootNode.path("email").asText());
+            //userProfile.setId(rootNode.path("id").asText());
+            //userProfile.setGiven_name(rootNode.path("given_name").asText());
+            //userProfile.setFamily_name(rootNode.path("family_name").asText());
+            //userProfile.setPicture(rootNode.path("picture").asText());
 
             // 데이터베이스에 저장 또는 업데이트
             userService.insertOrUpdate(userProfile);
 
+            // 세션에 사용자 정보 저장
+            session.setAttribute("user_email", userProfile.getUser_email());
+            session.setAttribute("user_name", userProfile.getUser_name());
             model.addAttribute("userProfile", userProfile);
+
             return "login"; // 성공 시 리턴 페이지
         } catch (Exception e) {
             System.err.println("Google API 호출 중 오류 발생: " + e.getMessage());
@@ -134,13 +143,8 @@ public class GoogleLoginController {
 
         // 세션 무효화
         session.invalidate();
-        System.out.println("로그아웃 세션만료");
+        System.out.println("로그아웃 세션 만료");
         
-        // 쿠키 삭제
-//        Cookie cookie = new Cookie("accessToken", null);
-//        cookie.setMaxAge(0);
-//        response.addCookie(cookie);
-//        System.out.println("쿠키 삭제");
 
         // 로그아웃 후 리디렉션할 페이지 설정
         return "redirect:/login";

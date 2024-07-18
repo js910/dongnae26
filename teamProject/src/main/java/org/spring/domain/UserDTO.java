@@ -12,13 +12,13 @@ public class UserDTO {
 	private String user_phone;
 	private String user_interest;
 	
-	private String id;
-    private String email;
-    private String verified_email;
-    private String name;
-    private String given_name;
-    private String family_name;
-    private String picture;
+//	private String id;
+//    private String email;
+//    private String name;
+//    private String verified_email;
+//    private String given_name;
+//    private String family_name;
+//    private String picture;
     
 public UserDTO() {}
     
