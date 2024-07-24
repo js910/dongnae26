@@ -19,7 +19,7 @@
                     <div class="navbar-nav ms-auto py-0">
                         <a href="main.jsp" class="nav-item nav-link active">Home</a>
                         <a href="about.html" class="nav-item nav-link">정책</a>
-                        <a href="services.html" class="nav-item nav-link">일자리 정보</a>
+                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
                         <a href="packages.html" class="nav-item nav-link">문화 행사</a>
                         <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
                         <div class="nav-item dropdown">

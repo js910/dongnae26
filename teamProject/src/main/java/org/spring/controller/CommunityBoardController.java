@@ -91,9 +91,10 @@ public class CommunityBoardController {
     }
     
     @GetMapping("/list")
-    public void list(Criteria cri, Model model, HttpSession session) {
+    public String list(Criteria cri, Model model, HttpSession session) {
         List<CommunityBoardDTO> list = service.getListWithPaging(cri);
         model.addAttribute("boardlist", list);
+        
         UserDTO user = (UserDTO) session.getAttribute("user_info");
         System.out.println(user);
         System.out.println(list);
@@ -102,8 +103,9 @@ public class CommunityBoardController {
         PageDTO pageResult = new PageDTO(cri, total);
         System.out.println(total);
         model.addAttribute("pageMaker", pageResult);
+
+        return "community/list"; // JSP 파일 경로
     }
-    
     
     @ResponseBody
     @PostMapping("/getList")
@@ -123,6 +125,7 @@ public class CommunityBoardController {
 
         return response;
     }
+    
     
     @GetMapping("/get")
     public String getList(@RequestParam("community_bno") Integer community_bno, Model model, HttpSession session,

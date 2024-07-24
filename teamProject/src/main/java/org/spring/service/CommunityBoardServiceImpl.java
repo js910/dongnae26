@@ -47,16 +47,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 	}
 
 	@Override
-	public int getTotalCount(Criteria cri) {
-		return boardMapper.getTotalCount(cri);
-	}
-
-	@Override
-	public List<CommunityBoardDTO> getListWithPaging(Criteria cri) {
-		return boardMapper.getListWithPaging(cri);
-	}
-
-	@Override
 	public void updateFileName(CommunityBoardDTO board) {
 		boardMapper.updateFileName(board);
 	}
@@ -66,6 +56,16 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 		return boardMapper.getBoardID(community_bno);
 	}
 
+	@Override
+	public int getTotalCount(Criteria cri) {
+		return boardMapper.getTotalCount(cri);
+	}
+
+	@Override
+	public List<CommunityBoardDTO> getListWithPaging(Criteria cri) {
+		return boardMapper.getListWithPaging(cri);
+	}
+	
 	@Override
 	public int getTotal(Criteria cri) {
 		return boardMapper.getTotalCount(cri);
@@ -119,10 +119,6 @@ public class CommunityBoardServiceImpl implements CommunityBoardService {
 		return commentMapper.getCommentCno(user_num);
 	}
 
-	@Override
-	public List<CommunityBoardDTO> getList(Criteria cri) {
-		List<CommunityBoardDTO> result = boardMapper.getListWithSearch(cri);
-		return result;
-	}
+
 
 }

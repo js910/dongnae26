@@ -9,43 +9,42 @@ import org.spring.domain.community.ViewCountDTO;
 
 
 public interface CommunityBoardService {
-	public void register(CommunityBoardDTO board);
+    public void register(CommunityBoardDTO board);
 
-	public CommunityBoardDTO get(Integer community_bno);
+    public CommunityBoardDTO get(Integer community_bno);
 
-	public boolean modify(CommunityBoardDTO board);
+    public boolean modify(CommunityBoardDTO board);
 
-	public boolean remove(Integer community_bno);
+    public boolean remove(Integer community_bno);
 
-	public int getTotal(Criteria cri);
+    public int getTotal(Criteria cri);
 
-	public void updateViewCnt(int community_bno);
+    public void updateViewCnt(int community_bno);
 
-	public List<CommunityBoardDTO> getListWithPaging(Criteria cri);
+    public List<CommunityBoardDTO> getListWithPaging(Criteria cri);
 
-	public int getTotalCount(Criteria cri);
+    public int getTotalCount(Criteria cri);
 
-	public void updateFileName(CommunityBoardDTO board);
+    public void updateFileName(CommunityBoardDTO board);
 
-	public Boolean checkViewCnt(ViewCountDTO viewCnt);
+    public Boolean checkViewCnt(ViewCountDTO viewCnt);
 
-	public void insertViewCnt(ViewCountDTO viewCnt);
+    public void insertViewCnt(ViewCountDTO viewCnt);
 
-	public void registerComment(CommunityCommentDTO comment);
+    public void registerComment(CommunityCommentDTO comment);
 
-	public void modifyComment(CommunityCommentDTO comment);
+    public void modifyComment(CommunityCommentDTO comment);
 
-	public void removeComment(int community_cno);
-	
-	public CommunityCommentDTO getCommentById(int community_cno);
-	
-	public List<CommunityCommentDTO> getCommentsByBoardId(int community_bno);
+    public void removeComment(int community_cno);
 
-	public CommunityBoardDTO getBoardById(int community_bno);
+    public CommunityCommentDTO getCommentById(int community_cno);
 
-	public int getCno(Integer user_num);
+    public List<CommunityCommentDTO> getCommentsByBoardId(int community_bno);
 
-	public List<CommunityBoardDTO> getList(Criteria cri);
-	
+    public CommunityBoardDTO getBoardById(int community_bno);
+
+    public int getCno(Integer user_num);
+
+
 
 }
