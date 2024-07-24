@@ -145,7 +145,11 @@ public class NaverLoginService {
             user.setUser_email(responseNode.path("email").asText());
             user.setUser_name(responseNode.path("name").asText());
             user.setUser_phone(responseNode.path("mobile").asText());
+            session.setAttribute("user_name", user.getUser_name());
             session.setAttribute("user_email", user.getUser_email());
+            UserDTO user_info = user;
+            session.setAttribute("user_info", user_info);
+            session.setAttribute("isLogin", true);
             return user;
         } catch (Exception e) {
             throw new RuntimeException("사용자 정보 파싱 실패", e);

@@ -16,6 +16,7 @@
 	 <c:choose>
         <c:when test="${not empty loginUserID}">
             <h3>로그인 성공</h3>
+            <h2>메인으로 이동<a href="${pageContext.request.contextPath}/test">이동</a></h2>
             <c:choose>
                 <c:when test="${loginType == 'google'}">
                     <a href="${pageContext.request.contextPath}/social/logout">구글 로그아웃</a>
@@ -34,7 +35,7 @@
                 <input type="password" name="user_pw" placeholder="비밀번호 입력" required="required">
                 <button type="submit">로그인</button>
             </form>
-            <button onclick="location.href='${pageContext.request.contextPath}/basic/register'">회원가입</button>
+            <button onclick="location.href='${pageContext.request.contextPath}/basic/join'">회원가입</button>
             <button onclick="location.href='${pageContext.request.contextPath}/basic/searchId'">아이디 찾기</button>
             <div id="google_id_login">
                 <a href="${pageContext.request.contextPath}/social/login">

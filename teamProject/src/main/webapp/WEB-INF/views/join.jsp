@@ -36,7 +36,7 @@
 
 <body>
     <h1>회원가입 페이지</h1>
-    <form action="${pageContext.request.contextPath}/basic/register" method="post">
+    <form action="${pageContext.request.contextPath}/basic/join" method="post">
        <div class="form-group">
             <input type="text" name="user_email" id="user_email" placeholder="아이디" required>
             <button id="checkIdBtn" type="button">중복 확인</button>

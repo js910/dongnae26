@@ -49,7 +49,7 @@ public class GoogleLoginController {
         String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
         System.out.println("구글 로그인 URL: " + url);
         model.addAttribute("google_login", url);
-        return "redirect:" + url;
+        return "redirect:" + url; 
     }
 
     @RequestMapping(value = "/login_project/oauth2callback", method = { RequestMethod.GET, RequestMethod.POST })
@@ -103,13 +103,13 @@ public class GoogleLoginController {
 
             // 데이터베이스에 저장 또는 업데이트
             userService.insertOrUpdate(userProfile);
-
+            
             // 세션에 사용자 정보 저장
             session.setAttribute("user_email", userProfile.getUser_email());
             session.setAttribute("user_name", userProfile.getUser_name());
             model.addAttribute("userProfile", userProfile);
 
-            return "login"; // 성공 시 리턴 페이지
+            return "redirect:/test"; // 성공 시 리턴 페이지
         } catch (Exception e) {
             System.err.println("Google API 호출 중 오류 발생: " + e.getMessage());
             e.printStackTrace();

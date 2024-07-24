@@ -53,12 +53,10 @@ public class CallbackController {
             
             userService.saveUser(user);
             //userService.insertOrUpdate(user);
-            
-            session.setAttribute("isLogin", true);
-            return "redirect:/login";
+            return "redirect:/test";
         } catch (Exception e) {
             session.setAttribute("isLogin", false);
-            return "redirect:/login";
+            return "redirect:/test";
         }
     }
 

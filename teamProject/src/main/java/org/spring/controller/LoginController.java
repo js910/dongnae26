@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.spring.domain.RegisterDTO;
+import org.spring.domain.UserDTO;
 import org.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,21 +34,28 @@ public class LoginController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@PostMapping("/login")
-	public String login(@RequestParam String user_email, @RequestParam String user_pw, 
+	public String login(@RequestParam String user_email, @RequestParam String user_pw,
 			HttpSession session, RedirectAttributes redirectAttributes) {
 		logger.info("사용자 로그인 실행"+user_email);
+		UserDTO user = new UserDTO(user_email); 
+		user = userService.getUserInfo(user);
+		System.out.println(user);
 		
 		if(userService.login(user_email, user_pw) != null) {
+			
 			session.setAttribute("loginUserID", user_email);
 			session.setAttribute("loginType", "basic");
 			logger.info("사용자 로그인 성공 : "+user_email);
+			
+			session.setAttribute("user_info", user);
+			
 			redirectAttributes.addFlashAttribute("메세지","로그인 성공");
 		}else {
 			logger.info("로그인 실패");
 			redirectAttributes.addFlashAttribute("error","로그인 실패");
 		}
 		
-		return "redirect:/login";
+		return "redirect:/main";
 	}
 	
 	@GetMapping("/logout")
@@ -56,18 +64,18 @@ public class LoginController {
 		return "redirect:/login";
 	}
 	
-	@GetMapping("/register")
+	@GetMapping("/join")
 	public String registerShow() {
-		return "/register";
+		return "/join";
 	}
 	
-	@PostMapping("/register")
+	@PostMapping("/join")
 	public String register(RegisterDTO registerDTO) {
 		if(!userService.isIdDuplicated(registerDTO.getUser_email())) { //중복x
 			userService.register(registerDTO);
 			return "redirect:/login";
 		}		
-		return "/register";
+		return "/join";
 	}
 	
 	@PostMapping("/checkId")

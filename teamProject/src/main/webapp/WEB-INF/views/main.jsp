@@ -21,7 +21,7 @@
                         <a href="about.html" class="nav-item nav-link">정책</a>
                         <a href="services.html" class="nav-item nav-link">일자리 정보</a>
                         <a href="packages.html" class="nav-item nav-link">문화 행사</a>
-                        <a href="blog.html" class="nav-item nav-link">커뮤니티</a>
+                        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0">
