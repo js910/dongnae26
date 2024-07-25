@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%@include file="../includes/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -83,6 +86,11 @@
         td {
             width: 80%;
         }
+        #bookmark{
+        	width: 24px;
+        	height: 24px;
+        	cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -90,7 +98,7 @@
         <h1>채용 상세 정보</h1>
 
         <div class="section">
-            <div class="section-title">기본 정보</div>
+            <div class="section-title"><span>기본 정보 <img id="bookmark" src="/resources/images/star.png"></span></div>
             <div class="section-content">
                 <table>
                     <tr>
@@ -194,8 +202,41 @@
         </div>
 
          <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}" class="back-link">채용 목록으로 돌아가기</a>
-
-
     </div>
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#bookmark").click(function() {
+            var joRegistNo = "${jobDetail.joRegistNo}";
+            var user_num = "${sessionScope.user_info.user_num}";
+            var cmpnyNm = "${jobDetail.cmpnyNm}";
+            var bsnsSumryCn = "${jobDetail.bsnsSumryCn}";
+
+            $.ajax({
+                url: "${pageContext.request.contextPath}/job/bookmark",
+                type: "POST",
+                data: {
+                    joRegistNo: joRegistNo,
+                    user_num: user_num,
+                    cmpnyNm: cmpnyNm,
+                    bsnsSumryCn: bsnsSumryCn
+                },
+                success: function(response) {
+                    if (response === "success") {
+                        alert("북마크에 추가되었습니다.");
+                    } else {
+                        alert("북마크 추가에 실패하였습니다.");
+                    }
+                },
+                error: function(xhr, status, error) {
+                    alert("에러 북마크 추가에 실패하였습니다.");
+                }
+            });
+        });
+    });
+    </script>
 </body>
 </html>
+
+<%@include file="../includes/footer.jsp"%>

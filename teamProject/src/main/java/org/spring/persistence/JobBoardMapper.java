@@ -33,5 +33,7 @@ public interface JobBoardMapper {
 
 	@Select("SELECT * FROM job_board WHERE joRegistNo = #{jobId}")
 	public JobBoardDTO getJobDetail(String jobId);
+
+	void bookmarkJob(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn);
 	
 }

@@ -63,4 +63,12 @@ public class JobBoardController {
         model.addAttribute("cri", cri);
         return "/job/detail";
     }
+    
+    @PostMapping("/bookmark")
+    @ResponseBody
+    public String bookmarkJob(@RequestParam("joRegistNo") String joRegistNo, @RequestParam("cmpnyNm") String cmpnyNm, 
+    						  @RequestParam("user_num") int user_num, @RequestParam("bsnsSumryCn") String bsnsSumryCn) {
+        jobBoardService.bookmarkJob(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+        return "success";
+    }
 }
