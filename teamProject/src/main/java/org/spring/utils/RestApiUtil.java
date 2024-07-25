@@ -53,6 +53,7 @@ public class RestApiUtil {
 	}
 
 	private static String httpConn(String connUrl, HashMap<String, String> headerData) throws IOException {
+		// System.out.println("HTTP connection to URL: " + connUrl);
 		URL url = new URL(connUrl);
 
 		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -78,11 +79,12 @@ public class RestApiUtil {
 		}
 		rd.close();
 		conn.disconnect();
-		//System.out.println(sb.toString());
+		// System.out.println("HTTP response: "+sb.toString());
 		return sb.toString();
 	}
 
 	private static String httpsConn(String connUrl, HashMap<String, String> headerData) throws IOException {
+		// System.out.println("HTTPS connection to URL: " + connUrl);
 		URL url = new URL(connUrl);
 
 		HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
@@ -108,7 +110,7 @@ public class RestApiUtil {
 		}
 		rd.close();
 		conn.disconnect();
-		//System.out.println(sb.toString());
+		// System.out.println("HTTPS response: "+sb.toString());
 		return sb.toString();
 	}
 }

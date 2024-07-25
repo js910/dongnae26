@@ -44,9 +44,14 @@ public class CommunityBoardController {
 
     @Autowired
     private CommunityBoardService service;
+<<<<<<< HEAD
     private final String uploadPath = "C:/Users/bcy12/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
     private String get = "redirect:/community/get/";
     
+=======
+    private final String uploadPath = "C:/Users/wlghk/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
+
+>>>>>>> refs/remotes/origin/main
     @GetMapping("/register")
     public String registerForm(CommunityBoardDTO board, HttpSession session) {
         String login = (String) session.getAttribute("loginUserID");

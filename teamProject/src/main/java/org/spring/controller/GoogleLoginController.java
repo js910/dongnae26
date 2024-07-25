@@ -147,6 +147,6 @@ public class GoogleLoginController {
         
 
         // 로그아웃 후 리디렉션할 페이지 설정
-        return "redirect:/login";
+        return "redirect:/main";
     }
 }

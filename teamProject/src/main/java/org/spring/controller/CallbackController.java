@@ -71,7 +71,7 @@ public class CallbackController {
         try {
             logoutService.performLogout(accessToken);
             session.invalidate(); // 세션 무효화
-            return "redirect:/login";
+            return "redirect:/main";
         } catch (Exception e) {
             session.invalidate(); // 예외 발생 시에도 세션 무효화
             return "redirect:/login";

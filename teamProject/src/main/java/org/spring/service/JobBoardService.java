@@ -105,4 +105,8 @@ public class JobBoardService {
 	public JobBoardDTO getJobDetail(String jobId) {
         return jobBoardMapper.getJobDetail(jobId);
     }
+
+	public void bookmarkJob(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
+		jobBoardMapper.bookmarkJob(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+	}
 }

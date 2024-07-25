@@ -241,7 +241,10 @@
     ORDER BY joRegDt DESC LIMIT #{start}, #{amount}
 </select>
 
- 	
+ 	<insert id="bookmarkJob" parameterType="map">
+	    INSERT INTO job_bookmark_board (joRegistNo, user_num, cmpnyNm, bsnsSumryCn)
+	    VALUES (#{joRegistNo}, #{user_num}, #{cmpnyNm}, #{bsnsSumryCn})
+	</insert>
  	
     
     </mapper>

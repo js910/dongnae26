@@ -209,7 +209,10 @@
             <version>2.9.0</version>
         </dependency>
 
+<<<<<<< HEAD
 		
+=======
+>>>>>>> refs/remotes/origin/main
 		<dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -227,10 +230,13 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
+<<<<<<< HEAD
 		
 		
 
 
+=======
+>>>>>>> refs/remotes/origin/main
 
 	</dependencies>
 	<build>
