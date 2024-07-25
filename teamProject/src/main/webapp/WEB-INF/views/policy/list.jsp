@@ -2,51 +2,76 @@
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <%@ include file="../includes/header.jsp"%>
 <style>
-@media (min-width: 768px) {
+/* General Page Layout */
+@media (min-width: 1000px) {
   #page-wrapper {
     margin: 0 100px 0 100px;
+    background-color: white;
   }
 }
-.table-container {
-	width: 100%;
-	overflow-x: auto;
-}
-table th {
-	background-color: #3E8EDE;
-	color: #ffffff;
-	text-align: center;
-}
-table th, table td.summary {
-    white-space: nowrap; /* 한줄출력 */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px;
-}
-table td.summary {
-	max-width: 80px;
-}
-table th:nth-child(1),table td:nth-child(1) {
-    min-width: 20px;
-    max-width: 100px;
-}
-table th:nth-child(2), table td:nth-child(2) {
-    min-width: 20px;
-    max-width: 80px;
-}
-table th:nth-child(3),table td:nth-child(3) {
-    min-width: 100px;
-}
-table th:nth-child(4),table td:nth-child(4) {
-    min-width: 200px;
-}
-table th:nth-child(5),table td:nth-child(5) {
-    min-width: 20px;
-    max-width: 100px;
-}
-label {
-	margin: 10px 0px;
+
+@media (max-width: 1000px) {
+    .service-icon-container {
+        flex: 0 1 calc(50% - 20px);
+    }
+
+    table th:nth-child(2), table td:nth-child(2) {
+        max-width: 80px;
+        min-width: 15px;
+    }
+
+    table th:nth-child(3), table td:nth-child(3) {
+        min-width: 80px;
+    }
+
+    table th:nth-child(4), table td:nth-child(4) {
+        min-width: 40px;
+    }
+
+	table th:nth-child(5), table td:nth-child(5) {
+        min-width: 10px;
+    }
+    table td.summary {
+        max-width: 10px;
+    }
 }
 
+body {
+    background-color: #f5f5f5; /* Outer div background color */
+}
+
+#page-wrapper {
+    padding: 50px;
+    background-color: white;
+}
+
+/* Header Styling */
+.page-header {
+    margin: 25px 20px;
+}
+
+/* Form Styling */
+#searchForm {
+    margin-bottom: 20px;
+}
+
+.icon-group {
+	margin-bottom: 20px;
+}
+
+.input-group-btn .btn {
+    background-color: #3E8EDE; /* Button color */
+    color: white;
+    border: none;
+    height: 38px;
+    border-radius: 0 10px 10px 0;
+}
+
+.input-group-btn .btn:hover {
+    background-color: #2C6EB2; /* Button hover color */
+}
+
+/* Service Icons */
 .service-icons {
     display: flex;
     justify-content: space-around;
@@ -56,15 +81,17 @@ label {
     padding: 10px;
     background-color: #f9f9f9;
 }
+
 .service-icon-container {
     flex: 0 1 calc(20% - 20px);
     text-align: center;
 }
+
 .service-icon {
     width: 100%;
     max-width: 120px;
     height: auto;
-    flex-wrap: nowwrap;
+    flex-wrap: nowrap;
     background-color: #e0e0e0;
     border-radius: 10px;
     padding: 10px;
@@ -72,53 +99,144 @@ label {
     transition: transform 0.2s, border-color 0.2s;
     cursor: pointer;
 }
+
 .service-icon img {
     max-width: 100%;
     max-height: 100%;
     border-radius: 10px;
 }
+
 .service-text {
     margin-top: 5px;
     font-size: 0.9em;
     color: #333;
 }
+
 .service-icon:hover {
     transform: scale(1.1);
     border-color: #3E8EDE;
 }
+
 .service-icon.selected {
     border-color: #3E8EDE;
 }
-@media (max-width: 1200px) {
-    .service-icon-container {
-        flex: 0 1 calc(50% - 20px);
-    }
-    table th:nth-child(2), table td:nth-child(2) {
-    	max-width: 80px;
-    	min-width: 15px;
-	}
-    table th:nth-child(3), table td:nth-child(3) {
-    	min-width: 80px;
-	}
-	table th:nth-child(4),table td:nth-child(4) {
-	    min-width: 50px;
-	}
-    table td.summary {
-        max-width: 10px;
-    }
+
+/* Table Styling */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
 }
+
+.table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.table thead th {
+    background-color: #3E8EDE;
+    color: #ffffff;
+    text-align: center;
+    padding: 8px;
+}
+
+.table tbody td {
+    padding: 8px;
+    border-top: 1px solid #e7e7e7;
+}
+
+table th, table td.summary {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+table td.summary {
+    max-width: 80px;
+}
+
+table th:nth-child(1), table td:nth-child(1) {
+    min-width: 20px;
+    max-width: 100px;
+}
+
+table th:nth-child(2), table td:nth-child(2) {
+    min-width: 20px;
+    max-width: 80px;
+}
+
+table th:nth-child(3), table td:nth-child(3) {
+    min-width: 150px;
+}
+
+table th:nth-child(4), table td:nth-child(4) {
+    min-width: 200px;
+}
+
+table th:nth-child(5), table td:nth-child(5) {
+    min-width: 20px;
+    max-width: 100px;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.pagination li {
+    list-style: none;
+    margin: 0 5px;
+}
+
+.pagination li a {
+    text-decoration: none;
+    color: #3E8EDE;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.pagination li.active a {
+    background-color: #3E8EDE;
+    color: white;
+    border: 1px solid #3E8EDE;
+}
+
+/* Entry Selection */
+.dataTables_length {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.dataTables_length label {
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.dataTables_length select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
 </style>
 
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">정책 게시판</h1>
+			<h2 class="page-header">정책 게시판</h2>
 		</div>
 		<!-- /.col-lg-12 -->
 	</div>
 
 	<div class="row">
         <form id="searchForm" action="/policy/list" method="post">
+        <div class="row">
             <div class="col-lg-6">
                 <div class="form-group">
                     <select id="searchDistrict" class="form-control" name="district">
@@ -136,13 +254,14 @@ label {
 				</div>
 			</div>
 			<input type="hidden" id="searchType" name="type" value="${pageMaker.cri.type}">
+		</div>
 		</form>
 	</div>
 
 	<div class="row">
     <!-- Icons for service categories -->
     	<div class="col-lg-12">
-        	<div class="form-group">
+        	<div class="form-group icon-group">
             	<label>Select Service Category:</label>
 	            <div class="service-icons">
                 <div class="service-icon-container" data-type="생활안정">
@@ -214,17 +333,6 @@ label {
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-                <div class="col-lg-6">
-                    <div class="dataTables_length" id="dataTables-example_length">
-                        <label>Show 
-                            <select name="dataTables-example_length" aria-controls="dataTables-example" class="form-control input-sm">
-                                <option value="20" ${pageMaker.cri.amount == 20 ? 'selected' : ''}>20</option>
-                                <option value="30" ${pageMaker.cri.amount == 30 ? 'selected' : ''}>30</option>
-                                <option value="50" ${pageMaker.cri.amount == 50 ? 'selected' : ''}>50</option>
-                            </select> entries
-                        </label>
-                    </div>
-                </div>
 				<!-- /.panel-heading -->
 				<div class="panel-body">
 					<table id="boardTable" width="100%" class="table table-striped table-bordered table-hover">
