@@ -42,12 +42,6 @@ public class PolicyBoardController {
 		model.addAttribute("pageMaker", pageResult);
 		System.out.println("total: "+response.getMatchCount());
 		
-		UserDTO user = (UserDTO) session.getAttribute("user_info");
-		if(user!=null) {
-			String usernum = Integer.toString(user.getUser_num());
-			model.addAttribute("user_num", usernum);
-		}
-		
 		return "/policy/list";
 	}
     
@@ -71,39 +65,50 @@ public class PolicyBoardController {
     }
 	
 	@GetMapping("/get")
-    public String get(@RequestParam("serviceID") String serviceID, Model model) {
+    public String get(@RequestParam("serviceID") String serviceID, Model model, HttpSession session) {
         System.out.println("read >>>");
         policyService.testDatabaseConnection();
         PolicyResponse2 response = policyService.get(serviceID);
         PolicyResponse3 engResponse = convertToEngResponse(response);
         System.out.println("get: "+engResponse.getData().get(0));
+        
         if (engResponse.getData() != null && !engResponse.getData().isEmpty()) {
         	System.out.println("if문 안: " + engResponse.getData().get(0));
             model.addAttribute("policyDetail", engResponse.getData().get(0));
             
-            int user_num;
-            if(model.getAttribute("user_num") != null) {
-            	user_num = Integer.valueOf((String) model.getAttribute("user_num"));
+            UserDTO user = (UserDTO) session.getAttribute("user_info");
+            if (user != null) {
+                int user_num = user.getUser_num();
+                boolean bookmarked = policyService.bookmarkChk(serviceID, user_num);
+                model.addAttribute("bookmarked", bookmarked);
+                model.addAttribute("user_num", user_num);
             } else {
-            	user_num = 0;
+                model.addAttribute("bookmarked", false);
+                model.addAttribute("user_num", null);
             }
-            boolean bookmarked = policyService.bookmarkChk(serviceID, user_num);
-            model.addAttribute("bookmarked", bookmarked);
-            
         }
         return "/policy/get";
     }
 	
 	@ResponseBody
 	@PostMapping("/bookmark")
-	public boolean policyBookmark(@RequestParam("user_num") int user_num, @RequestParam("serviceID") String serviceID) throws Exception {
-	    boolean bookmark = policyService.bookmarkChk(serviceID, user_num);
+	public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("serviceID") String serviceID) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		UserDTO user = (UserDTO) session.getAttribute("user_info");
+		if(user==null) {
+			result.put("loggedIn", false);
+	        return result;
+		}
+		int user_num = user.getUser_num();
+		boolean bookmark = policyService.bookmarkChk(serviceID, user_num);
 	    if (!bookmark) {
 	        policyService.bookmark(serviceID, user_num);
 	    } else {
 	        policyService.bookmarkDel(serviceID, user_num);
 	    }
-	    return !bookmark;
+	    result.put("loggedIn", true);
+	    result.put("bookmarked", !bookmark);
+	    return result;
 	}
 	
 	private PolicyResponse3 convertToEngResponse(PolicyResponse2 response2) {

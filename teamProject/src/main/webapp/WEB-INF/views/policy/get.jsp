@@ -96,7 +96,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                 	<em class="cate">${policyDetail.agencyName}</em>${policyDetail.serviceName}
-                	<span id="bookmark" class="bookmark" onclick="toggleBookmark(${policyDetail.serviceID}, '${user_email}')"></span>
+                	<span id="bookmark" class="bookmark" onclick="toggleBookmark(${policyDetail.serviceID})"></span>
 				</div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -133,17 +133,22 @@ if (${bookmarked}) {
 }
 
 $("#list").on("click", function() {
-    location.href = "/policy";
+    location.href = "/policy/list";
 });
 
-function toggleBookmark(serviceID, userEmail) {
+function toggleBookmark(serviceID) {
     $.ajax({
         type: "POST",
         url: "/policy/bookmark",
         dataType: "json",
-        data: { 'serviceID': serviceID, 'user_email': userEmail },
+        data: { 'serviceID': serviceID },
         success: function(response) {
-            if (response) {
+            if (!response.loggedIn) {
+                alert("로그인이 필요한 기능입니다");
+                return;
+            }
+            
+            if (response.bookmarked) {
                 $("#bookmark").addClass("bookmarked");
                 alert("북마크 완료");
             } else {
