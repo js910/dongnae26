@@ -403,6 +403,12 @@ $(document).ready(function() {
         }
         searchDistrict.append(option);
     });
+    
+    $("#searchDistrict").on('change', function() {
+        $("#pageForm input[name='district']").val($(this).val());
+        $("#pageForm input[name='pageNum']").val(1);
+        loadTable();
+    });
 
     // Handle service icon clicks
     $('.service-icon-container').on('click', function(event) {
