@@ -38,7 +38,7 @@ public class PolicyBoardService {
 		System.out.println("Service amount: "+cri.getAmount());
 		if (cri.getPageNum()==0 && cri.getAmount()==0) {
 			cri.setPageNum(1);
-			cri.setAmount(20);
+			cri.setAmount(10);
 		}
 		
 		data.put("page", Integer.toString(cri.getPageNum()));
@@ -59,7 +59,7 @@ public class PolicyBoardService {
 		data.put("serviceKey", SECRETKEY);
 		if (cri.getPageNum()==0 && cri.getAmount()==0) {
 			cri.setPageNum(1);
-			cri.setAmount(20);
+			cri.setAmount(10);
 		}
 		
 		data.put("page", Integer.toString(cri.getPageNum()));

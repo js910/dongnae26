@@ -22,7 +22,7 @@ public class Criteria {
 	
 	// 기본 생성자: 첫 페이지(1), 페이지당 10개 게시물
 	public Criteria() {
-		this(1,20);
+		this(1,10);
 	}
 	
 	public Criteria(int pageNum, int amount) {
