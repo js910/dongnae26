@@ -210,9 +210,6 @@
         </dependency>
 
 		
-		
-		
-		
 		<dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
@@ -230,7 +227,8 @@
             <artifactId>jaxb-api</artifactId>
             <version>2.3.1</version>
         </dependency>
-
+		
+		
 
 
 

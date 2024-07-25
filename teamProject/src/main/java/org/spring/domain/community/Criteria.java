@@ -18,13 +18,13 @@ public class Criteria {
 
 	// 기본생성자 : 첫 페이지(1), 페이지당 10개 게시물
 	public Criteria() {
-		this(1, 10);
+		this(1, 10); // 기본값: 1페이지, 10개 게시물
 	}
 
 	public Criteria(int pageNum, int amount) {
 		this.pageNum = pageNum;
 		this.amount = amount;
-		this.start = (pageNum - 1) * amount; // 시작 위치 계산
+		this.start = (pageNum - 1) * amount; // 시작 인덱스 계산
 	}
 
 //	public Criteria(int pageNum, int amount) {

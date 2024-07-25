@@ -4,14 +4,10 @@
 
 <%@include file="../includes/header.jsp"%>
 <head>
+<head>
     <title>게시글 상세보기</title>
- <style>
-        .comment-item {
-            border-bottom: 1px solid #ccc;
-            padding: 10px 0;
-            margin-bottom: 10px;
-        }
-
+ 
+    <style>
         #editCommentModal {
             display: none;
             position: fixed;
@@ -22,9 +18,6 @@
             padding: 20px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             z-index: 1000;
-            width: 90%;
-            max-width: 600px;
-            box-sizing: border-box;
         }
 
         .modal-overlay {
@@ -36,57 +29,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
-        }
-
-        .img-group img {
-            max-width: 25%;
-            height: auto;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .button-group {
-            margin-top: 20px;
-        }
-
-        .button-group a, .button-group button {
-            margin-right: 10px;
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .button-group button {
-            background-color: #dc3545;
-        }
-
-        #newCommentContent {
-            width: calc(100% - 22px);
-            height: 100px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        #submitComment, #submitEditComment, #cancelEditComment {
-            margin-top: 10px;
-        }
-
-        #submitComment {
-            background-color: #28a745;
-        }
-
-        #submitEditComment {
-            background-color: #007bff;
-        }
-
-        #cancelEditComment {
-            background-color: #6c757d;
         }
     </style>
 </head>
@@ -143,7 +85,7 @@
     <!-- 댓글 등록 -->
     <div>
         <h2>댓글 작성</h2>
-        <textarea id="newCommentContent" placeholder="댓글을 작성하세요" required="required"></textarea>
+        <textarea id="newCommentContent" placeholder="댓글을 작성하세요"></textarea>
         <button id="submitComment">댓글 등록</button>
     </div>
 
@@ -156,54 +98,18 @@
         <button id="cancelEditComment">취소</button>
     </div>
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("#commentList").on("click", ".edit-comment-btn", function() {
-            var commentId = $(this).data("comment-id");
-            var commentContent = $(this).siblings(".comment-content").text();
-            $("#editCommentCno").val(commentId);
-            $("#editCommentContent").val(commentContent);
-            $("#editCommentModal").show();
-        });
-
-        $("#submitEditComment").click(function() {
-            submitEditComment();
-        });
-
-        $("#cancelEditComment").click(function() {
-            $("#editCommentModal").hide();
-        });
-
-        $("#submitComment").click(function() {
-            submitComment();
-        });
-
-        $("#commentList").on("click", ".delete-comment-btn", function() {
-            var commentId = $(this).data("comment-id");
-            if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
-                $.ajax({
-                    type: "GET",
-                    url: "${pageContext.request.contextPath}/community/removeComment",
-                    data: { community_cno: commentId },
-                    success: function(response) {
-                        updateCommentList(response);
-                        alert("삭제되었습니다");
-                    },
-                    error: function(xhr, status, error) {
-                        alert("댓글 삭제에 실패하였습니다.");
-                    }
-                });
-            }
-        });
-    });
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    const boardId = ${board.community_bno};
+    const userNum = ${sessionScope.user_info.user_num};
 
     function submitEditComment() {
         var formData = {
             community_com_content: $("#editCommentContent").val(),
             community_cno: $("#editCommentCno").val(),
-            community_bno: ${board.community_bno},
-            user_num: ${sessionScope.user_info.user_num}
+            community_bno: boardId,
+            user_num: userNum
         };
 
         $.ajax({
@@ -211,6 +117,7 @@
             url: "${pageContext.request.contextPath}/community/modifyComment",
             data: JSON.stringify(formData),
             contentType: "application/json; charset=utf-8",
+            headers: { "Accept": "application/json" },
             success: function(response) {
                 updateCommentList(response);
                 $("#editCommentModal").hide();
@@ -225,8 +132,8 @@
     function submitComment() {
         var formData = {
             community_com_content: $("#newCommentContent").val(),
-            community_bno: ${board.community_bno},
-            user_num: ${sessionScope.user_info.user_num}
+            community_bno: boardId,
+            user_num: userNum
         };
 
         $.ajax({
@@ -234,6 +141,7 @@
             url: "${pageContext.request.contextPath}/community/registerComment",
             data: JSON.stringify(formData),
             contentType: "application/json; charset=utf-8",
+            headers: { "Accept": "application/json" },
             success: function(response) {
                 updateCommentList(response);
                 $("#newCommentContent").val(""); // 등록 후 입력 필드 비우기
@@ -255,7 +163,7 @@
                 "<p class='comment-content'>" + comment.community_com_content + "</p>" +
                 "<span>작성자: " + (comment.comment_writer ? comment.comment_writer : 'Unknown') + "</span>" +
                 "<span>작성일: " + formattedDate + "</span>";
-            if (comment.user_num == ${sessionScope.user_info.user_num}) {
+            if (comment.user_num == userNum) {
                 commentListHtml += "<button class='edit-comment-btn' data-comment-id='" + comment.community_cno + "'>수정</button>" +
                     "<button class='delete-comment-btn' data-comment-id='" + comment.community_cno + "'>삭제</button>";
             }
@@ -263,8 +171,48 @@
         });
         $("#commentList").html(commentListHtml);
     }
-    </script>
-<!-- Footer -->
-        <%@include file="../includes/footer.jsp"%>
+
+    $("#commentList").on("click", ".edit-comment-btn", function() {
+        var commentId = $(this).data("comment-id");
+        var commentContent = $(this).siblings(".comment-content").text();
+        $("#editCommentCno").val(commentId);
+        $("#editCommentContent").val(commentContent);
+        $("#editCommentModal").show();
+    });
+
+    $("#submitEditComment").click(function() {
+        submitEditComment();
+    });
+
+    $("#cancelEditComment").click(function() {
+        $("#editCommentModal").hide();
+    });
+
+    $("#submitComment").click(function() {
+        submitComment();
+    });
+
+    $("#commentList").on("click", ".delete-comment-btn", function() {
+        var commentId = $(this).data("comment-id");
+        if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/community/removeComment",
+                data: JSON.stringify({ community_cno: commentId }),
+                contentType: "application/json; charset=utf-8",
+                headers: { "Accept": "application/json" },
+                success: function(response) {
+                    updateCommentList(response);
+                    alert("삭제되었습니다");
+                },
+                error: function(xhr, status, error) {
+                    alert("댓글 삭제에 실패하였습니다.");
+                }
+            });
+        }
+    });
+});
+</script>
+     <%@include file="../includes/footer.jsp"%>
    </body>
 </html>
