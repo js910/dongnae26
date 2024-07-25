@@ -119,7 +119,6 @@
         <script src="/resources/lib/waypoints/waypoints.min.js"></script>
         <script src="/resources/lib/owlcarousel/owl.carousel.min.js"></script>
         <script src="/resources/lib/lightbox/js/lightbox.min.js"></script>
-        
 
         <!-- Template Javascript -->
         <script src="/resources/js/main.js"></script>
