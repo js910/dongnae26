@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
-
-<%@include file="../includes/header.jsp"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +20,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            font-size: 24px;
             margin-bottom: 20px;
             color: #333;
             text-align: center;
@@ -135,7 +132,7 @@
     		margin-right: 400px;
     	}
     	h2{
-    		margin-top: 50px;
+    		margin-top: 150px;
     	}
     	#boardTable {
 		    border-left: none;
@@ -442,5 +439,5 @@
             }
         });
     </script>
-<!-- Footer -->
-<%@include file="../includes/footer.jsp"%>
+</body>
+</html>
