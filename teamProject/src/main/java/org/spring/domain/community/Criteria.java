@@ -15,6 +15,7 @@ public class Criteria {
 	// 검색에 필요한 필드 선언
 	private String type; // 종류
 	private String keyword; // 검색어
+	private String area;
 
 	// 기본생성자 : 첫 페이지(1), 페이지당 10개 게시물
 	public Criteria() {
@@ -41,6 +42,10 @@ public class Criteria {
 		this.keyword = keyword;
 	}
 
+	public void area(String area) {
+		this.area = area;
+	}
+	
 	public int getStart() {
 		return (this.pageNum - 1) * this.amount;
 	}

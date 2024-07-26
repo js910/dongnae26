@@ -4,33 +4,160 @@
 
 <%@include file="../includes/header.jsp"%>
 <head>
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 게시글 상세 보기 */
+div {
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+.img-group img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.button-group {
+    margin-top: 20px;
+}
+
+.button-group a, .button-group button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background 0.3s ease;
+}
+
+.button-group a:hover, .button-group button:hover {
+    background: #0056b3;
+}
+
+/* 댓글 목록 */
+#commentList {
+    margin-top: 20px;
+}
+
+.comment-item {
+    background: #fafafa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-content {
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.comment-item span {
+    display: block;
+    color: #666;
+}
+
+.comment-item button {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background 0.3s ease;
+}
+
+.comment-item button:hover {
+    background: #c82333;
+}
+
+/* 댓글 작성 및 수정 모달 */
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+#editCommentModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+#editCommentModal h2 {
+    margin-top: 0;
+}
+
+#submitEditComment, #cancelEditComment {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: background 0.3s ease;
+}
+
+#submitEditComment:hover, #cancelEditComment:hover {
+    background: #0056b3;
+}
+
+#cancelEditComment {
+    background: #6c757d;
+}
+
+#cancelEditComment:hover {
+    background: #5a6268;
+}
+</style>
 <head>
     <title>게시글 상세보기</title>
  
-    <style>
-        #editCommentModal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-    </style>
 </head>
 <body>
     <h1>게시글 상세보기</h1>

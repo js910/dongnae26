@@ -38,20 +38,23 @@
     SELECT count(*) FROM community_board
 </select>
 
-	<select id="getTotalCount" parameterType="org.spring.domain.community.Criteria" resultType="int">
+<select id="getTotalCount" parameterType="org.spring.domain.community.Criteria" resultType="int">
     SELECT COUNT(*)
     FROM community_board
     <where>
+        <if test="area != null and area != ''">
+            region = #{area}
+        </if>
         <if test="type != null and keyword != null and type != '' and keyword != ''">
             <choose>
                 <when test="type == 'all'">
-                    community_title LIKE CONCAT('%', #{keyword}, '%')
+                    AND (community_title LIKE CONCAT('%', #{keyword}, '%')
                     OR community_content LIKE CONCAT('%', #{keyword}, '%')
                     OR writer LIKE CONCAT('%', #{keyword}, '%')
-                    OR region LIKE CONCAT('%', #{keyword}, '%')
+                    OR region LIKE CONCAT('%', #{keyword}, '%'))
                 </when>
                 <otherwise>
-                    ${type} LIKE CONCAT('%', #{keyword}, '%')
+                    AND ${type} LIKE CONCAT('%', #{keyword}, '%')
                 </otherwise>
             </choose>
         </if>
@@ -61,16 +64,19 @@
 <select id="getListWithPaging" parameterType="org.spring.domain.community.Criteria" resultType="org.spring.domain.community.CommunityBoardDTO">
     SELECT * FROM community_board
     <where>
+        <if test="area != null and area != ''">
+            region = #{area}
+        </if>
         <if test="type != null and keyword != null and type != '' and keyword != ''">
             <choose>
                 <when test="type == 'all'">
-                    community_title LIKE CONCAT('%', #{keyword}, '%')
+                    AND (community_title LIKE CONCAT('%', #{keyword}, '%')
                     OR community_content LIKE CONCAT('%', #{keyword}, '%')
                     OR writer LIKE CONCAT('%', #{keyword}, '%')
-                    OR region LIKE CONCAT('%', #{keyword}, '%')
+                    OR region LIKE CONCAT('%', #{keyword}, '%'))
                 </when>
                 <otherwise>
-                    ${type} LIKE CONCAT('%', #{keyword}, '%')
+                    AND ${type} LIKE CONCAT('%', #{keyword}, '%')
                 </otherwise>
             </choose>
         </if>
