@@ -106,7 +106,19 @@ public class JobBoardService {
         return jobBoardMapper.getJobDetail(jobId);
     }
 
-	public void bookmarkJob(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
-		jobBoardMapper.bookmarkJob(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+	public boolean bookmarkChk(String joRegistNo, int user_num) {
+		return jobBoardMapper.bookmarkChk(joRegistNo, user_num) > 0;
 	}
+
+	public void bookmarkDel(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
+		jobBoardMapper.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+	}
+
+	public void bookmark(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
+		jobBoardMapper.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);		
+	}
+
+	
+	
+	
 }

@@ -1,11 +1,15 @@
 package org.spring.persistence;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.spring.domain.RegisterDTO;
 import org.spring.domain.UserDTO;
+import org.spring.domain.job.JobBoardDTO;
 
 @Mapper
 public interface UserMapper {
@@ -32,5 +36,7 @@ public interface UserMapper {
 	    // 이름 번호로 아이디 찾기
 	    public String searchId(@Param("user_name") String user_name, @Param("user_phone") String user_phone);
 
+	    @Update("UPDATE user SET user_name = #{user_name}, user_email = #{user_email}, user_phone = #{user_phone} WHERE user_num = #{user_num}")
+	    void updateUserProfile(UserDTO user);
 
 }

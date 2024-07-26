@@ -1,5 +1,7 @@
 package org.spring.service;
 
+import java.util.List;
+import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.RegisterDTO;
 import org.spring.domain.UserDTO;
 import org.spring.persistence.UserMapper;
@@ -51,6 +53,9 @@ public class UserService {
 		return userMapper.getUser(user);
 	}
 
+	public void updateUserProfile(UserDTO user) {
+		userMapper.updateUserProfile(user);		
+	}
 
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.job.JobCriteria;
@@ -34,6 +35,13 @@ public interface JobBoardMapper {
 	@Select("SELECT * FROM job_board WHERE joRegistNo = #{jobId}")
 	public JobBoardDTO getJobDetail(String jobId);
 
-	void bookmarkJob(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn);
+	// 북마크 추가
+    public void bookmark(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num, @Param("cmpnyNm") String cmpnyNm, @Param("bsnsSumryCn") String bsnsSumryCn);
+
+    // 북마크 삭제
+    public void bookmarkDel(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num, @Param("cmpnyNm") String cmpnyNm, @Param("bsnsSumryCn") String bsnsSumryCn);
+
+    // 북마크 여부 확인
+    public int bookmarkChk(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num);
 	
 }
