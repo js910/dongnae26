@@ -8,7 +8,21 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script type="text/javascript">
+//핸드폰 번호 숫자만 입력
+function onlyNumber() {
+	  if((event.keyCode >= 48 && event.keyCode < 57) 
+	   || event.keyCode == 8 // backspace
+	   || event.keyCode == 37 || event.keyCode == 39 // 방향키
+	   || event.keyCode == 46 // delete키
+	   || event.keyCode == 39){
+	  }else{
+		  event.returnValue=false;
+	  }
+	}
+
 	$(document).ready(function() {
+		$("#user_phone").on("keydown", onlyNumber);
+		
 		$("#searchId").on("click", function(event) {
 			event.preventDefault();
 			var user_name = $("#user_name").val();
@@ -36,17 +50,16 @@
 </script>
 </head>
 <body>
-	<h1>아이디 찾기</h1>
-	<form action="${pageContext.request.contextPath }/basic/searchId" method="post">
+    <h1>아이디 찾기</h1>
+    <form id="searchIdForm" action="${pageContext.request.contextPath}/basic/searchId" method="post">
         <div class="form-group">
-            <input type="text" id="user_name" placeholder="이름" required>
+            <input type="text" id="user_name" name="user_name" placeholder="이름" required>
         </div>
         <div class="form-group">
-            <input type="text" id="user_phone" placeholder="휴대폰 번호" required>
+            <input type="text" id="user_phone" onkeydown="onlyNumber();" name="user_phone" placeholder="휴대폰 번호" required>
         </div>
         <button id="searchId">아이디 찾기</button>
         <span id="searchIdResult"></span>
-	</form>
-	
+    </form>
 </body>
 </html>

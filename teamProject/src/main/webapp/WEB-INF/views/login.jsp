@@ -37,6 +37,7 @@
             </form>
             <button onclick="location.href='${pageContext.request.contextPath}/basic/join'">회원가입</button>
             <button onclick="location.href='${pageContext.request.contextPath}/basic/searchId'">아이디 찾기</button>
+            <button onclick="location.href='${pageContext.request.contextPath}/YM/pw_find'">비밀번호 찾기</button>
             <div id="google_id_login">
                 <a href="${pageContext.request.contextPath}/social/login">
                     <img width="230" src="${pageContext.request.contextPath}/resources/images/goole_login_btn.png"/>

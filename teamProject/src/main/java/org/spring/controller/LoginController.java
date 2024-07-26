@@ -99,4 +99,11 @@ public class LoginController {
 		
 		return user_email != null ? user_email : "not found";
 	}
+	
+	@PostMapping("/checkPhoneNum")
+	@ResponseBody
+	 public String checkPhoneNum(@RequestParam("user_phone") String user_phone) {
+        boolean isDuplicated = userService.isPhoneNumberDuplicated(user_phone);
+        return isDuplicated ? "exists" : "available";
+	}
 }
