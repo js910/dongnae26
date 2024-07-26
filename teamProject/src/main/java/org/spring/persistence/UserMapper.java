@@ -30,13 +30,27 @@ public interface UserMapper {
 
 	    //google
 	    void insertOrUpdate(UserDTO userDTO);
-	    // 아이디 중복 확인
-	    public boolean checkId(@Param("user_email") String user_email);
-
-	    // 이름 번호로 아이디 찾기
-	    public String searchId(@Param("user_name") String user_name, @Param("user_phone") String user_phone);
+	   
 
 	    @Update("UPDATE user SET user_name = #{user_name}, user_email = #{user_email}, user_phone = #{user_phone} WHERE user_num = #{user_num}")
 	    void updateUserProfile(UserDTO user);
+	    
+	 // 아이디 중복 확인
+		public boolean checkId(@Param("user_email") String user_email);
+		
+		// 이름 번호로 아이디 찾기
+		public String searchId(@Param("user_name") String user_name, @Param("user_phone") String user_phone);
+		
+		// 임시 비밀번호 발급
+		public UserDTO searchPw(@Param("user_email") String user_email);
+		
+		// 번호 중복 확인
+		public int countByPhoneNumber(String user_phone);
+		
+		
+		public UserDTO getUserByEmail(String email);
+		
+
+		public int updatePassword(UserDTO userDTO);
 
 }

@@ -20,6 +20,27 @@
 		<property name="password" value="0000"></property>
 	</bean>
 	
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="yi3976997@gmail.com" />
+		<property name="password" value="dxka tsnc mudf ebuy" />
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="javaMailProperties">
+			<props>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.smtp.ssl.protocols">TLSv1.2 TLSv1.3</prop>
+                <prop key="mail.smtp.ssl.ciphersuites">
+                    TLS_AES_128_GCM_SHA256 TLS_AES_256_GCM_SHA384 TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+                    TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+                </prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+		</property>
+	</bean>
+	
 	<!-- hikariCP사용하여 DataPool을 만듬  -->
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig"/>

@@ -58,4 +58,21 @@ public class UserService {
 	}
 
 
+	// 중복 번호 찾기
+		 public boolean isPhoneNumberDuplicated(String user_phone) {
+		        return userMapper.countByPhoneNumber(user_phone) > 0;
+		    }
+		 
+		 public int updatePassword(UserDTO userDTO) {
+			System.out.println("Before update - userDTO: " + userDTO);
+			userDTO.setUser_pw(userDTO.getPw());
+			userDTO.setEmail(userDTO.getEmail()); 
+			System.out.println("Updating password for user_email: " + userDTO.getUser_email() + 
+								" with new password: " + userDTO.getUser_pw());
+			int updateResult = userMapper.updatePassword(userDTO);
+			System.out.println("updateResult in service: " + updateResult);
+			return updateResult;
+			
+		 }
+	
 }
