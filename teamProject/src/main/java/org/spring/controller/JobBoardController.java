@@ -1,5 +1,6 @@
 package org.spring.controller;
 
+import org.spring.domain.UserDTO;
 import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.job.JobCriteria;
 import org.spring.domain.job.JobPageDTO;
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/job/*")
@@ -57,18 +62,46 @@ public class JobBoardController {
     }
     
     @GetMapping("/detail")
-    public String getJobDetail(@RequestParam("jobId") String jobId, JobCriteria cri, Model model) {
+    public String getJobDetail(@RequestParam("jobId") String jobId, JobCriteria cri, Model model, HttpSession session) {
         JobBoardDTO jobDetail = jobBoardService.getJobDetail(jobId);
         model.addAttribute("jobDetail", jobDetail);
         model.addAttribute("cri", cri);
+        
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if (user != null) {
+            int user_num = user.getUser_num();
+            boolean bookmarked = jobBoardService.bookmarkChk(jobId, user_num);
+            model.addAttribute("bookmarked", bookmarked);
+            model.addAttribute("user_num", user_num);
+        } else {
+            model.addAttribute("bookmarked", false);
+            model.addAttribute("user_num", null);
+        }
         return "/job/detail";
     }
     
-    @PostMapping("/bookmark")
     @ResponseBody
-    public String bookmarkJob(@RequestParam("joRegistNo") String joRegistNo, @RequestParam("cmpnyNm") String cmpnyNm, 
-    						  @RequestParam("user_num") int user_num, @RequestParam("bsnsSumryCn") String bsnsSumryCn) {
-        jobBoardService.bookmarkJob(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
-        return "success";
-    }
+	@PostMapping("/bookmark")
+	public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
+																   @RequestParam("cmpnyNm") String cmpnyNm,
+																   @RequestParam("bsnsSumryCn") String bsnsSumryCn) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		UserDTO user = (UserDTO) session.getAttribute("user_info");
+		if(user==null) {
+			result.put("loggedIn", false);
+	        return result;
+		}
+		int user_num = user.getUser_num();
+		boolean bookmark = jobBoardService.bookmarkChk(joRegistNo, user_num);
+		if (!bookmark) {
+	    	jobBoardService.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+	    } else {
+	    	jobBoardService.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+	    }
+	    result.put("loggedIn", true);
+	    result.put("bookmarked", !bookmark);
+	    return result;
+	}
+    
+    
 }

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
+    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<%@include file="../includes/header.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -39,6 +38,9 @@
             border-bottom: 2px solid #ddd;
             padding-bottom: 5px;
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .section-content {
             font-size: 16px;
@@ -86,19 +88,28 @@
         td {
             width: 80%;
         }
-        #bookmark{
-        	width: 24px;
-        	height: 24px;
-        	cursor: pointer;
+        .bookmark {
+            cursor: pointer;
+            width: 24px;
+            height: 24px;
+            background-image: url('/resources/images/star.png');
+            background-size: contain;
+        }
+        .bookmarked {
+            background-image: url('/resources/images/yellow-star.png');
         }
     </style>
+    
 </head>
 <body>
     <div class="container">
         <h1>채용 상세 정보</h1>
 
         <div class="section">
-            <div class="section-title"><span>기본 정보 <img id="bookmark" src="/resources/images/star.png"></span></div>
+            <div class="section-title">
+                기본 정보
+                <span id="bookmark" class="bookmark" onclick="toggleBookmark('${jobDetail.joRegistNo}','${jobDetail.cmpnyNm}','${jobDetail.bsnsSumryCn}')"></span>
+            </div>
             <div class="section-content">
                 <table>
                     <tr>
@@ -203,40 +214,52 @@
 
          <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}" class="back-link">채용 목록으로 돌아가기</a>
     </div>
-    
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $("#bookmark").click(function() {
-            var joRegistNo = "${jobDetail.joRegistNo}";
-            var user_num = "${sessionScope.user_info.user_num}";
-            var cmpnyNm = "${jobDetail.cmpnyNm}";
-            var bsnsSumryCn = "${jobDetail.bsnsSumryCn}";
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    const bookmarked = ${bookmarked ? 'true' : 'false'};
 
-            $.ajax({
-                url: "${pageContext.request.contextPath}/job/bookmark",
-                type: "POST",
-                data: {
-                    joRegistNo: joRegistNo,
-                    user_num: user_num,
-                    cmpnyNm: cmpnyNm,
-                    bsnsSumryCn: bsnsSumryCn
-                },
-                success: function(response) {
-                    if (response === "success") {
-                        alert("북마크에 추가되었습니다.");
-                    } else {
-                        alert("북마크 추가에 실패하였습니다.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    alert("에러 북마크 추가에 실패하였습니다.");
+    if (bookmarked) {
+        $("#bookmark").addClass("bookmarked");
+    }
+
+    window.toggleBookmark = function(joRegistNo, cmpnyNm, bsnsSumryCn) {
+        $.ajax({
+            type: "POST",
+            url: "/job/bookmark",
+            dataType: "json",
+            data: {
+                'joRegistNo': joRegistNo,
+                'cmpnyNm': cmpnyNm,
+                'bsnsSumryCn': bsnsSumryCn
+            },
+            success: function(response) {
+                console.log("AJAX success response:", response);
+                if (!response.loggedIn) {
+                    alert("로그인이 필요한 기능입니다");
+                    return;
                 }
-            });
+
+                if (response.bookmarked) {
+                    $("#bookmark").addClass("bookmarked");
+                    alert("북마크 완료");
+                } else {
+                    $("#bookmark").removeClass("bookmarked");
+                    alert("북마크 취소");
+                }
+            },
+            error: function(xhr, status, error) {
+                console.log("AJAX error response:", status, error);
+                alert("북마크 처리 중 오류가 발생했습니다. 상태: " + status + ", 오류: " + error);
+            }
         });
-    });
-    </script>
+    }
+
+    
+});
+</script>
+
+
 </body>
 </html>
 
-<%@include file="../includes/footer.jsp"%>

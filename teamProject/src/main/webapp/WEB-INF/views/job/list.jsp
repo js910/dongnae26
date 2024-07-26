@@ -135,7 +135,7 @@
     		margin-right: 400px;
     	}
     	h2{
-    		margin-top: 150px;
+    		margin-top: 50px;
     	}
     	#boardTable {
 		    border-left: none;

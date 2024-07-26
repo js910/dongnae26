@@ -13,6 +13,9 @@ public class UserDTO {
     private String user_phone;
     private String user_interest;
     
+    private String pw;
+    private String email;
+    
     public UserDTO() {}
     
     public UserDTO(String user_email) {
@@ -50,5 +53,18 @@ public class UserDTO {
 		this.user_name = user_name;
 		this.user_phone = user_phone;
 	}
+	
+	public UserDTO(String pw, String email) {
+        this.pw = pw;
+        this.email = email;
+    }
+
+    public void setPw(String pw) {
+        this.user_pw = pw;  // set user_pw to the provided pw value
+    }
+
+    public void setEmail(String email) {
+        this.user_email = email;  // set user_email to the provided email value
+    }
 	
 }

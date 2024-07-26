@@ -246,5 +246,22 @@
 	    VALUES (#{joRegistNo}, #{user_num}, #{cmpnyNm}, #{bsnsSumryCn})
 	</insert>
  	
+ 	
+ 	
+ 	<!-- 북마크 기능 -->
+	<insert id="bookmark">
+		INSERT INTO bookmark_job_board (joRegistNo, user_num, cmpnyNm, bsnsSumryCn) VALUES (#{joRegistNo},#{user_num},#{cmpnyNm},#{bsnsSumryCn})
+	</insert>
+	
+	<!-- 북마크 취소 -->
+	<delete id="bookmarkDel">
+		DELETE FROM bookmark_job_board WHERE joRegistNo = #{joRegistNo} AND user_num = #{user_num}
+	</delete>
+	
+	<!-- 게시글의 스크랩 수 -->
+	<select id="bookmarkChk" resultType="int">
+		SELECT COUNT(*) FROM bookmark_job_board WHERE joRegistNo = #{joRegistNo} AND user_num = #{user_num}
+	</select>
+ 	
     
     </mapper>
