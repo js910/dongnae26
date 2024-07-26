@@ -40,12 +40,14 @@ public class CultureBoardController {
         int total = cultureboardService.getTotalCount(cri);
         
         System.out.println("total: "+total);
-        List<CultureBoardDTO> list = cultureboardService.listPage(cri, culture_area, culture_classify);
+        List<CultureBoardDTO> list = cultureboardService.listAll(cri, culture_area, culture_classify);
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(cri, total));
         model.addAttribute("selectedArea", culture_area);
         model.addAttribute("selectedClassify", culture_classify);
     }
+    
+    
     
     @GetMapping("/get/{culture_bno}")
     public String get(@PathVariable("culture_bno") int culture_bno, Model model) {
@@ -64,10 +66,12 @@ public class CultureBoardController {
     public Map<String, Object> ajaxList(@RequestParam(value="pageNum") int pageNum,
                                         @RequestParam(value="amount") int amount,
                                         @RequestParam(value="area") String culture_area,
-                                        @RequestParam(value="classify") String culture_classify) {
+                                        @RequestParam(value="classify") String culture_classify,
+                                        Criteria cri) {
     	System.out.println("ajax >> " + "pageNum: " + pageNum + ", amount: " + amount);
-        Criteria cri = new Criteria(pageNum, amount);
-        cri.setArea(culture_area);
+        cri.setPageNum(pageNum);
+    	cri.setAmount(amount);
+    	cri.setArea(culture_area);
         cri.setClassify(culture_classify);
         
         int total = cultureboardService.getTotalCount(cri);

@@ -16,12 +16,6 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	private CultureBoardMapper cultureboardMapper;
 
 	@Override
-	public List<CultureBoardDTO> listAll() {
-		System.out.println("service listAll ~~~" + cultureboardMapper.selectAll());
-		return cultureboardMapper.selectAll();
-	}
-	
-	@Override
     public CultureBoardDTO getBoard(int culture_bno) {
         return cultureboardMapper.selectBoard(culture_bno); // 추가된 메서드
     }
@@ -49,6 +43,13 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	public boolean bookmarkChk(int culture_bno, String user_email) {
 	    return cultureboardMapper.bookmarkChk(culture_bno, user_email) > 0;
 	}
+
+	@Override
+	public List<CultureBoardDTO> listAll(Criteria cri, String culture_area, String culture_classify) {
+		System.out.println("service listAll ~~~" + cultureboardMapper.selectAll(cri, culture_area, culture_classify));
+		return cultureboardMapper.selectAll(cri, culture_area, culture_classify);
+	}
+
 
 
 
