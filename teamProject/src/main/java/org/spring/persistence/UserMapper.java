@@ -24,7 +24,8 @@ public interface UserMapper {
 	    public void registerUser(RegisterDTO user);
 
 	    //naver
-	    @Insert("INSERT INTO user (social_user_email, user_name, user_phone) VALUES (#{user_email}, #{user_name}, #{user_phone})")
+	    @Insert("INSERT INTO user (social_user_email, user_name, user_phone) VALUES (#{user_email}, #{user_name}, #{user_phone}) "
+	    		+ "ON DUPLICATE KEY UPDATE user_name = VALUES(user_name),user_num = LAST_INSERT_ID(user_num)")
 	    void insertUser(UserDTO user);
 
 

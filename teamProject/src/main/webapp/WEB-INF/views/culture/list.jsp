@@ -5,23 +5,16 @@
 
 <%@include file="../includes/header.jsp"%>
 
-<!-- Navbar & Hero Start -->
-<div class="container-fluid position-relative p-0">
-    <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-        <a href="" class="navbar-brand p-0">
-            <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>동네26</h1>
-            <!-- <img src="img/logo.png" alt="Logo"> -->
-        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
             <span class="fa fa-bars"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                <a href="main" class="nav-item nav-link">Home</a>
-                <a href="about.html" class="nav-item nav-link">정책</a>
-                <a href="services.html" class="nav-item nav-link">일자리 정보</a>
-                <a href="list" class="nav-item nav-link active">문화 행사</a>
-                <a href="blog.html" class="nav-item nav-link">커뮤니티</a>
+                <a href="../main" class="nav-item nav-link">Home</a>
+                <a href="/policy/list" class="nav-item nav-link">정책</a>
+                <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
+                <a href="/culture/list" class="nav-item nav-link active">문화·행사</a>
+                <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
             </div>
         </div>
     </nav>
@@ -31,11 +24,10 @@
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">행사 게시판</h3>
+        <h3 class="text-white display-3 mb-4">문화·행사 게시판</h3>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">문화/행사 게시판</a></li>
-            <li class="breadcrumb-item active text-white">About</li>
+            <li class="breadcrumb-item"><a href="../main">Home</a></li>
+            <li class="breadcrumb-item"><a href="/culture/list">문화·행사 게시판</a></li>
         </ol>    
     </div>
 </div>
@@ -43,7 +35,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>동네26 - 행사게시판</title>
+<title>동네26 - 문화·행사게시판</title>
 <link rel="stylesheet" href="">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script> 

@@ -88,6 +88,6 @@
 				</choose>
 			</if>
 		</where>
-		ORDER BY culture_bno DESC LIMIT #{start}, #{amount}
+		ORDER BY culture_regdate DESC LIMIT #{start}, #{amount}
 	</select>
   </mapper>
