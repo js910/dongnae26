@@ -56,9 +56,6 @@ public interface UserMapper {
 		public int updatePassword(UserDTO userDTO);
 
 		
-		
-		
-		
 		// 소셜 로그인
 		
 		UserDTO findUserByEmail(String user_email);

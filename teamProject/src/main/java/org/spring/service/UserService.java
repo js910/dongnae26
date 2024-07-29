@@ -1,13 +1,11 @@
 package org.spring.service;
 
-import java.util.List;
-import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.RegisterDTO;
 import org.spring.domain.UserDTO;
 import org.spring.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import lombok.extern.log4j.Log4j;
 
@@ -31,11 +29,7 @@ public class UserService {
         userMapper.insertUser(user);
     }
 
-    //google
-//    @Transactional
-//    public void insertOrUpdate(UserDTO dto) {       
-//    	userMapper.insertOrUpdate(dto);
-//    }
+
     
     public void insertOrUpdate(UserDTO userDTO) {
         UserDTO existingUser = userMapper.findUserByEmail(userDTO.getUser_email());
@@ -75,32 +69,32 @@ public class UserService {
 	    }
 		 
 	 public int updatePassword(UserDTO userDTO) {
-		System.out.println("Before update - userDTO: " + userDTO);
-		userDTO.setUser_pw(userDTO.getPw());
-		userDTO.setEmail(userDTO.getEmail()); 
-		//추가
-		userDTO.setLogin_type(userDTO.getLogin_type());
-		System.out.println("Updating password for user_email: " + userDTO.getUser_email() + 
-							" with new password: " + userDTO.getUser_pw());
-		int updateResult = userMapper.updatePassword(userDTO);
-		System.out.println("updateResult in service: " + updateResult);
-		return updateResult;
-		
+			System.out.println("Before update - userDTO: " + userDTO);
+			userDTO.setUser_pw(userDTO.getPw());
+			userDTO.setEmail(userDTO.getEmail()); 
+			//추가
+			userDTO.setLogin_type(userDTO.getLogin_type());
+			System.out.println("Updating password for user_email: " + userDTO.getUser_email() + 
+								" with new password: " + userDTO.getUser_pw());
+			int updateResult = userMapper.updatePassword(userDTO);
+			System.out.println("updateResult in service: " + updateResult);
+			return updateResult;
+			
+		 }
+		 
+		 //카카오
+		 public void saveKakaoUser(UserDTO kakaoUser) {
+	         System.out.println("들어오니?"+kakaoUser);
+	         UserDTO existingUser = userMapper.getUser(kakaoUser);
+	         if (existingUser == null) { 
+	         userMapper.insertKakaoUser(kakaoUser);
+	     }else {
+	         userMapper.updateUserProfile(kakaoUser);
+	     }
 	 }
-	 
-	 //카카오
-	 public void saveKakaoUser(UserDTO kakaoUser) {
-         System.out.println("들어오니?"+kakaoUser);
-         UserDTO existingUser = userMapper.getUser(kakaoUser);
-         if (existingUser == null) { 
-         userMapper.insertKakaoUser(kakaoUser);
-     }else {
-         userMapper.updateUserProfile(kakaoUser);
-     }
- }
-	 
-	 public int getUserNum(String userEmail) {
-         return userMapper.getUnum(userEmail);
-     }
-	
+		 
+		 public int getUserNum(String userEmail) {
+	         return userMapper.getUnum(userEmail);
+	     }
+
 }

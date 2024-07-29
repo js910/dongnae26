@@ -228,11 +228,13 @@ textarea {
 
     <div class="button-group">
         <a href="${pageContext.request.contextPath}/community/list">목록으로</a>
+          <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
         <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
         <form action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
             <input type="hidden" name="community_bno" value="${board.community_bno}" />
             <button type="submit">삭제하기</button>
         </form>
+        </c:if>
     </div>
 
    <!-- 댓글 목록 -->
@@ -298,8 +300,16 @@ $(document).ready(function() {
     }
 
     function submitComment() {
+        var commentContent = $("#newCommentContent").val().trim(); // 입력 필드의 값을 가져와서 공백을 제거합니다
+
+        // 댓글 내용이 비어 있는지 확인합니다
+        if (commentContent === "") {
+            alert("댓글을 입력하세요.");
+            return; // 댓글이 비어 있으면 함수 실행을 중지합니다
+        }
+
         var formData = {
-            community_com_content: $("#newCommentContent").val(),
+            community_com_content: commentContent, // 비어 있지 않은 댓글 내용 사용
             community_bno: boardId,
             user_num: userNum
         };
