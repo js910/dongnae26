@@ -38,7 +38,7 @@ public class CommunityBoardController {
 
     @Autowired
     private CommunityBoardService service;
-    private final String uploadPath = "C:/Users/wlghk/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
+    private final String uploadPath = "C:/Users/user/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
 
     @GetMapping("/register")
     public String registerForm(CommunityBoardDTO board, HttpSession session) {

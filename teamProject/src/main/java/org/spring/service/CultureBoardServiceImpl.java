@@ -35,10 +35,12 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	public void bookmark(int culture_bno, String user_email) {
 		cultureboardMapper.bookmark(culture_bno, user_email);
 	}
+	
 	// 북마크 삭제 메서드
 	public void bookmarkDel(int culture_bno, String user_email) {
 		cultureboardMapper.bookmarkDel(culture_bno, user_email);
 	}
+	
 	// 북마크 여부 확인 메서드
 	public boolean bookmarkChk(int culture_bno, String user_email) {
 	    return cultureboardMapper.bookmarkChk(culture_bno, user_email) > 0;
@@ -54,3 +56,4 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 
 
 }
+ 

@@ -313,7 +313,7 @@
                 
             </form>
         </div>
-        <h2>채용정보</h2>
+        <!-- <h2>채용정보</h2> -->
         <div class="form-group input-group">
             <label for="amount">게시글 갯수:</label>
             <select id="amount" name="amount" class="form-control">
