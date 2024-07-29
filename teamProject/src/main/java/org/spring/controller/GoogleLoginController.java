@@ -111,7 +111,7 @@ public class GoogleLoginController {
             session.setAttribute("login_type", userProfile.getLogin_type());
             model.addAttribute("userProfile", userProfile);
 
-            return "redirect:/test"; // 성공 시 리턴 페이지
+            return "redirect:/user"; // 성공 시 리턴 페이지
         } catch (Exception e) {
             System.err.println("Google API 호출 중 오류 발생: " + e.getMessage());
             e.printStackTrace();

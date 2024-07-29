@@ -1,7 +1,8 @@
 package org.spring.service;
 
 import java.util.List;
-import org.spring.domain.job.JobBoardDTO;
+
+import org.spring.domain.InquiryDTO;
 import org.spring.domain.RegisterDTO;
 import org.spring.domain.UserDTO;
 import org.spring.persistence.UserMapper;
@@ -103,4 +104,16 @@ public class UserService {
          return userMapper.getUnum(userEmail);
      }
 	
+	 
+	// 문의 폼
+	@Transactional
+	public void saveInquiry(InquiryDTO inquiryDTO) {
+		userMapper.insertInquiry(inquiryDTO);
+	}
+	
+	public List<InquiryDTO> getInquiries(int userNum) {
+		List<InquiryDTO> inquiries = userMapper.selectAllInquiries(userNum);
+	    System.out.println("Inquiries: " + inquiries); // 디버깅 로그 추가
+	    return inquiries;
+	}
 }

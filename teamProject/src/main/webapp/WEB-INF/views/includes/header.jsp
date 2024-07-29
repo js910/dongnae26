@@ -65,7 +65,7 @@
                         <!--<a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>Login</small></a>-->
         <c:choose>            
 	        <c:when test="${not empty loginUserID}">
-	        	<a href="http://localhost:8090/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
+	        	<a href="http://localhost:8090/user/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
 	            <c:choose>
 	                <c:when test="${loginType == 'google'}">
 	                    <a href="${pageContext.request.contextPath}/social/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>

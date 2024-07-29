@@ -16,7 +16,7 @@
 	 <c:choose>
         <c:when test="${not empty loginUserID}">
             <h3>로그인 성공</h3>
-            <h2>메인으로 이동<a href="${pageContext.request.contextPath}/test">이동</a></h2>
+            <h2>메인으로 이동<a href="${pageContext.request.contextPath}/user">이동</a></h2>
             <c:choose>
                 <c:when test="${loginType == 'google'}">
                     <a href="${pageContext.request.contextPath}/social/logout">구글 로그아웃</a>
