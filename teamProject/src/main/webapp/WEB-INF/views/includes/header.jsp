@@ -76,6 +76,10 @@
 	                <c:when test="${loginType == 'basic'}">
 	                    <a href="${pageContext.request.contextPath}/basic/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
 	                </c:when>
+	                <c:when test="${loginType == 'kakao'}">
+                	 	<a href='https://kauth.kakao.com/oauth/logout?client_id=57d63923a77bfe9b2640845383c5ee17&logout_redirect_uri=http://localhost:8090/kakao/logout'>
+                	 	<small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                	</c:when>
 	            </c:choose>
 	        </c:when>
 	        <c:otherwise>

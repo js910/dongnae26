@@ -35,16 +35,16 @@ public class JobBoardController {
 
     @GetMapping("/list")
     public String getJobBoardData(JobCriteria cri, Model model) {
-    	System.out.println("cri 값 : " + cri);
-    	int total = jobBoardService.getTotal(cri);
-    	
-    	JobPageDTO pageResult = new JobPageDTO(cri, total);
-		model.addAttribute("pageMaker", pageResult);
-		
-		System.out.println("total : " + total);
-		System.out.println("pageResult : " + pageResult);
-		
-    	List<JobBoardDTO> jobBoardData = jobBoardService.getJobBoardData(cri);
+        System.out.println("cri 값 : " + cri);
+        int total = jobBoardService.getTotal(cri);
+
+        JobPageDTO pageResult = new JobPageDTO(cri, total);
+        model.addAttribute("pageMaker", pageResult);
+
+        System.out.println("total : " + total);
+        System.out.println("pageResult : " + pageResult);
+
+        List<JobBoardDTO> jobBoardData = jobBoardService.getJobBoardData(cri);
         model.addAttribute("jobBoardData", jobBoardData);
         model.addAttribute("cri", cri);
         return "/job/list";
@@ -52,15 +52,22 @@ public class JobBoardController {
     
     @ResponseBody
     @PostMapping("/getList")
-    public List<JobBoardDTO> getList(JobCriteria cri, Model model){
-    	System.out.println("Ajax로 전체 게시물 조회>>>");
-    	int total = jobBoardService.getTotal(cri);
-    	
-    	JobPageDTO pageResult = new JobPageDTO(cri,total);
-    	model.addAttribute("pageMaker",pageResult);
-    	return jobBoardService.getList(cri);
+    public Map<String, Object> getList(JobCriteria cri, Model model) {
+        System.out.println("Ajax로 전체 게시물 조회>>>");
+        int total = jobBoardService.getTotal(cri);
+
+        JobPageDTO pageResult = new JobPageDTO(cri, total);
+        model.addAttribute("pageMaker", pageResult);
+        
+        List<JobBoardDTO> jobBoardData = jobBoardService.getList(cri);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("list", jobBoardData);
+        response.put("pageMaker", pageResult);
+
+        return response;
     }
-    
+
     @GetMapping("/detail")
     public String getJobDetail(@RequestParam("jobId") String jobId, JobCriteria cri, Model model, HttpSession session) {
         JobBoardDTO jobDetail = jobBoardService.getJobDetail(jobId);
@@ -81,27 +88,25 @@ public class JobBoardController {
     }
     
     @ResponseBody
-	@PostMapping("/bookmark")
-	public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
-																   @RequestParam("cmpnyNm") String cmpnyNm,
-																   @RequestParam("bsnsSumryCn") String bsnsSumryCn) throws Exception {
-		Map<String, Object> result = new HashMap<>();
-		UserDTO user = (UserDTO) session.getAttribute("user_info");
-		if(user==null) {
-			result.put("loggedIn", false);
-	        return result;
-		}
-		int user_num = user.getUser_num();
-		boolean bookmark = jobBoardService.bookmarkChk(joRegistNo, user_num);
-		if (!bookmark) {
-	    	jobBoardService.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
-	    } else {
-	    	jobBoardService.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
-	    }
-	    result.put("loggedIn", true);
-	    result.put("bookmarked", !bookmark);
-	    return result;
-	}
-    
-    
+    @PostMapping("/bookmark")
+    public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
+                                                               @RequestParam("cmpnyNm") String cmpnyNm,
+                                                               @RequestParam("bsnsSumryCn") String bsnsSumryCn) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if(user == null) {
+            result.put("loggedIn", false);
+            return result;
+        }
+        int user_num = user.getUser_num();
+        boolean bookmark = jobBoardService.bookmarkChk(joRegistNo, user_num);
+        if (!bookmark) {
+            jobBoardService.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+        } else {
+            jobBoardService.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+        }
+        result.put("loggedIn", true);
+        result.put("bookmarked", !bookmark);
+        return result;
+    }
 }

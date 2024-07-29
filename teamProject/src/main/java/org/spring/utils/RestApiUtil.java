@@ -51,6 +51,32 @@ public class RestApiUtil {
 		}
 
 	}
+	
+	public static <T> T ConnHttpGetType2(String connUrl, HashMap<String, String> data,
+            HashMap<String, String> headerData, Class<T> classType) {
+
+        StringBuilder urlBuilder = new StringBuilder(connUrl);
+        try {
+            int count = 0;
+            for (String key : data.keySet()) {
+                if (count == 0) {
+                    urlBuilder.append("?" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(data.get(key), "UTF-8"));
+                } else {
+                    urlBuilder.append("&" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(data.get(key), "UTF-8"));
+                }
+                count++;
+            }
+
+            if (urlBuilder.toString().startsWith("https")) {
+                return JsonUtil.parseJson(httpsConn(urlBuilder.toString(), headerData), classType);
+            } else {
+                return JsonUtil.parseJson(httpConn(urlBuilder.toString(), headerData), classType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
 	private static String httpConn(String connUrl, HashMap<String, String> headerData) throws IOException {
 		// System.out.println("HTTP connection to URL: " + connUrl);
@@ -82,6 +108,8 @@ public class RestApiUtil {
 		// System.out.println("HTTP response: "+sb.toString());
 		return sb.toString();
 	}
+	
+	
 
 	private static String httpsConn(String connUrl, HashMap<String, String> headerData) throws IOException {
 		// System.out.println("HTTPS connection to URL: " + connUrl);
@@ -113,4 +141,6 @@ public class RestApiUtil {
 		// System.out.println("HTTPS response: "+sb.toString());
 		return sb.toString();
 	}
+	
+	
 }

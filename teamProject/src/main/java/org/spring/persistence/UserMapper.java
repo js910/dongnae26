@@ -14,9 +14,10 @@ import org.spring.domain.job.JobBoardDTO;
 @Mapper
 public interface UserMapper {
 
-	
-	@Select("SELECT * FROM user WHERE user_email =#{user_email} OR social_user_email = #{user_email} AND user_name = #{user_name}")
-	UserDTO getUser(UserDTO user);
+		//login
+		@Select("SELECT * FROM user WHERE (login_type = #{login_type} AND user_email = #{user_email}) OR (login_type = #{login_type} AND social_user_email = #{user_email})")
+		UserDTO getUser(UserDTO user);
+
 
 //	 @Select("SELECT COUNT(*) FROM user WHERE user_email = #{user_email} AND user_pw = #{user_pw}")
 	    public UserDTO validateUser(@Param("user_email") String user_email, @Param("user_pw") String user_pw);
@@ -24,7 +25,7 @@ public interface UserMapper {
 	    public void registerUser(RegisterDTO user);
 
 	    //naver
-	    @Insert("INSERT INTO user (social_user_email, user_name, user_phone) VALUES (#{user_email}, #{user_name}, #{user_phone}) "
+	    @Insert("INSERT INTO user (social_user_email, user_name, user_phone, login_type) VALUES (#{user_email}, #{user_name}, #{user_phone}, #{login_type}) "
 	    		+ "ON DUPLICATE KEY UPDATE user_name = VALUES(user_name),user_num = LAST_INSERT_ID(user_num)")
 	    void insertUser(UserDTO user);
 
@@ -36,7 +37,7 @@ public interface UserMapper {
 	    @Update("UPDATE user SET user_name = #{user_name}, user_email = #{user_email}, user_phone = #{user_phone} WHERE user_num = #{user_num}")
 	    void updateUserProfile(UserDTO user);
 	    
-	 // 아이디 중복 확인
+	    // 아이디 중복 확인
 		public boolean checkId(@Param("user_email") String user_email);
 		
 		// 이름 번호로 아이디 찾기
@@ -53,5 +54,24 @@ public interface UserMapper {
 		
 
 		public int updatePassword(UserDTO userDTO);
+
+		
+		
+		
+		
+		// 소셜 로그인
+		
+		UserDTO findUserByEmail(String user_email);
+
+		void updateGoogleUser(UserDTO userDTO);
+
+		void insertGoogleUser(UserDTO userDTO);
+		
+		// kakao
+        @Insert("INSERT INTO user (social_user_email, user_name, user_phone) VALUES (#{social_user_email}, #{user_name}, #{user_phone})")
+       void insertKakaoUser(UserDTO kakaoUser);
+
+        @Select(" SELECT user_num FROM users WHERE social_user_email = #{userEmail}")
+       int getUnum(String userEmail);
 
 }

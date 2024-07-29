@@ -18,6 +18,7 @@ import org.spring.domain.community.Criteria;
 import org.spring.domain.community.PageDTO;
 import org.spring.domain.UserDTO; 
 import org.spring.domain.community.ViewCountDTO;
+import org.spring.model.KakaoUserInfoResponse;
 import org.spring.service.CommunityBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -35,6 +36,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -47,17 +49,33 @@ public class CommunityBoardController {
 
     private final String uploadPath = "C:/Users/wlghk/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
 
-    
-
-
-
 
     @GetMapping("/register")
-    public String registerForm(CommunityBoardDTO board, HttpSession session) {
+    public String registerForm(CommunityBoardDTO board, HttpSession session,RedirectAttributes rrtt) {
         String login = (String) session.getAttribute("loginUserID");
+        String loginType = (String) session.getAttribute("loginType");
+
+        if ("kakao".equals(loginType)) {
+            KakaoUserInfoResponse kakaoUser = (KakaoUserInfoResponse) session.getAttribute("kakaoUserInfo");
+
+            if (kakaoUser != null) {
+                // 카카오 사용자 정보에서 이름과 이메일을 추출합니다.
+                String email = kakaoUser.getKakao_account().getEmail();
+                String name = kakaoUser.getKakao_account().getName();
+
+                // 정보를 출력하거나 사용하세요.
+                System.out.println("Kakao User Email: " + email);
+                System.out.println("Kakao User Name: " + name);
+            } else {
+                System.out.println("KakaoUserInfo is null");
+            }
+        }
+
         if (login == null || login.isEmpty()) {
+            rrtt.addFlashAttribute("alertMessage", "로그인 후에 글 작성이 가능합니다.");
             return "redirect:/login";
         }
+
         return "/community/register";
     }
 
