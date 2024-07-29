@@ -1,5 +1,6 @@
 package org.spring.controller;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.UserDTO;
 import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.job.JobCriteria;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,5 +105,17 @@ public class JobBoardController {
 	    return result;
 	}
     
+    @GetMapping("/bookmarks")
+    public String getUserBookmarks(HttpSession session, Model model) {
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if (user != null) {
+            int user_num = user.getUser_num();
+            List<BookmarkDTO> jobBookmarks = jobBoardService.getUserBookmarks(user_num);
+            model.addAttribute("jobBookmarks", jobBookmarks);
+        } else {
+            model.addAttribute("jobBookmarks", new ArrayList<>());
+        }
+        return "/job/bookmark";
+    }
     
 }

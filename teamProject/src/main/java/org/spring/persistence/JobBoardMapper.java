@@ -6,9 +6,10 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.job.JobCriteria;
-import org.spring.model.JobBoardResponse.Row;
+
 
 
 @Mapper
@@ -43,5 +44,7 @@ public interface JobBoardMapper {
 
     // 북마크 여부 확인
     public int bookmarkChk(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num);
+    
+    List<BookmarkDTO> getUserBookmarks(@Param("user_num") int user_num);
 	
 }

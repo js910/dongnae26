@@ -91,25 +91,27 @@ public class PolicyBoardController {
     }
 	
 	@ResponseBody
-	@PostMapping("/bookmark")
-	public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("serviceID") String serviceID) throws Exception {
-		Map<String, Object> result = new HashMap<>();
-		UserDTO user = (UserDTO) session.getAttribute("user_info");
-		if(user==null) {
-			result.put("loggedIn", false);
-	        return result;
-		}
-		int user_num = user.getUser_num();
-		boolean bookmark = policyService.bookmarkChk(serviceID, user_num);
-	    if (!bookmark) {
-	        policyService.bookmark(serviceID, user_num);
-	    } else {
-	        policyService.bookmarkDel(serviceID, user_num);
-	    }
-	    result.put("loggedIn", true);
-	    result.put("bookmarked", !bookmark);
-	    return result;
-	}
+    @PostMapping("/bookmark")
+    public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("serviceID") String serviceID) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if (user == null) {
+            result.put("loggedIn", false);
+            return result;
+        }
+        int user_num = user.getUser_num();
+        boolean bookmark = policyService.bookmarkChk(serviceID, user_num);
+        if (!bookmark) {
+            policyService.bookmark(serviceID, user_num, "Name placeholder", "Summary placeholder"); // 이름과 요약 정보를 적절히 설정하세요.
+        } else {
+            policyService.bookmarkDel(serviceID, user_num);
+        }
+        result.put("loggedIn", true);
+        result.put("bookmarked", !bookmark);
+        return result;
+    }
+	
+	
 	
 	private PolicyResponse3 convertToEngResponse(PolicyResponse2 response2) {
         PolicyResponse3 response3 = new PolicyResponse3();

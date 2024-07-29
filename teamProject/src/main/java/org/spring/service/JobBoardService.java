@@ -1,6 +1,7 @@
 package org.spring.service;
 
 import org.spring.persistence.JobBoardMapper;
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.job.JobCriteria;
 import org.spring.model.JobBoardResponse;
@@ -117,6 +118,13 @@ public class JobBoardService {
 	public void bookmark(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
 		jobBoardMapper.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);		
 	}
+
+	public List<BookmarkDTO> getUserBookmarks(int user_num) {
+		
+		 return jobBoardMapper.getUserBookmarks(user_num);
+	}
+
+	
 
 	
 	

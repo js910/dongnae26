@@ -16,6 +16,7 @@ public class UserDTO {
     private String pw;
     private String email;
     
+    
     public UserDTO() {}
     
     public UserDTO(String user_email) {
@@ -65,6 +66,14 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.user_email = email;  // set user_email to the provided email value
+    }
+    
+    public String getSocialUserEmail() {
+        return social_user_email;
+    }
+
+    public void setSocialUserEmail(String social_user_email) {
+        this.social_user_email = social_user_email;
     }
 	
 }

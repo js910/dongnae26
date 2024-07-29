@@ -1,7 +1,9 @@
 package org.spring.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.policy.*;
 import org.spring.model.PolicyResponse;
 import org.spring.model.PolicyResponse2;
@@ -110,8 +112,8 @@ public class PolicyBoardService {
 	}
 	
 	// 북마크 추가 메서드
-    public void bookmark(String serviceID, int user_num) {
-        boardMapper.bookmark(serviceID, user_num);
+    public void bookmark(String serviceID, int user_num, String cmpnyNm, String bsnsSumryCn) {
+        boardMapper.bookmark(serviceID, user_num, cmpnyNm, bsnsSumryCn);
     }
 
     // 북마크 삭제 메서드
@@ -123,4 +125,10 @@ public class PolicyBoardService {
     public boolean bookmarkChk(String serviceID, int user_num) {
         return boardMapper.bookmarkChk(serviceID, user_num) > 0;
     }
+
+    // 사용자 북마크 조회 메서드
+    public List<BookmarkDTO> getUserBookmarks(int user_num) {
+        return boardMapper.getUserBookmarks(user_num);
+    }
+	
 }
