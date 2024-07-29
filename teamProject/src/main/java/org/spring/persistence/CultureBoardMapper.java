@@ -8,8 +8,21 @@ import org.spring.domain.culture.CultureBoardDTO;
 
 public interface CultureBoardMapper {
 
-    @Select("SELECT * FROM culture_board")
-    public List<CultureBoardDTO> selectAll();
+	@Select({
+        "<script>",
+        "SELECT * FROM culture_board",
+        "WHERE 1=1",
+        "<if test='culture_area != null and !culture_area.isEmpty()'>",
+        "AND culture_area = #{culture_area}",
+        "</if>",
+        "<if test='culture_classify != null and !culture_classify.isEmpty()'>",
+        "AND culture_classify = #{culture_classify}",
+        "</if>",
+        "ORDER BY culture_bno DESC LIMIT #{cri.amount} OFFSET #{cri.offset}",
+        "</script>"
+    })
+    public List<CultureBoardDTO> selectAll(@Param("cri") Criteria cri,
+            @Param("culture_area") String culture_area, @Param("culture_classify") String culture_classify);
 
     @Select("SELECT * FROM culture_board WHERE culture_bno = #{culture_bno}")
     CultureBoardDTO selectBoard(int culture_bno);
@@ -23,6 +36,16 @@ public interface CultureBoardMapper {
         "</if>",
         "<if test='culture_classify != null and !culture_classify.isEmpty()'>",
         "AND culture_classify = #{culture_classify}",
+        "</if>",
+        "<if test='cri.type != null and cri.keyword != null and !cri.type.isEmpty() and !cri.keyword.isEmpty()'>",
+        "<choose>",
+        "<when test='cri.type == \"all\"'>",
+        "AND (culture_title LIKE CONCAT('%', #{cri.keyword}, '%') OR culture_place LIKE CONCAT('%', #{cri.keyword}, '%'))",
+        "</when>",
+        "<otherwise>",
+        "AND ${cri.type} LIKE CONCAT('%', #{cri.keyword}, '%')",
+        "</otherwise>",
+        "</choose>",
         "</if>",
         "ORDER BY culture_bno DESC LIMIT #{cri.amount} OFFSET #{cri.offset}",
         "</script>"
@@ -40,4 +63,5 @@ public interface CultureBoardMapper {
     public int bookmarkChk(@Param("culture_bno") int culture_bno, @Param("user_email") String userEmail);
 
 	public int getTotalCount(Criteria cri);
+
 }

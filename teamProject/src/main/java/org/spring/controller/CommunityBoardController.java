@@ -20,7 +20,6 @@ import org.spring.domain.UserDTO;
 import org.spring.domain.community.ViewCountDTO;
 import org.spring.model.KakaoUserInfoResponse;
 import org.spring.service.CommunityBoardService;
-import org.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -47,19 +46,18 @@ public class CommunityBoardController {
 
     @Autowired
     private CommunityBoardService service;
-    private UserService Uservice;
+
     private final String uploadPath = "C:/Users/bcy12/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
 
-	
 
     @GetMapping("/register")
-    public String registerForm(CommunityBoardDTO board, HttpSession session, RedirectAttributes rrtt) {
+    public String registerForm(CommunityBoardDTO board, HttpSession session,RedirectAttributes rrtt) {
         String login = (String) session.getAttribute("loginUserID");
         String loginType = (String) session.getAttribute("loginType");
 
         if ("kakao".equals(loginType)) {
             KakaoUserInfoResponse kakaoUser = (KakaoUserInfoResponse) session.getAttribute("kakaoUserInfo");
-            
+
             if (kakaoUser != null) {
                 // 카카오 사용자 정보에서 이름과 이메일을 추출합니다.
                 String email = kakaoUser.getKakao_account().getEmail();
@@ -72,12 +70,12 @@ public class CommunityBoardController {
                 System.out.println("KakaoUserInfo is null");
             }
         }
-        
+
         if (login == null || login.isEmpty()) {
-        	rrtt.addFlashAttribute("alertMessage", "로그인 후에 글 작성이 가능합니다.");
+            rrtt.addFlashAttribute("alertMessage", "로그인 후에 글 작성이 가능합니다.");
             return "redirect:/login";
         }
-        
+
         return "/community/register";
     }
 
@@ -85,23 +83,14 @@ public class CommunityBoardController {
     public String register(@ModelAttribute CommunityBoardDTO board, 
                            @RequestParam(value = "file", required = false) MultipartFile file, 
                            HttpSession session) throws IOException {
-
+        
         UserDTO user = (UserDTO) session.getAttribute("user_info");
-        KakaoUserInfoResponse kakaoUser = (KakaoUserInfoResponse) session.getAttribute("kakaoUserInfo");
-        if (user == null && kakaoUser == null) {
+        if (user == null) {
             return "redirect:/login";
         }
 
-        if (user != null) {
-            board.setUser_num(user.getUser_num());
-            board.setWriter(user.getUser_name());
-        } else if (kakaoUser != null) {
-            String userEmail = kakaoUser.getKakao_account().getEmail();
-            String userName = kakaoUser.getKakao_account().getName();
-            int userNum = Uservice.getUserNum(userEmail);
-            board.setUser_num(userNum); 
-            board.setWriter(userName);
-        }
+        board.setUser_num(user.getUser_num());
+        board.setWriter(user.getUser_name());
 
         try {
             // 게시글 등록
@@ -109,26 +98,26 @@ public class CommunityBoardController {
 
             // 파일 업로드 처리
             if (file != null && !file.isEmpty()) {
-                String uploadDir = uploadPath + board.getCommunity_bno(); // 업로드 디렉토리 설정
+                String uploadDir = uploadPath + board.getCommunity_bno();
                 File dir = new File(uploadDir);
                 if (!dir.exists()) {
-                    dir.mkdirs(); // 디렉토리 생성
+                    dir.mkdirs();
                 }
 
-                // 파일 저장
                 String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
                 File uploadFilePath = new File(uploadDir + "/" + fileName);
-                file.transferTo(uploadFilePath); // 파일 저장
+                file.transferTo(uploadFilePath);
                 board.setCommunity_filename(fileName);
                 service.updateFileName(board);
-               
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             // 예외 처리 및 사용자에게 친절한 메시지 제공
         }
 
         return "redirect:/community/list";
+    
     }
     
     @GetMapping("/list")
@@ -351,5 +340,3 @@ public class CommunityBoardController {
 		return ResponseEntity.ok(comments);
 	}
 }
-
-

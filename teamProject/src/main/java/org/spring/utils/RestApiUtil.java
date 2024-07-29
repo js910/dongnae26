@@ -108,6 +108,8 @@ public class RestApiUtil {
 		// System.out.println("HTTP response: "+sb.toString());
 		return sb.toString();
 	}
+	
+	
 
 	private static String httpsConn(String connUrl, HashMap<String, String> headerData) throws IOException {
 		// System.out.println("HTTPS connection to URL: " + connUrl);
@@ -139,4 +141,6 @@ public class RestApiUtil {
 		// System.out.println("HTTPS response: "+sb.toString());
 		return sb.toString();
 	}
+	
+	
 }

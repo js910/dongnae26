@@ -2,6 +2,7 @@ package org.spring.service;
 
 import java.util.HashMap;
 
+import org.spring.domain.UserDTO;
 import org.spring.model.KakaoAuthResponse;
 import org.spring.model.KakaoTokenResponse;
 import org.spring.model.KakaoUserInfoResponse;
@@ -50,4 +51,14 @@ public class KakaoService {
         }
         return result;
     }
+    
+    // 사용자 정보를 UserDTO로 변환하는 메서드 추가
+    public UserDTO createUserDTO(KakaoUserInfoResponse userInfo) {
+        UserDTO user = new UserDTO();
+        user.setUser_name(userInfo.getKakao_account().getName());
+        user.setUser_email(userInfo.getKakao_account().getEmail());
+        user.setLogin_type("kakao");
+        return user;
+    }
 }
+

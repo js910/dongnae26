@@ -11,8 +11,9 @@ import org.springframework.stereotype.Service;
 
 public interface CultureBoardService {
 
+	
 		// 게시판 페이지
-		public List<CultureBoardDTO> listAll();
+		public List<CultureBoardDTO> listAll(Criteria cri, String culture_area, String culture_classify);
 		
 		// 상세보기 페이지
 		CultureBoardDTO getBoard(int culture_bno);
@@ -23,6 +24,5 @@ public interface CultureBoardService {
 		
 		// 전체 게시글 수
 		public int getTotalCount(Criteria cri);
-
 
 }

@@ -95,6 +95,7 @@ public class GoogleLoginController {
             UserDTO userProfile = new UserDTO();
             userProfile.setUser_email(rootNode.path("email").asText());
             userProfile.setUser_name(rootNode.path("name").asText());
+            userProfile.setLogin_type("google"); // login_type 설정
             //userProfile.setSocial_user_email(rootNode.path("email").asText());
             //userProfile.setId(rootNode.path("id").asText());
             //userProfile.setGiven_name(rootNode.path("given_name").asText());
@@ -107,6 +108,7 @@ public class GoogleLoginController {
             // 세션에 사용자 정보 저장
             session.setAttribute("user_email", userProfile.getUser_email());
             session.setAttribute("user_name", userProfile.getUser_name());
+            session.setAttribute("login_type", userProfile.getLogin_type());
             model.addAttribute("userProfile", userProfile);
 
             return "redirect:/test"; // 성공 시 리턴 페이지

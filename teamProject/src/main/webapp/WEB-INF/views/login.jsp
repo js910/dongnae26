@@ -48,13 +48,16 @@
                     <img width="230" src="${pageContext.request.contextPath}/resources/images/goole_login_btn.png"/>
                 </a>
             </div>
+            <div id="naver_id_login">
             <a href='http://localhost:8090/naverlogin'>
                 <img width="230" src="/resources/images/naver_login_btn.png">
             </a>
-            
+            </div>
+            <div id="kakao_id_login">
             <a href='https://kauth.kakao.com/oauth/authorize?client_id=57d63923a77bfe9b2640845383c5ee17&redirect_uri=http://localhost:8090/kakao/oauth&response_type=code'>
-                <img src="/resources/images/login_btn.png">
-                </a>
+                <img width="230" src="/resources/images/kakao_login_btn.png">
+            </a>
+            </div>
              
         </c:otherwise>
     </c:choose>

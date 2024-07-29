@@ -3,6 +3,47 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@include file="../includes/header.jsp"%>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="../main" class="nav-item nav-link">Home</a>
+                        <a href="/policy/list" class="nav-item nav-link">정책</a>
+                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
+                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
+                        <a href="/community/list" class="nav-item nav-link active">커뮤니티</a>
+                        <!-- 
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="destination.html" class="dropdown-item">Destination</a>
+                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
+                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
+                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
+                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
+                         -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
+                    </div>
+                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
+                </div>
+            </nav>
+        <!-- Navbar & Hero End -->
+        
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h3 class="text-white display-3 mb-4">커뮤니티 게시판</h3>
+                <ol class="breadcrumb justify-content-center mb-0">
+                </ol>    
+            </div>
+        </div>
+        <!-- Header End -->
 <head>
 <style type="text/css">
 body {
@@ -187,7 +228,7 @@ textarea {
 
     <div class="button-group">
         <a href="${pageContext.request.contextPath}/community/list">목록으로</a>
-         <c:if test="${board.user_num == sessionScope.user_info.user_num && board.community_email == sessionScope.user_info.user_email}">
+          <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
         <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
         <form action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
             <input type="hidden" name="community_bno" value="${board.community_bno}" />
@@ -203,7 +244,7 @@ textarea {
             <p class="comment-content">댓글내용 : ${comment.community_com_content}</p>
             <span>작성자: ${comment.comment_writer}&nbsp</span>
             <span>작성일: ${comment.community_com_regdate}</span>
-            <c:if test="${comment.user_num == sessionScope.user_info.user_num}">
+            <c:if test="${board.user_num == sessionScope.user_info.user_num && board.community_email == sessionScope.user_info.user_email}">
                 <button class="edit-comment-btn" data-comment-id="${comment.community_cno}">수정</button>
                 <button class="delete-comment-btn" data-comment-id="${comment.community_cno}">삭제</button>
             </c:if>
@@ -259,8 +300,16 @@ $(document).ready(function() {
     }
 
     function submitComment() {
+        var commentContent = $("#newCommentContent").val().trim(); // 입력 필드의 값을 가져와서 공백을 제거합니다
+
+        // 댓글 내용이 비어 있는지 확인합니다
+        if (commentContent === "") {
+            alert("댓글을 입력하세요.");
+            return; // 댓글이 비어 있으면 함수 실행을 중지합니다
+        }
+
         var formData = {
-            community_com_content: $("#newCommentContent").val(),
+            community_com_content: commentContent, // 비어 있지 않은 댓글 내용 사용
             community_bno: boardId,
             user_num: userNum
         };

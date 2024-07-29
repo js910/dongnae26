@@ -31,29 +31,63 @@
 	</select>
 	
 	<select id="getTotalCount" resultType="int" parameterType="org.spring.domain.culture.Criteria">
-		SELECT COUNT(culture_bno) FROM culture_board
+    SELECT COUNT(culture_bno)
+    FROM culture_board
+    <where>
+        <!-- Handle area condition -->
+        <if test="area != null and area != ''">
+            culture_area LIKE CONCAT("%", #{area}, "%")
+        </if>
+        
+        <!-- Handle classify condition -->
+        <if test="classify != null and classify != ''">
+            <choose>
+                <when test="area != null and area != ''">
+                    AND culture_classify LIKE CONCAT("%", #{classify}, "%")
+                </when>
+                <otherwise>
+                    culture_classify LIKE CONCAT("%", #{classify}, "%")
+                </otherwise>
+            </choose>
+        </if>
+
+        <!-- Handle type and keyword conditions -->
+        <if test="type != null and keyword != null and type != '' and keyword != ''">
+            <choose>
+                <when test="type == 'all'">
+                    <choose>
+                        <when test="area == null or area == '' and classify == null or classify == ''">
+                            AND (culture_title LIKE CONCAT("%", #{keyword}, "%") OR culture_place LIKE CONCAT("%", #{keyword}, "%"))
+                        </when>
+                        <otherwise>
+                            (culture_title LIKE CONCAT("%", #{keyword}, "%") OR culture_place LIKE CONCAT("%", #{keyword}, "%"))
+                        </otherwise>
+                    </choose>
+                </when>
+                <otherwise>
+                    AND ${type} LIKE CONCAT("%", #{keyword}, "%")
+                </otherwise>
+            </choose>
+        </if>
+    </where>
+	</select>
+
+	
+	<select id="getListWithSearch" parameterType="org.spring.domain.culture.Criteria" resultType="org.spring.domain.culture.CultureBoardDTO">
+		SELECT * FROM culture_board 
 		<where>
-			<if test="area != null and area != ''">
-				(culture_area LIKE CONCAT("%",#{area},"%"))
-			</if>
-			<if test="area != null and area != '' and classify != null and classify !=''">
-				AND
-			</if>
-			<if test="classify != null and classify !=''">
-				(culture_classify LIKE CONCAT("%",#{classify},"%"))
-			</if>
 			<if test="type != null and keyword != null and type != '' and keyword != ''">
 				<choose>
 					<when test="type == 'all'">
-					(titlec LIKE CONCAT("%",#{keyword},"%") OR
-					placec LIKE CONCAT("%",#{keyword},"%"))
+					(culture_title LIKE CONCAT("%",#{keyword},"%") OR
+					culture_place LIKE CONCAT("%",#{keyword},"%"))
 					</when>
 					<otherwise>
 						${type} LIKE CONCAT("%",#{keyword},"%")
 					</otherwise>
 				</choose>
-			</if>                           
+			</if>
 		</where>
+		ORDER BY culture_regdate DESC LIMIT #{start}, #{amount}
 	</select>
-	
   </mapper>

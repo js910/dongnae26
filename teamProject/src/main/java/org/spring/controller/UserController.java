@@ -3,10 +3,13 @@ package org.spring.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+
 import org.spring.domain.UserDTO;
+import org.spring.domain.job.JobBoardDTO;
 import org.spring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,30 +25,26 @@ public class UserController {
     public String getUser(HttpSession session) {
         String user_name = (String) session.getAttribute("user_name");
         String user_email = (String) session.getAttribute("user_email");
-        String social_user_email = (String) session.getAttribute("user_email");
-        String user_phone = (String) session.getAttribute("user_phone");
-
+        String login_type = (String) session.getAttribute("login_type");
         
-        UserDTO user = new UserDTO(user_email, social_user_email, user_name, user_phone);
-        service.saveKakaoUser(user);
-        System.out.println(user);
+        UserDTO user = new UserDTO();
+        user.setUser_name(user_name);
+        user.setUser_email(user_email);
+        user.setLogin_type(login_type);
         
-        System.out.println("등록후:: "+user);
-        
-        
-        System.out.println(user);
         if (user_email == null || user_name.isEmpty()) {
             // user_name이 세션에 없을 경우의 처리
             System.out.println("User name is not in session");
-            return "redirect:/login"; 
+            return "redirect:/login"; // 에러 페이지로 리디렉션
         }
+
+        System.out.println(user_name);
         
           UserDTO userInfo = service.getUserInfo(user);
-          System.out.println(userInfo);
+        
         if (userInfo != null) {
             System.out.println(userInfo.getUser_num());
             session.setAttribute("user_info", userInfo);
-            System.out.println("userInfo 부분!!!!!!!!!!!!!!!!"+userInfo);
             
         } else {
             // 유저 정보를 찾지 못했을 경우의 처리

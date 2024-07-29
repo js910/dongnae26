@@ -10,36 +10,17 @@ import org.spring.utils.RestApiUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zaxxer.hikari.HikariConfig;
-
 @Service
 public class PolicyBoardService {
-
-	@Autowired
-	private HikariConfig hikariConfig;
-    public void testDatabaseConnection() {
-        try {
-        	System.out.println(hikariConfig.getConnectionInitSql());
-            System.out.println("Database connection successful.");
-        } catch (Exception e) {
-            System.err.println("Database connection failed: " + e.getMessage());
-        }
-    }
-    
+	
 	@Autowired
     private PolicyBoardMapper boardMapper;
-	
 	private static final String SECRETKEY = "i3+6fMkkv8XL1CB7x0ZgBb5lNltDkXgPED80oyl9ur6fi8aaDnXR8nvU2U3TMzWDho62+4xfDaBh9odVCGIyiA==";
 
 	public PolicyResponse listAll(Criteria cri) {
 		HashMap<String, String> data = new HashMap<>();
 		data.put("serviceKey", SECRETKEY);
-		System.out.println("Service pageNum: "+cri.getPageNum());
-		System.out.println("Service amount: "+cri.getAmount());
-		if (cri.getPageNum()==0 && cri.getAmount()==0) {
-			cri.setPageNum(1);
-			cri.setAmount(10);
-		}
+		System.out.println("PolicyService (pageNum, amount): ("+cri.getPageNum()+", "+cri.getAmount()+")");
 		
 		data.put("page", Integer.toString(cri.getPageNum()));
 		data.put("perPage", Integer.toString(cri.getAmount()));
@@ -57,10 +38,6 @@ public class PolicyBoardService {
 	public PolicyResponse getList(Criteria cri) {
 		HashMap<String, String> data = new HashMap<>();
 		data.put("serviceKey", SECRETKEY);
-		if (cri.getPageNum()==0 && cri.getAmount()==0) {
-			cri.setPageNum(1);
-			cri.setAmount(10);
-		}
 		
 		data.put("page", Integer.toString(cri.getPageNum()));
 		data.put("perPage", Integer.toString(cri.getAmount()));
@@ -78,8 +55,7 @@ public class PolicyBoardService {
 		String keyword = cri.getKeyword();
 		if (keyword != null && !keyword.isEmpty()) {
 			System.out.println("cond 지원내용: "+keyword);
-			System.out.println("포맷된 keyValue: " + keyword);
-			data.put("cond[지원내용::LIKE]", (String) keyword);
+			data.put("cond[서비스명::LIKE]", (String) keyword);
 		}
 		data.put("returnType", "JSON");
 
@@ -93,7 +69,7 @@ public class PolicyBoardService {
 	}
 	
 	public PolicyResponse2 get(String serviceID) {
-		System.out.println(serviceID);
+		System.out.println("상세페이지 서비스ID: "+serviceID);
 		HashMap<String, String> data = new HashMap<>();
 		data.put("serviceKey", SECRETKEY);
 		data.put("returnType", "JSON");
@@ -105,7 +81,6 @@ public class PolicyBoardService {
 		headerData.put("Content-type", "application/json");
 
 		PolicyResponse2 result = RestApiUtil.ConnHttpGetType(url, data, headerData, PolicyResponse2.class, false);
-		System.out.println("get service");
 		return result;
 	}
 	
