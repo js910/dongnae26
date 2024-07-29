@@ -187,11 +187,13 @@ textarea {
 
     <div class="button-group">
         <a href="${pageContext.request.contextPath}/community/list">목록으로</a>
+         <c:if test="${board.user_num == sessionScope.user_info.user_num && board.community_email == sessionScope.user_info.user_email}">
         <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
         <form action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
             <input type="hidden" name="community_bno" value="${board.community_bno}" />
             <button type="submit">삭제하기</button>
         </form>
+        </c:if>
     </div>
 
    <!-- 댓글 목록 -->

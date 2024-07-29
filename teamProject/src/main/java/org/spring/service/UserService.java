@@ -74,5 +74,18 @@ public class UserService {
 			return updateResult;
 			
 		 }
-	
+
+		public void saveKakaoUser(UserDTO kakaoUser) {
+			System.out.println("들어오니?"+kakaoUser);
+			UserDTO existingUser = userMapper.getUser(kakaoUser);
+			if (existingUser == null) { 
+			userMapper.insertKakaoUser(kakaoUser);
+		}else {
+            userMapper.updateUserProfile(kakaoUser);
+        }
+    }
+
+		public int getUserNum(String userEmail) {
+			return userMapper.getUnum(userEmail);
+		}	
 }

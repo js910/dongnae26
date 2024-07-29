@@ -53,4 +53,12 @@ public interface UserMapper {
 
 		public int updatePassword(UserDTO userDTO);
 
+		
+		// kakao
+		 @Insert("INSERT INTO user (social_user_email, user_name, user_phone) VALUES (#{social_user_email}, #{user_name}, #{user_phone})")
+		void insertKakaoUser(UserDTO kakaoUser);
+		
+		 @Select(" SELECT user_num FROM users WHERE social_user_email = #{userEmail}")
+		int getUnum(String userEmail);
+
 }

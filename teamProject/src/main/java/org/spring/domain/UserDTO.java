@@ -66,5 +66,13 @@ public class UserDTO {
     public void setEmail(String email) {
         this.user_email = email;  // set user_email to the provided email value
     }
+
+	public UserDTO(String user_email, String social_user_email, String user_name, String user_phone) {
+		super();
+		this.user_email = user_email;
+		this.social_user_email = social_user_email;
+		this.user_name = user_name;
+		this.user_phone = user_phone;
+	}
 	
 }
