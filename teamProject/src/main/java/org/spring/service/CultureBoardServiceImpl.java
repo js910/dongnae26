@@ -30,18 +30,17 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 		return cultureboardMapper.getTotalCount(cri);
 	}
 
-	
-	// 북마크 추가 메서드
-	public void bookmark(int culture_bno, String user_email) {
-		cultureboardMapper.bookmark(culture_bno, user_email);
+	@Override
+	public boolean bookmarkChk(int culture_bno, int user_num) {
+		return cultureboardMapper.bookmarkChk(culture_bno, user_num) > 0;
 	}
-	// 북마크 삭제 메서드
-	public void bookmarkDel(int culture_bno, String user_email) {
-		cultureboardMapper.bookmarkDel(culture_bno, user_email);
+	@Override
+	public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title) {
+		cultureboardMapper.bookmark(culture_bno, user_num, culture_classify, culture_title);
 	}
-	// 북마크 여부 확인 메서드
-	public boolean bookmarkChk(int culture_bno, String user_email) {
-	    return cultureboardMapper.bookmarkChk(culture_bno, user_email) > 0;
+	@Override
+	public void bookmarkDel(int culture_bno, int user_num, String culture_classify, String culture_title) {
+		cultureboardMapper.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
 	}
 
 	@Override

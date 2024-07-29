@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.spring.domain.UserDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
 import org.spring.domain.culture.PageDTO;
@@ -50,14 +53,20 @@ public class CultureBoardController {
     
     
     @GetMapping("/get/{culture_bno}")
-    public String get(@PathVariable("culture_bno") int culture_bno, Model model) {
+    public String get(@PathVariable("culture_bno") int culture_bno, Model model, HttpSession session) {
     	CultureBoardDTO dto = cultureboardService.getBoard(culture_bno);
         model.addAttribute("dto", dto);
         
-        String user_email = "test@example.com";
-        model.addAttribute("user_email", user_email);
-        boolean bookmarked = cultureboardServiceImpl.bookmarkChk(culture_bno, user_email);
-        model.addAttribute("bookmarked", bookmarked);
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if (user != null) {
+            int user_num = user.getUser_num();
+            boolean bookmarked = cultureboardService.bookmarkChk(culture_bno, user_num);
+            model.addAttribute("bookmarked", bookmarked);
+            model.addAttribute("user_num", user_num);
+        } else {
+            model.addAttribute("bookmarked", false);
+            model.addAttribute("user_num", null);
+        }
         return "culture/get";
     }
     
@@ -86,13 +95,24 @@ public class CultureBoardController {
     
     @ResponseBody
     @PostMapping("/bookmark")
-    public boolean policyBookmark(@RequestParam("user_email") String userEmail, @RequestParam("culture_bno") int culture_bno) throws Exception {
-        boolean bookmark = cultureboardServiceImpl.bookmarkChk(culture_bno, userEmail);
-        if (!bookmark) {
-        	cultureboardServiceImpl.bookmark(culture_bno, userEmail);
-        } else {
-        	cultureboardServiceImpl.bookmarkDel(culture_bno, userEmail);
+    public Map<String, Object> jobBookmark(HttpSession session, @RequestParam("culture_bno") int culture_bno,
+                                                               @RequestParam("culture_classify") String culture_classify,
+                                                               @RequestParam("culture_title") String culture_title) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if(user == null) {
+            result.put("loggedIn", false);
+            return result;
         }
-        return !bookmark;
+        int user_num = user.getUser_num();
+        boolean bookmark = cultureboardService.bookmarkChk(culture_bno, user_num);
+        if (!bookmark) {
+        	cultureboardService.bookmark(culture_bno, user_num, culture_classify, culture_title);
+        } else {
+        	cultureboardService.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
+        }
+        result.put("loggedIn", true);
+        result.put("bookmarked", !bookmark);
+        return result;
     }
 }

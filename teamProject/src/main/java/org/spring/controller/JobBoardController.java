@@ -89,7 +89,7 @@ public class JobBoardController {
     
     @ResponseBody
     @PostMapping("/bookmark")
-    public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
+    public Map<String, Object> jobBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
                                                                @RequestParam("cmpnyNm") String cmpnyNm,
                                                                @RequestParam("bsnsSumryCn") String bsnsSumryCn) throws Exception {
         Map<String, Object> result = new HashMap<>();

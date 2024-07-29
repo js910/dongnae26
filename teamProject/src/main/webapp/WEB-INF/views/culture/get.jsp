@@ -56,7 +56,7 @@
                     </div>
                     <div class="col-lg-7" style="background: linear-gradient(rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)), url(#);">
                     	<div style="block;">
-						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark(${dto.culture_bno}, '${user_email}')"></span>
+						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}')"></span>
 						</div>
                         <h5 class="section-about-title pe-3">About Us</h5>
                         <h1 class="mb-4"><span class="text-primary"><c:out value="${dto.culture_title }"/></span></h1>
@@ -132,29 +132,46 @@
 	                }
 	            }
 	            
-	            const bookmarked = ${bookmarked};
-	            if (${bookmarked}) {
-	                $("#bookmark").addClass("bookmarked");
-	            }
-	            function toggleBookmark(culture_bno, userEmail) {
-	                $.ajax({
-	                    type: "POST",
-	                    url: "/board/bookmark",
-	                    dataType: "json",
-	                    data: { 'culture_bno': culture_bno, 'user_email': userEmail },
-	                    success: function(response) {
-	                        if (response) {
-	                            $("#bookmark").addClass("bookmarked");
-	                            alert("북마크 완료");
-	                        } else {
-	                            $("#bookmark").removeClass("bookmarked");
-	                            alert("북마크 취소");
+	            $(document).ready(function() {
+	                const bookmarked = ${bookmarked ? 'true' : 'false'};
+
+	                if (bookmarked) {
+	                    $("#bookmark").addClass("bookmarked");
+	                }
+
+	                window.toggleBookmark = function(culture_bno, culture_classify, culture_title) {
+	                    $.ajax({
+	                        type: "POST",
+	                        url: "/culture/bookmark",
+	                        dataType: "json",
+	                        data: {
+	                            'culture_bno': culture_bno,
+	                            'culture_classify': culture_classify,
+	                            'culture_title': culture_title
+	                        },
+	                        success: function(response) {
+	                            console.log("AJAX success response:", response);
+	                            if (!response.loggedIn) {
+	                                alert("로그인이 필요한 기능입니다");
+	                                return;
+	                            }
+
+	                            if (response.bookmarked) {
+	                                $("#bookmark").addClass("bookmarked");
+	                                alert("북마크 완료");
+	                            } else {
+	                                $("#bookmark").removeClass("bookmarked");
+	                                alert("북마크 취소");
+	                            }
+	                        },
+	                        error: function(xhr, status, error) {
+	                            console.log("AJAX error response:", status, error);
+	                            alert("북마크 처리 중 오류가 발생했습니다. 상태: " + status + ", 오류: " + error);
 	                        }
-	                    },
-	                    error: function() {
-	                        alert("북마크 처리 중 오류가 발생했습니다.");
-	                    }
-	                });
-	            }
+	                    });
+	                }
+
+	                
+	            });
 	    </script>
         <%@include file="../includes/footer.jsp"%>

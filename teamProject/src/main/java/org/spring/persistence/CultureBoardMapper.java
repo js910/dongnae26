@@ -53,14 +53,14 @@ public interface CultureBoardMapper {
     public List<CultureBoardDTO> selectPage(@Param("cri") Criteria cri,
         @Param("culture_area") String culture_area, @Param("culture_classify") String culture_classify);
 
- // 북마크 추가
-    public void bookmark(@Param("culture_bno") int culture_bno, @Param("user_email") String userEmail);
+    // 북마크 추가
+    public void bookmark(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num, @Param("culture_classify") String culture_classify, @Param("culture_title") String culture_title);
 
     // 북마크 삭제
-    public void bookmarkDel(@Param("culture_bno") int culture_bno, @Param("user_email") String userEmail);
+    public void bookmarkDel(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num, @Param("culture_classify") String culture_classify, @Param("culture_title") String culture_title);
 
     // 북마크 여부 확인
-    public int bookmarkChk(@Param("culture_bno") int culture_bno, @Param("user_email") String userEmail);
+    public int bookmarkChk(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num);
 
 	public int getTotalCount(Criteria cri);
 

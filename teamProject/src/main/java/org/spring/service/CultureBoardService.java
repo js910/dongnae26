@@ -25,4 +25,12 @@ public interface CultureBoardService {
 		// 전체 게시글 수
 		public int getTotalCount(Criteria cri);
 
+		
+		// 북마크
+		public boolean bookmarkChk(int culture_bno, int user_num);
+
+		public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title);
+
+		public void bookmarkDel(int culture_bno, int user_num, String culture_classify, String culture_title);
+
 }
