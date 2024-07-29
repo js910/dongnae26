@@ -289,7 +289,8 @@ table th:nth-child(5), table td:nth-child(5) {
             </div>
 			<div class="col-lg-6">
 				<div class="form-group input-group">
-					<input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+					<input type="search" class="form-control" name="keyword"
+						placeholder="서비스명 검색" value="${pageMaker.cri.keyword}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                             <i class="fa fa-search"></i>
@@ -514,7 +515,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=UTF-8",
             dataType : "json",
             success : function(response) {
-            	console.log("Response:", response);
+            	console.log("list loadTable()");
             	var data = response.policyapi.data;
                 var boardTbody = $("#boardTable tbody");
                 boardTbody.empty();
