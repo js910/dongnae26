@@ -242,7 +242,7 @@ textarea {
             <p class="comment-content">댓글내용 : ${comment.community_com_content}</p>
             <span>작성자: ${comment.comment_writer}&nbsp</span>
             <span>작성일: ${comment.community_com_regdate}</span>
-            <c:if test="${board.user_num == sessionScope.user_info.user_num && board.community_email == sessionScope.user_info.user_email}">
+            <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
                 <button class="edit-comment-btn" data-comment-id="${comment.community_cno}">수정</button>
                 <button class="delete-comment-btn" data-comment-id="${comment.community_cno}">삭제</button>
             </c:if>
