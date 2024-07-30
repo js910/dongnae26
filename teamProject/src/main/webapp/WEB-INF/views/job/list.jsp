@@ -284,7 +284,7 @@
             <select id="amount" name="amount" class="form-control">
                 <option value="10" ${pageMaker.cri.amount == 10 ? "selected" : ""}>10</option>
                 <option value="20" ${pageMaker.cri.amount == 20 ? "selected" : ""}>20</option>
-                <option value="50" ${pageMaker.cri.amount == 50 ? "selected" : ""}>50</option>
+                <option value="30" ${pageMaker.cri.amount == 30 ? "selected" : ""}>30</option>
             </select>
         </div>
         <table id="boardTable" class="table table-striped table-bordered">
