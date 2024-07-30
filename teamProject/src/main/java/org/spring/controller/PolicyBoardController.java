@@ -81,7 +81,7 @@ public class PolicyBoardController {
 	
 	@ResponseBody
 	@PostMapping("/bookmark")
-	public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("serviceID") String serviceID) throws Exception {
+	public Map<String, Object> policyBookmark(HttpSession session, @RequestBody PolicyBookmarkDTO dto) throws Exception {
 		Map<String, Object> result = new HashMap<>();
 		UserDTO user = (UserDTO) session.getAttribute("user_info");
 		if(user==null) {
@@ -89,11 +89,13 @@ public class PolicyBoardController {
 	        return result;
 		}
 		int user_num = user.getUser_num();
-		boolean bookmark = policyService.bookmarkChk(serviceID, user_num);
+	    dto.setUserNum(user_num);
+	    boolean bookmark = policyService.bookmarkChk(dto.getServiceID(), user_num);
+	    
 	    if (!bookmark) {
-	        policyService.bookmark(serviceID, user_num);
+	        policyService.bookmark(dto);
 	    } else {
-	        policyService.bookmarkDel(serviceID, user_num);
+	        policyService.bookmarkDel(dto);
 	    }
 	    result.put("loggedIn", true);
 	    result.put("bookmarked", !bookmark);

@@ -83,19 +83,19 @@ public class PolicyBoardService {
 		PolicyResponse2 result = RestApiUtil.ConnHttpGetType(url, data, headerData, PolicyResponse2.class, false);
 		return result;
 	}
-	
-	// 북마크 추가 메서드
-    public void bookmark(String serviceID, int user_num) {
-        boardMapper.bookmark(serviceID, user_num);
+
+    // 북마크 추가 메서드
+    public void bookmark(PolicyBookmarkDTO dto) {
+        boardMapper.bookmark(dto);
     }
 
     // 북마크 삭제 메서드
-    public void bookmarkDel(String serviceID, int user_num) {
-        boardMapper.bookmarkDel(serviceID, user_num);
+    public void bookmarkDel(PolicyBookmarkDTO dto) {
+        boardMapper.bookmarkDel(dto);
     }
 
     // 북마크 여부 확인 메서드
-    public boolean bookmarkChk(String serviceID, int user_num) {
-        return boardMapper.bookmarkChk(serviceID, user_num) > 0;
+    public boolean bookmarkChk(String serviceID, int userNum) {
+        return boardMapper.bookmarkChk(serviceID, userNum) > 0;
     }
 }
