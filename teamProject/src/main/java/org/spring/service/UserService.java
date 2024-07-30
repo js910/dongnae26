@@ -1,11 +1,14 @@
 package org.spring.service;
 
+import java.util.List;
+
+import org.spring.domain.InquiryDTO;
 import org.spring.domain.RegisterDTO;
 import org.spring.domain.UserDTO;
 import org.spring.persistence.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.log4j.Log4j;
 
@@ -82,19 +85,42 @@ public class UserService {
 			
 		 }
 		 
-		 //카카오
-		 public void saveKakaoUser(UserDTO kakaoUser) {
-	         System.out.println("들어오니?"+kakaoUser);
-	         UserDTO existingUser = userMapper.getUser(kakaoUser);
-	         if (existingUser == null) { 
-	         userMapper.insertKakaoUser(kakaoUser);
-	     }else {
-	         userMapper.updateUserProfile(kakaoUser);
-	     }
-	 }
-		 
-		 public int getUserNum(String userEmail) {
-	         return userMapper.getUnum(userEmail);
-	     }
 
+	 
+	 //카카오
+	 public void saveKakaoUser(UserDTO kakaoUser) {
+         System.out.println("들어오니?"+kakaoUser);
+         UserDTO existingUser = userMapper.getUser(kakaoUser);
+         if (existingUser == null) { 
+         userMapper.insertKakaoUser(kakaoUser);
+     }else {
+         userMapper.updateUserProfile(kakaoUser);
+     }
+ }
+	 
+	 public int getUserNum(String userEmail) {
+         return userMapper.getUnum(userEmail);
+     }
+	
+	 
+	// 문의 폼
+	@Transactional
+	public void saveInquiry(InquiryDTO inquiryDTO) {
+		userMapper.insertInquiry(inquiryDTO);
+	}
+	
+	public List<InquiryDTO> getInquiries(int userNum) {
+		List<InquiryDTO> inquiries = userMapper.selectAllInquiries(userNum);
+	    System.out.println("Inquiries: " + inquiries);
+	    return inquiries;
+	}
+	
+	public List<InquiryDTO> getAllInquiries() {
+        return userMapper.getAllInquiries();
+    }
+	 public void updateInquiryStatus(int inquiryNum, String inquiryProgress) {
+		 userMapper.updateInquiryStatus(inquiryNum, inquiryProgress);
+	    }
+	
+	
 }

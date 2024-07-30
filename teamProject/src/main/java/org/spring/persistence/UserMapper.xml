@@ -108,4 +108,14 @@
 	</update>
 
 
+
+	<update id="updateInquiryStatus" parameterType="map">
+	    UPDATE user_inquiry
+	    SET inquiry_progress = #{inquiry_progress}
+	    WHERE inquiry_num = #{inquiry_num}
+	</update>
+
+	<select id="getAllInquiries" resultType="org.spring.domain.InquiryDTO">
+    	SELECT * FROM user_inquiry
+	</select>
 </mapper>
