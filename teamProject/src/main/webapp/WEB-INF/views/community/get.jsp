@@ -241,7 +241,7 @@ textarea {
    <div id="commentList">
       <c:forEach var="comment" items="${comments}">
         <div class="comment-item">
-            <p class="comment-content">댓글내용 : ${comment.community_com_content}</p>
+            <p class="comment-content">${comment.community_com_content}</p>
             <span>작성자: ${comment.comment_writer}&nbsp</span>
             <span>작성일: ${comment.community_com_regdate}</span>
 
@@ -270,134 +270,134 @@ textarea {
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
-            const boardId = ${board.community_bno};
-            const userNum = ${sessionScope.user_info.user_num};
+    $(document).ready(function() {
+        const boardId = ${board.community_bno};
+        const userNum = ${sessionScope.user_info.user_num};
 
-            function submitEditComment() {
-                var formData = {
-                    community_com_content: $("#editCommentContent").val(),
-                    community_cno: $("#editCommentCno").val(),
-                    community_bno: boardId,
-                    user_num: userNum
-                };
+        function submitEditComment() {
+            var formData = {
+                community_com_content: $("#editCommentContent").val(),
+                community_cno: $("#editCommentCno").val(),
+                community_bno: boardId,
+                user_num: userNum
+            };
 
-                $.ajax({
-                    type: "POST",
-                    url: "${pageContext.request.contextPath}/community/modifyComment",
-                    data: JSON.stringify(formData),
-                    contentType: "application/json; charset=utf-8",
-                    headers: { "Accept": "application/json" },
-                    success: function(response) {
-                        updateCommentList(response);
-                        $("#editCommentModal").hide();
-                        alert("댓글 수정이 완료되었습니다.");
-                    },
-                    error: function(xhr, status, error) {
-                        alert("댓글 수정에 실패하였습니다.");
-                    }
-                });
-            }
-
-            function submitComment() {
-                var commentContent = $("#newCommentContent").val().trim();
-
-                if (commentContent === "") {
-                    alert("댓글을 입력하세요.");
-                    return;
-                }
-
-                var formData = {
-                    community_com_content: commentContent,
-                    community_bno: boardId,
-                    user_num: userNum
-                };
-
-                $.ajax({
-                    type: "POST",
-                    url: "${pageContext.request.contextPath}/community/registerComment",
-                    data: JSON.stringify(formData),
-                    contentType: "application/json; charset=utf-8",
-                    headers: { "Accept": "application/json" },
-                    success: function(response) {
-                        updateCommentList(response);
-                        $("#newCommentContent").val("");
-                        alert("댓글이 등록되었습니다.");
-                    },
-                    error: function(xhr, status, error) {
-                        alert("댓글 등록에 실패하였습니다.");
-                    }
-                });
-            }
-
-            function updateCommentList(comments) {
-                var commentListHtml = "";
-                $.each(comments, function(index, comment) {
-                    var date = new Date(comment.community_com_regdate);
-                    var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-                    commentListHtml += "<div class='comment-item'>" +
-                        "<p class='comment-content'>" + comment.community_com_content + "</p>" +
-                        "<span>작성자: " + (comment.comment_writer ? comment.comment_writer : 'Unknown') + "</span>" +
-                        "<span>작성일: " + formattedDate + "</span>";
-
-                    if (comment.user_num == userNum) {
-                        commentListHtml += "<button class='edit-comment-btn' data-comment-id='" + comment.community_cno + "'>수정</button>" +
-                            "<button class='delete-comment-btn' data-comment-id='" + comment.community_cno + "'>삭제</button>";
-                    }
-
-                    commentListHtml += "</div>";
-                });
-                $("#commentList").html(commentListHtml);
-            }
-
-            $("#commentList").on("click", ".edit-comment-btn", function() {
-                var commentId = $(this).data("comment-id");
-                var commentContent = $(this).siblings(".comment-content").text();
-                $("#editCommentCno").val(commentId);
-                $("#editCommentContent").val(commentContent);
-                $("#editCommentModal").show();
-            });
-
-            $("#submitEditComment").click(function() {
-                submitEditComment();
-            });
-
-            $("#cancelEditComment").click(function() {
-                $("#editCommentModal").hide();
-            });
-
-            $("#submitComment").click(function() {
-                submitComment();
-            });
-
-            $("#commentList").on("click", ".delete-comment-btn", function() {
-                var commentId = $(this).data("comment-id");
-                if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
-                    $.ajax({
-                        type: "POST",
-                        url: "${pageContext.request.contextPath}/community/removeComment",
-                        data: JSON.stringify({ community_cno: commentId }),
-                        contentType: "application/json; charset=utf-8",
-                        headers: { "Accept": "application/json" },
-                        success: function(response) {
-                            updateCommentList(response);
-                            alert("삭제되었습니다");
-                        },
-                        error: function(xhr, status, error) {
-                            alert("댓글 삭제에 실패하였습니다.");
-                        }
-                    });
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/community/modifyComment",
+                data: JSON.stringify(formData),
+                contentType: "application/json; charset=utf-8",
+                headers: { "Accept": "application/json" },
+                success: function(response) {
+                    updateCommentList(response);
+                    $("#editCommentModal").hide();
+                    alert("댓글 수정이 완료되었습니다.");
+                },
+                error: function(xhr, status, error) {
+                    alert("댓글 수정에 실패하였습니다.");
                 }
             });
+        }
 
-            $("#deleteButton").click(function() {
-                if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
-                    $("#deleteForm").submit();
+        function submitComment() {
+            var commentContent = $("#newCommentContent").val().trim();
+
+            if (commentContent === "") {
+                alert("내용을 입력하세요.");
+                return;
+            }
+
+            var formData = {
+                community_com_content: commentContent,
+                community_bno: boardId,
+                user_num: userNum
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "${pageContext.request.contextPath}/community/registerComment",
+                data: JSON.stringify(formData),
+                contentType: "application/json; charset=utf-8",
+                headers: { "Accept": "application/json" },
+                success: function(response) {
+                    updateCommentList(response);
+                    $("#newCommentContent").val("");
+                    alert("댓글이 등록되었습니다.");
+                },
+                error: function(xhr, status, error) {
+                    alert("댓글 등록에 실패하였습니다.");
                 }
             });
+        }
+
+        function updateCommentList(comments) {
+            var commentListHtml = "";
+            $.each(comments, function(index, comment) {
+                var date = new Date(comment.community_com_regdate);
+                var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                commentListHtml += "<div class='comment-item'>" +
+                    "<p class='comment-content'>" + comment.community_com_content + "</p>" +
+                    "<span>작성자: " + (comment.comment_writer ? comment.comment_writer : 'Unknown') + "</span>" +
+                    "<span>작성일: " + formattedDate + "</span>";
+
+                if (comment.user_num == userNum) {
+                    commentListHtml += "<button class='edit-comment-btn' data-comment-id='" + comment.community_cno + "'>수정</button>" +
+                        "<button class='delete-comment-btn' data-comment-id='" + comment.community_cno + "'>삭제</button>";
+                }
+
+                commentListHtml += "</div>";
+            });
+            $("#commentList").html(commentListHtml);
+        }
+
+        $("#commentList").on("click", ".edit-comment-btn", function() {
+            var commentId = $(this).data("comment-id");
+            var commentContent = $(this).siblings(".comment-content").text();
+            $("#editCommentCno").val(commentId);
+            $("#editCommentContent").val(commentContent);
+            $("#editCommentModal").show();
         });
-    </script>
+
+        $("#submitEditComment").click(function() {
+            submitEditComment();
+        });
+
+        $("#cancelEditComment").click(function() {
+            $("#editCommentModal").hide();
+        });
+
+        $("#submitComment").click(function() {
+            submitComment();
+        });
+
+        $("#commentList").on("click", ".delete-comment-btn", function() {
+            var commentId = $(this).data("comment-id");
+            if (confirm("정말로 이 댓글을 삭제하시겠습니까?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.request.contextPath}/community/removeComment",
+                    data: JSON.stringify({ community_cno: commentId }),
+                    contentType: "application/json; charset=utf-8",
+                    headers: { "Accept": "application/json" },
+                    success: function(response) {
+                        updateCommentList(response);
+                        alert("삭제되었습니다");
+                    },
+                    error: function(xhr, status, error) {
+                        alert("댓글 삭제에 실패하였습니다.");
+                    }
+                });
+            }
+        });
+
+        $("#deleteButton").click(function() {
+            if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+                $("#deleteForm").submit();
+            }
+        });
+    });
+</script>
      <%@include file="../includes/footer.jsp"%>
    </body>
 </html>
