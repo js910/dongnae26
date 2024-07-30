@@ -133,8 +133,7 @@ public class CommunityBoardController {
         PageDTO pageResult = new PageDTO(cri, total);
         System.out.println(total);
         model.addAttribute("pageMaker", pageResult);
-
-        return "community/list"; // JSP 파일 경로
+        return "community/list"; 
     }
     
     @ResponseBody
@@ -198,6 +197,9 @@ public class CommunityBoardController {
         int connunutyBno = board.getCommunity_bno();
         List<CommunityCommentDTO> comments = service.getCommentsByBoardId(connunutyBno);
         model.addAttribute("comments", comments);
+        if (userId != null) {
+            model.addAttribute("loggedInUserId", userId);
+        }
         return "/community/get";
     }
 
