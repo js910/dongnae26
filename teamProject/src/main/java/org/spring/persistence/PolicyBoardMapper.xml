@@ -13,16 +13,22 @@
 
 	<!-- 북마크 기능 -->
 	<insert id="bookmark">
-		INSERT INTO bookmark_policy_board (serviceID, user_num) VALUES (#{serviceID},#{user_num})
+	    INSERT INTO bookmark_policy_board 
+	    (serviceID, userNum, serviceName, serviceContent, serviceDeadline)
+	    VALUES 
+	    (#{serviceID}, #{userNum}, #{serviceName}, #{serviceContent}, #{serviceDeadline})
 	</insert>
 	
 	<!-- 북마크 취소 -->
 	<delete id="bookmarkDel">
-		DELETE FROM bookmark_policy_board WHERE serviceID = #{serviceID} AND user_num = #{user_num}
+		DELETE FROM bookmark_policy_board
+    	WHERE serviceID = #{serviceID} AND userNum = #{userNum}
 	</delete>
 	
 	<!-- 게시글의 스크랩 수 -->
-	<select id="bookmarkChk" resultType="int">
-		SELECT COUNT(*) FROM bookmark_policy_board WHERE serviceID = #{serviceID} AND user_num = #{user_num}
+	<select id="bookmarkChk" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+    	FROM bookmark_policy_board
+    	WHERE serviceID = #{serviceID} AND userNum = #{userNum}
 	</select>
 </mapper>

@@ -2,6 +2,7 @@ package org.spring.persistence;
 
 import org.apache.ibatis.annotations.Param;
 import org.spring.domain.policy.Criteria;
+import org.spring.domain.policy.PolicyBookmarkDTO;
 
 public interface PolicyBoardMapper {
 
@@ -9,11 +10,11 @@ public interface PolicyBoardMapper {
 	public int getTotalCount(Criteria cri);
 		
 	// 북마크 추가
-    public void bookmark(@Param("serviceID") String serviceID, @Param("user_num") int user_num);
+    public void bookmark(PolicyBookmarkDTO dto);
 
     // 북마크 삭제
-    public void bookmarkDel(@Param("serviceID") String serviceID, @Param("user_num") int user_num);
+    public void bookmarkDel(PolicyBookmarkDTO dto);
 
     // 북마크 여부 확인
-    public int bookmarkChk(@Param("serviceID") String serviceID, @Param("user_num") int user_num);
+    public int bookmarkChk(@Param("serviceID") String serviceID, @Param("userNum") int userNum);
 }

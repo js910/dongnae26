@@ -182,10 +182,16 @@ body {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                	<em class="cate">${policyDetail.agencyName}</em>
-                	<span class="service-name">${policyDetail.serviceName}</span>
-                	<span id="bookmark" class="bookmark" onclick="toggleBookmark(${policyDetail.serviceID})"></span>
-				</div>
+                    <em class="cate">${policyDetail.agencyName}</em>
+                    <span class="service-name">${policyDetail.serviceName}</span>
+                    <span id="bookmark" class="bookmark"
+                          data-service-id="${policyDetail.serviceID}"
+                          data-service-name="${policyDetail.serviceName}"
+                          data-service-content="${policyDetail.supportContent}"
+                          data-service-deadline="${policyDetail.applicationDeadline}"
+                          data-user-num="${user_num}"
+                          onclick="toggleBookmark(this)"></span>
+                </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                      <table class="table policy-table" id="policyTable">
@@ -214,22 +220,37 @@ body {
 <!-- /#page-wrapper -->
 
 <script type="text/javascript">
-const bookmarked = ${bookmarked};
+$(document).ready(function() {
+    // Add 'bookmarked' class based on the server-side state
+    const bookmarked = ${bookmarked};
+    if (bookmarked) {
+        $("#bookmark").addClass("bookmarked");
+    }
 
-if (${bookmarked}) {
-    $("#bookmark").addClass("bookmarked");
-}
-
-$("#list").on("click", function() {
-    location.href = "/policy/list";
+    $("#list").on("click", function() {
+        location.href = "/policy/list";
+    });
 });
 
-function toggleBookmark(serviceID) {
+function toggleBookmark(element) {
+    const serviceID = $(element).data('service-id');
+    const serviceName = $(element).data('service-name');
+    const serviceContent = $(element).data('service-content');
+    const serviceDeadline = $(element).data('service-deadline');
+    const userNum = $(element).data('user-num');
+    
     $.ajax({
         type: "POST",
         url: "/policy/bookmark",
         dataType: "json",
-        data: { 'serviceID': serviceID },
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify({
+        	serviceID: serviceID,
+            serviceName: serviceName,
+            serviceContent: serviceContent,
+            serviceDeadline: serviceDeadline,
+            userNum: userNum
+        }),
         success: function(response) {
             if (!response.loggedIn) {
                 alert("로그인이 필요한 기능입니다");
@@ -249,7 +270,6 @@ function toggleBookmark(serviceID) {
         }
     });
 }
-
 </script>
 
 <%@include file="../includes/footer.jsp"%>
