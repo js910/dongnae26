@@ -2,112 +2,168 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 
-    <head>
-        <meta charset="utf-8">
-        <title>E1I4 - 동네26</title>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
-        <meta content="" name="keywords">
-        <meta content="" name="description">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Roboto&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
 
-        <!-- Icon Font Stylesheet -->
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+        .navv-link.active {
+            color: #5bc1ac !important;
+        }
 
-        <!-- Libraries Stylesheet -->
-        <link href="/resources/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="/resources/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+        .navbar-nav .nav-item {
+            margin-right: 15px;
+        }
 
+        .navbar-nav .nav-item:last-child {
+            margin-right: 0;
+        }
+    </style>
 
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <!-- Template Stylesheet -->
-        <link href="/resources/css/style.css" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    </head>
-    
-    <body>
+    <!-- CSS FILES -->
+    <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/bootstrap-icons.css" rel="stylesheet">
+    <link href="/resources/css/templatemo-kind-heart-charity.css" rel="stylesheet">
+    <!-- TemplateMo 581 Kind Heart Charity https://templatemo.com/tm-581-kind-heart-charity -->
 
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-8 col-12 d-flex flex-wrap" style="float: right;">
+                    <c:choose>
+                        <c:when test="${not empty loginUserID}">
+                            <a href="${pageContext.request.contextPath}/user/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
+                            <c:choose>
+                                <c:when test="${loginType == 'google'}">
+                                    <a href="${pageContext.request.contextPath}/social/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                                </c:when>
+                                <c:when test="${loginType == 'naver'}">
+                                    <a href='http://localhost:8090/callback/performLogout'><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                                </c:when>
+                                <c:when test="${loginType == 'basic'}">
+                                    <a href="${pageContext.request.contextPath}/basic/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                                </c:when>
+                                <c:when test="${loginType == 'kakao'}">
+			                	 	<a href='https://kauth.kakao.com/oauth/logout?client_id=57d63923a77bfe9b2640845383c5ee17&logout_redirect_uri=http://localhost:8090/kakao/logout'>
+			                	 	<small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+			                	</c:when>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="http://localhost:8090/basic/join"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>회원가입</small></a>
+                            <a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그인</small></a>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+
             </div>
         </div>
-        <!-- Spinner End -->
+    </header>
 
-        <!-- Topbar Start -->
-        <div class="container-fluid bg-primary px-5 d-none d-lg-block">
-            <div class="row gx-0">
-                <div class="col-lg-8 text-center text-lg-start mb-2 mb-lg-0">
-                    <div class="d-inline-flex align-items-center" style="height: 45px;">
-                        <!-- 
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal"></i></a>
-                        <a class="btn btn-sm btn-outline-light btn-sm-square rounded-circle" href=""><i class="fab fa-youtube fw-normal"></i></a>
-                         -->
-                    </div>
-                </div>  
-                <div class="col-lg-4 text-center text-lg-end">
-                    <div class="d-inline-flex align-items-center" style="height: 45px;">
-                        
-                        <!--<a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>Login</small></a>-->
-        <c:choose>            
-	        <c:when test="${not empty loginUserID}">
-	        	<a href="http://localhost:8090/user/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
-	            <c:choose>
-	                <c:when test="${loginType == 'google'}">
-	                    <a href="${pageContext.request.contextPath}/social/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-	                </c:when>
-	                <c:when test="${loginType == 'naver'}">
-	                    <a href='http://localhost:8090/callback/performLogout'><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-	                </c:when>
-	                <c:when test="${loginType == 'basic'}">
-	                    <a href="${pageContext.request.contextPath}/basic/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-	                </c:when>
-	                <c:when test="${loginType == 'kakao'}">
-                	 	<a href='https://kauth.kakao.com/oauth/logout?client_id=57d63923a77bfe9b2640845383c5ee17&logout_redirect_uri=http://localhost:8090/kakao/logout'>
-                	 	<small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-                	</c:when>
-	            </c:choose>
-	        </c:when>
-	        <c:otherwise>
-	        	<a href="http://localhost:8090/basic/join"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>회원가입</small></a>
-	        	<a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그인</small></a>
-	        </c:otherwise>
-	    </c:choose>
-                        
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i></small></a>
-                            <div class="dropdown-menu rounded">
-                                <a href="#" class="dropdown-item"><i class="fas fa-user-alt me-2"></i> My Profile</a>
-                                <a href="#" class="dropdown-item"><i class="fas fa-comment-alt me-2"></i> Inbox</a>
-                                <a href="#" class="dropdown-item"><i class="fas fa-bell me-2"></i> Notifications</a>
-                                <a href="#" class="dropdown-item"><i class="fas fa-cog me-2"></i> Account Settings</a>
-                                <a href="#" class="dropdown-item"><i class="fas fa-power-off me-2"></i> Log Out</a>
-                            </div>
-                        </div>
-                    </div>
+    <div id="sticky-wrapper" class="sticky-wrapper" style="height: 150px;">
+        <nav class="navbar navbar-expand-lg bg-light shadow-lg">
+            <div class="container">
+                <a class="navbar-brand" href="../main" id="logo-link">
+                    <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity">
+                    <span>
+                        동네26
+                        <small>- made by E1I4</small>
+                    </span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="navv-link" href="http://localhost:8090/main">main</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="navv-link" href="/policy/list">정책</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="navv-link" href="/job/list">일자리 정보</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="navv-link" href="/culture/list">문화·행사</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="navv-link" href="/community/list">커뮤니티</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-        <!-- Topbar End -->
-        
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                <a href="" class="navbar-brand p-0">
-                    <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>동네26</h1>
-                    <!-- <img src="img/logo.png" alt="Logo"> -->
-                </a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var navLinks = document.querySelectorAll('.navv-link');
+            var currentUrl = window.location.href;
+
+            // 메뉴바 동적 설정
+            var activeLink = localStorage.getItem('activeNavLink');
+            var activeElement = document.querySelector('.navv-link[href="' + currentUrl + '"]');
+            
+            if (activeElement) {
+                activeElement.classList.add('active');
+                localStorage.setItem('activeNavLink', currentUrl);
+            } else if (activeLink) {
+                var storedActiveElement = document.querySelector('.navv-link[href="' + activeLink + '"]');
+                if (storedActiveElement) {
+                    storedActiveElement.classList.add('active');
+                }
+            } else {
+                // 기본적으로 main에 색칠이 되어있도록 설정
+                var mainLink = document.querySelector('.navv-link[href="http://localhost:8090/main"]');
+                if (mainLink) {
+                    mainLink.classList.add('active');
+                    localStorage.setItem('activeNavLink', mainLink.getAttribute('href'));
+                }
+            }
+
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    navLinks.forEach(function (link) {
+                        link.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    // 선택된 메뉴 색 유지
+                    localStorage.setItem('activeNavLink', this.getAttribute('href'));
+                });
+            });
+
+            // 동네26 로고 클릭 시
+            document.getElementById('logo-link').addEventListener('click', function () {
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+                var mainLink = document.querySelector('.navv-link[href="http://localhost:8090/main"]');
+                if (mainLink) {
+                    mainLink.classList.add('active');
+                    localStorage.setItem('activeNavLink', mainLink.getAttribute('href'));
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

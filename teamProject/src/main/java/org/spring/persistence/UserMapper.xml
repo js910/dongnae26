@@ -117,5 +117,6 @@
 
 	<select id="getAllInquiries" resultType="org.spring.domain.InquiryDTO">
     	SELECT * FROM user_inquiry
+    	ORDER BY inquiry_regdate DESC
 	</select>
 </mapper>

@@ -154,12 +154,27 @@
                     <td><input type="text" name="user_name" value="${user_info.user_name}" disabled></td>
                 </tr>
                 <tr>
-                    <th>이메일</th>
-                    <td><input type="email" name="user_email" value="${user_info.user_email}" disabled></td>
-                </tr>
+				    <th>이메일</th>
+				    <td>
+				        <c:choose>
+				            <c:when test="${not empty user_info.user_email}">
+				                <input type="email" value="${user_info.user_email}" disabled>
+				                <input type="hidden" name="user_email" value="${user_info.user_email}">
+				            </c:when>
+				            <c:otherwise>
+				                <input type="email" value="${user_info.social_user_email}" disabled>
+				                <input type="hidden" name="user_email" value="${user_info.social_user_email}">
+				            </c:otherwise>
+				        </c:choose>
+				    </td>
+				</tr>
                 <tr>
                     <th>전화번호</th>
                     <td><input type="tel" name="user_phone" value="${user_info.user_phone}" disabled></td>
+                </tr>
+                <tr>
+                    <th>관심 키워드</th>
+                    <td><input type="text" name="user_interest" value="${user_info.user_interest}" disabled></td>
                 </tr>
             </table>
             <button type="button" id="editButton" class="btn">수정하기</button>
@@ -210,16 +225,16 @@
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        document.getElementById('editButton').addEventListener('click', function() {
-            // Enable the input fields
-            var inputs = document.querySelectorAll('#userForm input[type="text"], #userForm input[type="email"], #userForm input[type="tel"]');
-            inputs.forEach(function(input) {
-                input.disabled = false;
-            });
-
-            // Enable the submit button
-            document.querySelector('#userForm input[type="submit"]').disabled = false;
-        });
+	    document.getElementById('editButton').addEventListener('click', function() {
+	        // Enable the input fields except email
+	        var inputs = document.querySelectorAll('#userForm input[type="text"], #userForm input[type="tel"]');
+	        inputs.forEach(function(input) {
+	            input.disabled = false;
+	        });
+	
+	        // Enable the submit button
+	        document.querySelector('#userForm input[type="submit"]').disabled = false;
+	    });
         
      	// 문의 테이블 로드
     	function loadInquiries() {
