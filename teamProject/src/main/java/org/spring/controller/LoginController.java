@@ -38,8 +38,10 @@ public class LoginController {
 			HttpSession session, RedirectAttributes redirectAttributes) {
 		logger.info("사용자 로그인 실행"+user_email);
 		UserDTO user = new UserDTO(user_email); 
+		user.setLogin_type("basic");
+		System.out.println("첫 user: "+ user);
 		user = userService.getUserInfo(user);
-		System.out.println(user);
+		System.out.println("user : " + user);
 		
 		if(userService.login(user_email, user_pw) != null) {
 			

@@ -2,6 +2,7 @@ package org.spring.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,9 +18,12 @@ import org.spring.domain.community.Criteria;
 import org.spring.domain.community.PageDTO;
 import org.spring.domain.UserDTO; 
 import org.spring.domain.community.ViewCountDTO;
+import org.spring.model.KakaoUserInfoResponse;
 import org.spring.service.CommunityBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,10 +31,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 @Controller
 @RequestMapping("/community/*")
@@ -38,14 +46,37 @@ public class CommunityBoardController {
 
     @Autowired
     private CommunityBoardService service;
+
     private final String uploadPath = "C:/Users/user/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
 
+
+
     @GetMapping("/register")
-    public String registerForm(CommunityBoardDTO board, HttpSession session) {
+    public String registerForm(CommunityBoardDTO board, HttpSession session,RedirectAttributes rrtt) {
         String login = (String) session.getAttribute("loginUserID");
+        String loginType = (String) session.getAttribute("loginType");
+
+        if ("kakao".equals(loginType)) {
+            KakaoUserInfoResponse kakaoUser = (KakaoUserInfoResponse) session.getAttribute("kakaoUserInfo");
+
+            if (kakaoUser != null) {
+                // 카카오 사용자 정보에서 이름과 이메일을 추출합니다.
+                String email = kakaoUser.getKakao_account().getEmail();
+                String name = kakaoUser.getKakao_account().getName();
+
+                // 정보를 출력하거나 사용하세요.
+                System.out.println("Kakao User Email: " + email);
+                System.out.println("Kakao User Name: " + name);
+            } else {
+                System.out.println("KakaoUserInfo is null");
+            }
+        }
+
         if (login == null || login.isEmpty()) {
+            rrtt.addFlashAttribute("alertMessage", "로그인 후에 글 작성이 가능합니다.");
             return "redirect:/login";
         }
+
         return "/community/register";
     }
 
@@ -235,55 +266,80 @@ public class CommunityBoardController {
         return "redirect:/community/list";
     }
 
+    
+    
     @PostMapping("/registerComment")
-    @ResponseBody
-    public ResponseEntity<List<CommunityCommentDTO>> registerComment(@RequestBody CommunityCommentDTO comment, HttpSession session) {
-    	UserDTO user = (UserDTO) session.getAttribute("user_info");
+    public ResponseEntity<?> registerComment(@RequestBody CommunityCommentDTO comment, HttpSession session, @RequestHeader(value = HttpHeaders.ACCEPT, defaultValue = MediaType.APPLICATION_JSON_VALUE) String acceptHeader) {
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
         comment.setComment_writer(user.getUser_name());
         service.registerComment(comment);
         List<CommunityCommentDTO> comments = service.getCommentsByBoardId(comment.getCommunity_bno());
-        return ResponseEntity.ok(comments);
-    }
 
-    @PostMapping("/modifyComment")
-    @ResponseBody
-    public ResponseEntity<List<CommunityCommentDTO>> modifyComment(@RequestBody CommunityCommentDTO comment, HttpSession session) {
-    	UserDTO user = (UserDTO) session.getAttribute("user_info");
-        comment.setComment_writer(user.getUser_name());
-        service.modifyComment(comment);
-        List<CommunityCommentDTO> comments = service.getCommentsByBoardId(comment.getCommunity_bno());
-        return ResponseEntity.ok(comments);
-    }
-
-    @GetMapping("/removeComment")
-    @ResponseBody
-    public ResponseEntity<List<CommunityCommentDTO>> removeComment(@RequestParam("community_cno") Integer community_cno,
-            HttpSession session) {
-    	UserDTO user = (UserDTO) session.getAttribute("user_info");
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        if (acceptHeader.contains(MediaType.APPLICATION_JSON_VALUE)) {
+            return ResponseEntity.ok(comments);
+        } else if (acceptHeader.contains(MediaType.APPLICATION_XML_VALUE)) {
+            // XML 변환을 위해 Jackson XML을 사용하는 경우 설정이 필요
+            return ResponseEntity.ok(comments);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Unsupported Media Type");
         }
-
-        CommunityCommentDTO comment = service.getCommentById(community_cno);
-        if (comment == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        if (comment.getUser_num() == null || !comment.getUser_num().equals(user.getUser_num())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-        }
-
-        service.removeComment(community_cno);
-        List<CommunityCommentDTO> comments = service.getCommentsByBoardId(comment.getCommunity_bno());
-        return ResponseEntity.ok(comments);
     }
 
-    @PostMapping("/getCommentsByBoardId")
-    @ResponseBody
-    public ResponseEntity<List<CommunityCommentDTO>> getCommentsByBoardId(@RequestBody CommunityBoardDTO board) {
-        List<CommunityCommentDTO> comments = service.getCommentsByBoardId(board.getCommunity_bno());
-        System.out.println(comments);
-        return ResponseEntity.ok(comments);
-    }
+	@PostMapping("/modifyComment")
+	@ResponseBody
+	public ResponseEntity<List<CommunityCommentDTO>> modifyComment(@RequestBody CommunityCommentDTO comment, HttpSession session) {
+		UserDTO user = (UserDTO) session.getAttribute("user_info");
+		comment.setComment_writer(user.getUser_name());
+		service.modifyComment(comment);
+		List<CommunityCommentDTO> comments = service.getCommentsByBoardId(comment.getCommunity_bno());
+		return ResponseEntity.ok(comments);
+	}
 
+	 @PostMapping("/removeComment")
+	    public ResponseEntity<?> removeComment(@RequestBody CommunityCommentDTO comment, HttpSession session, @RequestHeader(value = HttpHeaders.ACCEPT, defaultValue = MediaType.APPLICATION_JSON_VALUE) String acceptHeader) {
+	        UserDTO user = (UserDTO) session.getAttribute("user_info");
+	        if (user == null) {
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+	        }
+
+	        CommunityCommentDTO existingComment = service.getCommentById(comment.getCommunity_cno());
+	        if (existingComment == null) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comment not found");
+	        }
+
+	        if (existingComment.getUser_num() == null || !existingComment.getUser_num().equals(user.getUser_num())) {
+	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Forbidden");
+	        }
+
+	        service.removeComment(comment.getCommunity_cno());
+	        List<CommunityCommentDTO> comments = service.getCommentsByBoardId(existingComment.getCommunity_bno());
+
+	        if (acceptHeader.contains(MediaType.APPLICATION_JSON_VALUE)) {
+	            return ResponseEntity.ok(comments);
+	        } else if (acceptHeader.contains(MediaType.APPLICATION_XML_VALUE)) {
+	            return ResponseEntity.ok(convertToXml(comments));
+	        } else {
+	            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Unsupported Media Type");
+	        }
+	    }
+
+	    // Helper method to convert list of comments to XML
+	    private String convertToXml(Object object) {
+	        try {
+	            XmlMapper xmlMapper = new XmlMapper();
+	            return xmlMapper.writeValueAsString(object);
+	        } catch (Exception e) {
+	            throw new RuntimeException("Failed to convert to XML", e);
+	        }
+	    }
+
+	@PostMapping("/getCommentsByBoardId")
+	@ResponseBody
+	public ResponseEntity<List<CommunityCommentDTO>> getCommentsByBoardId(@RequestBody CommunityBoardDTO board) {
+		List<CommunityCommentDTO> comments = service.getCommentsByBoardId(board.getCommunity_bno());
+		System.out.println(comments);
+		return ResponseEntity.ok(comments);
+	}
 }
+
+

@@ -72,6 +72,8 @@ public class SearchPwController {
 
                 session.setAttribute("num", num);
                 session.setAttribute("email", email);
+                //추가
+                session.setAttribute("login_type", "basic");
                 return "YM/pw_auth";
             } else {
             	System.out.println("첫번째");
@@ -104,6 +106,8 @@ public class SearchPwController {
 	   UserDTO userDTO = new UserDTO(pw, email);
 		userDTO.setPw(pw);
 		userDTO.setEmail(email);
+		//추가
+		userDTO.setLogin_type("basic");
 		
 		System.out.println("UserDTO: " + userDTO);
 		

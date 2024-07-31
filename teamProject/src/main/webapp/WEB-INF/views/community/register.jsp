@@ -6,80 +6,94 @@
 <html>
 <head>
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f4f4f4;
-    }
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
 
-    h1 {
-        text-align: center;
-        color: #333;
-    }
+.container {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
 
-    form {
-        background: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        margin: auto;
-    }
+/* 폼 레이아웃 */
+form {
+    display: flex;
+    flex-direction: column;
+}
 
-    div {
-        margin-bottom: 15px;
-    }
+form div {
+    margin-bottom: 15px;
+}
 
-    label {
-        display: block;
-        margin-bottom: 5px;
-        font-weight: bold;
-        color: #555;
-    }
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
-    input[type="text"], textarea, select {
-        width: 100%;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        box-sizing: border-box;
-    }
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
-    textarea {
-        height: 150px;
-        resize: vertical;
-    }
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
 
-    .button-group {
-        text-align: center;
-    }
+input[type="file"] {
+    display: block;
+    margin-bottom: 10px;
+}
 
-    button {
-        background-color: #007bff;
-        border: none;
-        color: white;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 5px;
-        cursor: pointer;
-        border-radius: 4px;
-    }
+/* 이미지 미리보기 */
+#preview {
+    display: block;
+    max-width: 200px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
 
-    button:hover {
-        background-color: #0056b3;
-    }
+/* 버튼 그룹 */
+.button-group {
+    margin-top: 20px;
+}
 
-    #preview {
-        display: block;
-        margin-top: 10px;
-        max-width: 100%;
-        height: auto;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
+.button-group button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.button-group button:hover {
+    background-color: #0056b3;
+}
+
+.button-group button[type="button"] {
+    background-color: #6c757d;
+}
+
+.button-group button[type="button"]:hover {
+    background-color: #5a6268;
+}
 </style>
 <title>글 작성</title>
 
@@ -92,10 +106,29 @@
             <label for="region">구 선택</label>
             <select id="region" name="region" required>
                 <option value="">구를 선택하세요</option>
+                <option value="강남구">강남구</option>
+                <option value="강동구">강동구</option>
+                <option value="강북구">강북구</option>
                 <option value="관악구">관악구</option>
+                <option value="광진구">광진구</option>
+                <option value="구로구">구로구</option>
                 <option value="금천구">금천구</option>
+                <option value="노원구">노원구</option>
+                <option value="도봉구">도봉구</option>
                 <option value="동대문구">동대문구</option>
+                <option value="동작구">동작구</option>
+                <option value="마포구">마포구</option>
+                <option value="서대문구">서대문구</option>
                 <option value="서초구">서초구</option>
+                <option value="성북구">성북구</option>
+                <option value="송파구">송파구</option>
+                <option value="양천구">양천구</option>
+                <option value="영등포구">영등포구</option>
+                <option value="용산구">용산구</option>
+                <option value="은평구">은평구</option>
+                <option value="종로구">종로구</option>
+                <option value="중구">중구</option>
+                <option value="중랑구">중랑구</option>
             </select>
         </div>
         <div>

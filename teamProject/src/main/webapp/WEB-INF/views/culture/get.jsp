@@ -19,38 +19,13 @@
 		}
 	</style>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="../main" class="nav-item nav-link">Home</a>
-		                <a href="/policy/list" class="nav-item nav-link">정책</a>
-		                <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
-		                <a href="/culture/list" class="nav-item nav-link active">문화·행사</a>
-		                <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <!-- Navbar & Hero End -->
-
-        <!-- Header Start -->
-		<div class="container-fluid bg-breadcrumb">
-		    <div class="container text-center py-5" style="max-width: 900px;">
-		        <h3 class="text-white display-3 mb-4">문화·행사 상세보기</h3>
-		        <ol class="breadcrumb justify-content-center mb-0">
-		        </ol>    
-		    </div>
-		</div>
-		<!-- Header End -->
 
         <!-- About Start -->
         <div class="container-fluid about py-5">
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-5">
-                        <div class="h-100" style="border: 50px solid; border-color: transparent #13357B transparent #13357B;">
+                        <div class="h-100" style="border: 50px solid; border-color: transparent #063604 transparent #063604;">
                             <img src="${dto.culture_img }" class="img-fluid w-100 h-100" alt="">
                         </div>
                     </div>
@@ -81,7 +56,7 @@
                 	<p class="mb-0" style="padding-top: 10px; padding-bottom: 10px;"><span class="text-primary">상세 위치 </span> <i class="fa fa-arrow-right text-primary me-2"></i></p>
                 	<div id="map" style="width: 100%; height: 400px;"></div>
                 </div>
-                <a href="http://localhost:8090/board/list" class="btn btn-primary rounded-pill py-2 px-4 mt-4 float-end">go back to list</a>
+                <a href="http://localhost:8090/culture/list" class="btn btn-primary rounded-pill py-2 px-4 mt-4 float-end">go back to list</a>
             </div>
         </div>
         <!-- About End -->
@@ -157,4 +132,5 @@
 	                });
 	            }
 	    </script>
+	   
         <%@include file="../includes/footer.jsp"%>

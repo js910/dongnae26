@@ -4,91 +4,105 @@
 
 <%@include file="../includes/header.jsp"%>
 <head>
+<style type="text/css">
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* 폼 레이아웃 */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form div {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+input[type="file"] {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* 이미지 미리보기 */
+#preview {
+    display: block;
+    max-width: 200px;
+    margin-top: 10px;
+}
+
+/* 버튼 그룹 */
+.button-group {
+    margin-top: 20px;
+}
+
+.button-group button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 10px;
+}
+
+.button-group button:hover {
+    background-color: #0056b3;
+}
+
+.button-group button[type="button"] {
+    background-color: #6c757d;
+}
+
+.button-group button[type="button"]:hover {
+    background-color: #5a6268;
+}
+
+/* 기존 이미지 */
+img[alt="기존 이미지"] {
+    max-width: 200px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+</style>
 <title>게시글 수정</title>
-  <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            padding: 0;
-        }
-
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        form {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background: #f9f9f9;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        textarea,
-        select,
-        input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        textarea {
-            height: 150px;
-            resize: vertical;
-        }
-
-        .button-group {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .button-group button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-
-        .button-group button[type="button"] {
-            background-color: #6c757d;
-        }
-
-        .button-group button[type="submit"] {
-            background-color: #007bff;
-        }
-
-        .button-group button:hover {
-            opacity: 0.9;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 4px;
-            margin-top: 10px;
-        }
-
-        #preview {
-            display: block;
-            margin-top: 10px;
-        }
-    </style>
+  
+   
 </head>
 <body>
     <h1>게시글 수정</h1>
@@ -107,10 +121,29 @@
             <label for="region">구 선택</label>
             <select id="region" name="region" required>
                 <option value="">구를 선택하세요</option>
+                <option value="강남구" ${board.region == '강남구' ? 'selected' : ''}>강남구</option>
+                <option value="강동구" ${board.region == '강동구' ? 'selected' : ''}>강동구</option>
+                <option value="강북구" ${board.region == '강북구' ? 'selected' : ''}>강북구</option>
                 <option value="관악구" ${board.region == '관악구' ? 'selected' : ''}>관악구</option>
+                <option value="광진구" ${board.region == '광진구' ? 'selected' : ''}>광진구</option>
+                <option value="구로구" ${board.region == '구로구' ? 'selected' : ''}>구로구</option>
                 <option value="금천구" ${board.region == '금천구' ? 'selected' : ''}>금천구</option>
+                <option value="노원구" ${board.region == '노원구' ? 'selected' : ''}>노원구</option>
+                <option value="도봉구" ${board.region == '도봉구' ? 'selected' : ''}>도봉구</option>
                 <option value="동대문구" ${board.region == '동대문구' ? 'selected' : ''}>동대문구</option>
+                <option value="동작구" ${board.region == '동작구' ? 'selected' : ''}>동작구</option>
+                <option value="마포구" ${board.region == '마포구' ? 'selected' : ''}>마포구</option>
+                <option value="서대문구" ${board.region == '서대문구' ? 'selected' : ''}>서대문구</option>
                 <option value="서초구" ${board.region == '서초구' ? 'selected' : ''}>서초구</option>
+                <option value="성북구" ${board.region == '성북구' ? 'selected' : ''}>성북구</option>
+                <option value="송파구" ${board.region == '송파구' ? 'selected' : ''}>송파구</option>
+                <option value="양천구" ${board.region == '양천구' ? 'selected' : ''}>양천구</option>
+                <option value="영등포구" ${board.region == '영등포구' ? 'selected' : ''}>영등포구</option>
+                <option value="용산구" ${board.region == '용산구' ? 'selected' : ''}>용산구</option>
+                <option value="은평구" ${board.region == '은평구' ? 'selected' : ''}>은평구</option>
+                <option value="종로구" ${board.region == '종로구' ? 'selected' : ''}>종로구</option>
+                <option value="중구" ${board.region == '중구' ? 'selected' : ''}>중구</option>
+                <option value="중랑구" ${board.region == '중랑구' ? 'selected' : ''}>중랑구</option>
             </select>
         </div>
         <div>

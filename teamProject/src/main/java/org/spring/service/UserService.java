@@ -32,10 +32,21 @@ public class UserService {
     }
 
     //google
-    @Transactional
-    public void insertOrUpdate(UserDTO dto) {
-        userMapper.insertOrUpdate(dto);
+//    @Transactional
+//    public void insertOrUpdate(UserDTO dto) {       
+//    	userMapper.insertOrUpdate(dto);
+//    }
+    
+    public void insertOrUpdate(UserDTO userDTO) {
+        UserDTO existingUser = userMapper.findUserByEmail(userDTO.getUser_email());
+        
+        if (existingUser != null) {
+            userMapper.updateGoogleUser(userDTO);
+        } else {
+            userMapper.insertGoogleUser(userDTO);
+        }
     }
+    
 
     // 아이디 중복 확인
     public boolean isIdDuplicated(String user_email) {
@@ -59,20 +70,37 @@ public class UserService {
 
 
 	// 중복 번호 찾기
-		 public boolean isPhoneNumberDuplicated(String user_phone) {
-		        return userMapper.countByPhoneNumber(user_phone) > 0;
-		    }
+	 public boolean isPhoneNumberDuplicated(String user_phone) {
+	        return userMapper.countByPhoneNumber(user_phone) > 0;
+	    }
 		 
-		 public int updatePassword(UserDTO userDTO) {
-			System.out.println("Before update - userDTO: " + userDTO);
-			userDTO.setUser_pw(userDTO.getPw());
-			userDTO.setEmail(userDTO.getEmail()); 
-			System.out.println("Updating password for user_email: " + userDTO.getUser_email() + 
-								" with new password: " + userDTO.getUser_pw());
-			int updateResult = userMapper.updatePassword(userDTO);
-			System.out.println("updateResult in service: " + updateResult);
-			return updateResult;
-			
-		 }
+	 public int updatePassword(UserDTO userDTO) {
+		System.out.println("Before update - userDTO: " + userDTO);
+		userDTO.setUser_pw(userDTO.getPw());
+		userDTO.setEmail(userDTO.getEmail()); 
+		//추가
+		userDTO.setLogin_type(userDTO.getLogin_type());
+		System.out.println("Updating password for user_email: " + userDTO.getUser_email() + 
+							" with new password: " + userDTO.getUser_pw());
+		int updateResult = userMapper.updatePassword(userDTO);
+		System.out.println("updateResult in service: " + updateResult);
+		return updateResult;
+		
+	 }
+	 
+	 //카카오
+	 public void saveKakaoUser(UserDTO kakaoUser) {
+         System.out.println("들어오니?"+kakaoUser);
+         UserDTO existingUser = userMapper.getUser(kakaoUser);
+         if (existingUser == null) { 
+         userMapper.insertKakaoUser(kakaoUser);
+     }else {
+         userMapper.updateUserProfile(kakaoUser);
+     }
+ }
+	 
+	 public int getUserNum(String userEmail) {
+         return userMapper.getUnum(userEmail);
+     }
 	
 }

@@ -51,8 +51,8 @@ public class CallbackController {
             // 사용자 정보를 UserDTO 객체에 담기
             UserDTO user = naverLoginService.extractUserInfo(userProfile, session);
             
-            userService.saveUser(user);
-            //userService.insertOrUpdate(user);
+            //userService.saveUser(user);
+            userService.insertOrUpdate(user);
             return "redirect:/test";
         } catch (Exception e) {
             session.setAttribute("isLogin", false);

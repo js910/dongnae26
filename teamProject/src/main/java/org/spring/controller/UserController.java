@@ -25,10 +25,12 @@ public class UserController {
     public String getUser(HttpSession session) {
         String user_name = (String) session.getAttribute("user_name");
         String user_email = (String) session.getAttribute("user_email");
+        String login_type = (String) session.getAttribute("login_type");
         
         UserDTO user = new UserDTO();
         user.setUser_name(user_name);
         user.setUser_email(user_email);
+        user.setLogin_type(login_type);
         
         if (user_email == null || user_name.isEmpty()) {
             // user_name이 세션에 없을 경우의 처리
