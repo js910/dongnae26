@@ -9,75 +9,69 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
     <style>
-    	a{
-        text-decoration: none;
-        color: black;
-        font-weight: bold;
-    }
-    
+        a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
         .navv-link.active {
             color: #5bc1ac !important;
         }
-        
+
         .navbar-nav .nav-item {
-            margin-right: 15px; /* 원하는 간격으로 조절 */
+            margin-right: 15px;
         }
+
         .navbar-nav .nav-item:last-child {
-            margin-right: 0; /* 마지막 항목에는 간격을 적용하지 않음 */
+            margin-right: 0;
         }
     </style>
 
     <meta name="description" content="">
     <meta name="author" content="">
 
-    
-
     <!-- CSS FILES -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="/resources/css/bootstrap-icons.css" rel="stylesheet">
-
     <link href="/resources/css/templatemo-kind-heart-charity.css" rel="stylesheet">
-    <!--
-
-TemplateMo 581 Kind Heart Charity
-
-https://templatemo.com/tm-581-kind-heart-charity
-
--->
+    <!-- TemplateMo 581 Kind Heart Charity https://templatemo.com/tm-581-kind-heart-charity -->
 
 </head>
 
 <body>
 
-	<header class="site-header">
+    <header class="site-header">
         <div class="container">
             <div class="row">
 
                 <div class="col-lg-8 col-12 d-flex flex-wrap" style="float: right;">
-                    
-                    <c:choose>            
-				        <c:when test="${not empty loginUserID}">
-				        <a href="http://localhost:8090/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
-				            <c:choose>
-				                <c:when test="${loginType == 'google'}">
-				                    <a href="${pageContext.request.contextPath}/social/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-				                </c:when>
-				                <c:when test="${loginType == 'naver'}">
-				                    <a href='http://localhost:8090/callback/performLogout'><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-				                </c:when>
-				                <c:when test="${loginType == 'basic'}">
-				                    <a href="${pageContext.request.contextPath}/basic/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
-				                </c:when>
-				            </c:choose>
-				        </c:when>
-				        <c:otherwise>
-				        <a href="http://localhost:8090/basic/join"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>회원가입</small></a>
-				        <a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그인</small></a>
-				        </c:otherwise>
-				    </c:choose>
+                    <c:choose>
+                        <c:when test="${not empty loginUserID}">
+                            <a href="${pageContext.request.contextPath}/user/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
+                            <c:choose>
+                                <c:when test="${loginType == 'google'}">
+                                    <a href="${pageContext.request.contextPath}/social/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                                </c:when>
+                                <c:when test="${loginType == 'naver'}">
+                                    <a href='http://localhost:8090/callback/performLogout'><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                                </c:when>
+                                <c:when test="${loginType == 'basic'}">
+                                    <a href="${pageContext.request.contextPath}/basic/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+                                </c:when>
+                                <c:when test="${loginType == 'kakao'}">
+			                	 	<a href='https://kauth.kakao.com/oauth/logout?client_id=57d63923a77bfe9b2640845383c5ee17&logout_redirect_uri=http://localhost:8090/kakao/logout'>
+			                	 	<small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+			                	</c:when>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="http://localhost:8090/basic/join"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>회원가입</small></a>
+                            <a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그인</small></a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
 
             </div>
@@ -87,7 +81,7 @@ https://templatemo.com/tm-581-kind-heart-charity
     <div id="sticky-wrapper" class="sticky-wrapper" style="height: 150px;">
         <nav class="navbar navbar-expand-lg bg-light shadow-lg">
             <div class="container">
-                <a class="navbar-brand" href="../main">
+                <a class="navbar-brand" href="../main" id="logo-link">
                     <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity">
                     <span>
                         동네26
@@ -99,7 +93,7 @@ https://templatemo.com/tm-581-kind-heart-charity
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
-                    	<li class="nav-item">
+                        <li class="nav-item">
                             <a class="navv-link" href="http://localhost:8090/main">main</a>
                         </li>
                         <li class="nav-item">
@@ -120,16 +114,29 @@ https://templatemo.com/tm-581-kind-heart-charity
         </nav>
     </div>
 
-     <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var navLinks = document.querySelectorAll('.navv-link');
-            
+            var currentUrl = window.location.href;
+
             // 메뉴바 동적 설정
             var activeLink = localStorage.getItem('activeNavLink');
-            if (activeLink) {
-                var activeElement = document.querySelector('.navv-link[href="' + activeLink + '"]');
-                if (activeElement) {
-                    activeElement.classList.add('active');
+            var activeElement = document.querySelector('.navv-link[href="' + currentUrl + '"]');
+            
+            if (activeElement) {
+                activeElement.classList.add('active');
+                localStorage.setItem('activeNavLink', currentUrl);
+            } else if (activeLink) {
+                var storedActiveElement = document.querySelector('.navv-link[href="' + activeLink + '"]');
+                if (storedActiveElement) {
+                    storedActiveElement.classList.add('active');
+                }
+            } else {
+                // 기본적으로 main에 색칠이 되어있도록 설정
+                var mainLink = document.querySelector('.navv-link[href="http://localhost:8090/main"]');
+                if (mainLink) {
+                    mainLink.classList.add('active');
+                    localStorage.setItem('activeNavLink', mainLink.getAttribute('href'));
                 }
             }
 
@@ -143,5 +150,20 @@ https://templatemo.com/tm-581-kind-heart-charity
                     localStorage.setItem('activeNavLink', this.getAttribute('href'));
                 });
             });
+
+            // 동네26 로고 클릭 시
+            document.getElementById('logo-link').addEventListener('click', function () {
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+                var mainLink = document.querySelector('.navv-link[href="http://localhost:8090/main"]');
+                if (mainLink) {
+                    mainLink.classList.add('active');
+                    localStorage.setItem('activeNavLink', mainLink.getAttribute('href'));
+                }
+            });
         });
     </script>
+</body>
+
+</html>

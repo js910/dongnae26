@@ -73,13 +73,22 @@ public class UserController {
                                 @RequestParam("user_num") Integer userNum,
                                 @RequestParam("user_name") String userName,
                                 @RequestParam("user_email") String userEmail,
-                                @RequestParam("user_phone") String userPhone
+                                @RequestParam("user_phone") String userPhone,
+                                @RequestParam("user_interest") String userInterest,
+                                @RequestParam(value = "social_user_email", required = false) String socialUserEmail
                                 ) {
         UserDTO user = (UserDTO) session.getAttribute("user_info");
         if (user != null && user.getUser_num().equals(userNum)) {
             user.setUser_name(userName);
-            user.setUser_email(userEmail);
             user.setUser_phone(userPhone);
+            user.setUser_interest(userInterest);
+            
+            if (userEmail != null && !userEmail.isEmpty()) {
+                user.setUser_email(userEmail);
+            } else if (socialUserEmail != null && !socialUserEmail.isEmpty()) {
+                user.setUser_email(socialUserEmail);
+            }
+            
             userService.updateUserProfile(user);
             session.setAttribute("user_info", user);
             System.out.println("세션정보: " + user);

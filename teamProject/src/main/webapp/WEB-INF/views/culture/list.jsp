@@ -31,7 +31,7 @@
     function fetchPage(pageNum) {
         var area = $('#areaSelect').val();
         var classify = $('#classifySelect').val();
-        var amount = $('#amountSelect').val() || 15;  // 기본 값 설정
+        var amount = $('#amount').val();  // 기본 값 설정
         var type = $('#searchType').val();
         var keyword = $('input[name="keyword"]').val();
 
@@ -50,6 +50,16 @@
             success: function(data) {
                 console.log('리스트 내놔:', data && data.list.length > 0);
                 $('#boardTable tbody').empty();
+                	var boardTbody = $("#boardTable tbody");
+                    boardTbody.empty();
+                    if (data.list.length === 0) {
+                        var noDataMessage = $("<tr>").append($("<td>").attr("colspan", 5).text("검색 결과가 없습니다."));
+                        boardTbody.append(noDataMessage);
+                    }
+                	//$('#boardTable tbody').append(
+                    	//	'<tr><td colspan="5" class="text-center">검색 결과가 존재하지 않습니다</td></tr>'	
+                    //);
+                
                 if(data && Array.isArray(data.list)) {
                     data.list.forEach(function(item) {
                         $('#boardTable tbody').append(
@@ -63,10 +73,6 @@
                         );
                     });
                     updatePagination(data.pageMaker);
-                } else {
-                    $('#boardTable tbody').append(
-                    		'<tr><td colspan="5" class="text-center">검색 결과가 존재하지 않습니다</td></tr>'	
-                    );
                 }
             },
             error: function(xhr, status, error) {
@@ -106,7 +112,8 @@
     }
 
     $(document).ready(function() {
-        fetchPage(1);
+        const pageNum = new URLSearchParams(window.location.search).get('pageNum') || 1;
+        fetchPage(pageNum);
     });
 </script>
 
@@ -254,6 +261,9 @@
 	                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>search</button>
 	                    </div>
 	                </div>
+	                <div>
+	                	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+	                </div>
 	            </form>
 	        </div>
 	
@@ -280,8 +290,13 @@
 	                <div class="">
 	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
-	                            Hover Rows
-	                        </div>
+					            <label for="amount">게시글 갯수:</label>
+					            <select id="amount" name="amount" onchange="fetchPage(1)" class="form-control" >
+					                <option value="10" ${pageMaker.cri.amount == 10 ? "selected" : ""}>10</option>
+					                <option value="20" ${pageMaker.cri.amount == 20 ? "selected" : ""}>20</option>
+					                <option value="30" ${pageMaker.cri.amount == 30 ? "selected" : ""}>30</option>
+					            </select>
+        					</div>
 	                        <!-- /.panel-heading -->
 	                        <div class="panel-body">
 	                            <div class="table-responsive">
