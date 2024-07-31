@@ -213,7 +213,6 @@ table tr:hover {
         <option value="중구" ${selectedArea == '중구' ? 'selected' : ''}>중구</option>
         <option value="중랑구" ${selectedArea == '중랑구' ? 'selected' : ''}>중랑구</option>
     </select>
-    </select>
     <div>
         <label>Show 
             <select id="select1" name="select1">
@@ -284,17 +283,6 @@ table tr:hover {
                 var area = $("#searchForm").find("input[name='area']").val();
 
                 var boardListHtml = "";
-                $.each(boardList, function(index, board) {
-                    boardListHtml += "<tr>";
-                    boardListHtml += "<td>" + board.community_bno + "</td>";
-                    boardListHtml += "<td>" + board.region + "</td>";
-                    boardListHtml += "<td><a href='" + "${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "&pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword + "&area=" + area + "'>" + board.community_title + "</a></td>";
-                    boardListHtml += "<td>" + board.community_content + "</td>";
-                    boardListHtml += "<td>" + board.writer + "</td>";
-                    boardListHtml += "<td>" + board.community_viewcnt + "</td>";
-                    boardListHtml += "<td>" + board.formattedRegdate + "</td>";
-                    boardListHtml += "</tr>";
-                });
                 if (boardList.length === 0) {
                     boardListHtml = "<tr><td colspan='7' class='text-center'>검색 결과가 없습니다.</td></tr>";
                 } else {
@@ -314,15 +302,26 @@ table tr:hover {
 
                 var paginationHtml = "";
                 if (pageMaker.prev) {
-                    paginationHtml += "<a href='#' onclick='loadPage(" + (pageMaker.startPage - 1) + ")'>이전</a> ";
+                    paginationHtml += "<a href='#' class='page-link' data-page='" + (pageMaker.startPage - 1) + "'>이전</a> ";
                 }
                 for (var i = pageMaker.startPage; i <= pageMaker.endPage; i++) {
-                    paginationHtml += "<a href='#' onclick='loadPage(" + i + ")'>" + i + "</a> ";
+                    paginationHtml += "<a href='#' class='page-link' data-page='" + i + "'>" + i + "</a> ";
                 }
                 if (pageMaker.next) {
-                    paginationHtml += "<a href='#' onclick='loadPage(" + (pageMaker.endPage + 1) + ")'>다음</a>";
+                    paginationHtml += "<a href='#' class='page-link' data-page='" + (pageMaker.endPage + 1) + "'>다음</a>";
                 }
                 $("#pagination").html(paginationHtml);
+
+                // 페이지 링크에 클릭 이벤트를 바인딩합니다.
+                $(".page-link").click(function(event) {
+                    event.preventDefault();
+                    var pageNum = $(this).data("page");
+                    scrollPosition = $(window).scrollTop();  // 현재 스크롤 위치 저장
+                    loadPage(pageNum);
+                });
+
+                // AJAX 요청이 완료된 후 스크롤 위치를 복원합니다.
+                $(window).scrollTop(scrollPosition);
             },
             error: function() {
                 console.log("error");
