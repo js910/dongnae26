@@ -524,7 +524,12 @@ $(document).ready(function() {
                     var row = $("<tr>");
                     row.append($("<td>").text(item.소관기관명).addClass('summary'));
                     row.append($("<td>").text(item.서비스분야).addClass('summary'));
-                    var titleLink = $("<a>").attr("href", "/policy/get?serviceID=" + item.서비스ID).text(item.서비스명);
+                    var titleLink = $("<a>").attr("href", "/policy/get?serviceID=" + item.서비스ID + 
+                    		"&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + 
+                    		"&amount=" + $("#pageForm").find("input[name='amount']").val() + 
+                            "&type=" + $("#searchType").val() + 
+                            "&keyword=" + $("#searchForm").find("input[type='search']").val() + 
+                            "&district=" + $("#pageForm").find("input[name='district']").val()).text(item.서비스명);
                     var titleTd = $("<td>").append(titleLink);
                     row.append(titleTd.addClass('summary'));
                     row.append($("<td>").text(item.서비스목적요약).addClass('summary'));

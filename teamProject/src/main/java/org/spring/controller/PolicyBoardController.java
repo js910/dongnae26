@@ -59,10 +59,10 @@ public class PolicyBoardController {
     }
 	
 	@GetMapping("/get")
-    public String get(@RequestParam("serviceID") String serviceID, Model model, HttpSession session) {
+    public String get(@RequestParam("serviceID") String serviceID, Criteria cri , Model model, HttpSession session) {
         PolicyResponse2 response = policyService.get(serviceID);
         PolicyResponse3 engResponse = convertToEngResponse(response);
-        
+        model.addAttribute("cri", cri);
         if (engResponse.getData() != null && !engResponse.getData().isEmpty()) {
             model.addAttribute("policyDetail", engResponse.getData().get(0));
             UserDTO user = (UserDTO) session.getAttribute("user_info");

@@ -228,7 +228,7 @@ $(document).ready(function() {
     }
 
     $("#list").on("click", function() {
-        location.href = "/policy/list";
+        location.href = "${pageContext.request.contextPath}/policy/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}";
     });
 });
 
