@@ -3,10 +3,6 @@
 
 <%@include file="../includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<c:set var="wageType" value="${pageMaker.cri.wageType}" />
-<c:if test="${wageType == null || wageType == ''}">
-    <c:set var="wageType" value="all" />
-</c:if>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -414,7 +410,29 @@
                                 boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
                             });
                         }
+                        var wageType = $("#pageForm").find("input[name='wageType']").val();
+                        if (!wageType) {
+                            wageType = "all"; // 초기 값 설정
+                        }
+                        $('input[name="wageType"][value="' + wageType + '"]').prop('checked', true);
 
+                        var education = $("#pageForm").find("input[name='education']").val();
+                        if (!education) {
+                            education = "all"; // 초기 값 설정
+                        }
+                        $('input[name="education"][value="' + education + '"]').prop('checked', true);
+
+                        var career = $("#pageForm").find("input[name='career']").val();
+                        if (!career) {
+                            career = "all"; // 초기 값 설정
+                        }
+                        $('input[name="career"][value="' + career + '"]').prop('checked', true);
+
+                        var workDay = $("#pageForm").find("input[name='workDay']").val();
+                        if (!workDay) {
+                            workDay = "all"; // 초기 값 설정
+                        }
+                        $('input[name="workDay"][value="' + workDay + '"]').prop('checked', true);
                         // 페이지네이션 업데이트
                         updatePagination(data.pageMaker);
                     },
