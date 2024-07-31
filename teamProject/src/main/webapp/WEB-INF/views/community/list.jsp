@@ -295,6 +295,21 @@ table tr:hover {
                     boardListHtml += "<td>" + board.formattedRegdate + "</td>";
                     boardListHtml += "</tr>";
                 });
+                if (boardList.length === 0) {
+                    boardListHtml = "<tr><td colspan='7' class='text-center'>검색 결과가 없습니다.</td></tr>";
+                } else {
+                    $.each(boardList, function(index, board) {
+                        boardListHtml += "<tr>";
+                        boardListHtml += "<td>" + board.community_bno + "</td>";
+                        boardListHtml += "<td>" + board.region + "</td>";
+                        boardListHtml += "<td><a href='" + "${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "&pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword + "&area=" + area + "'>" + board.community_title + "</a></td>";
+                        boardListHtml += "<td>" + board.community_content + "</td>";
+                        boardListHtml += "<td>" + board.writer + "</td>";
+                        boardListHtml += "<td>" + board.community_viewcnt + "</td>";
+                        boardListHtml += "<td>" + board.formattedRegdate + "</td>";
+                        boardListHtml += "</tr>";
+                    });
+                }
                 $("#boardList").html(boardListHtml);
 
                 var paginationHtml = "";

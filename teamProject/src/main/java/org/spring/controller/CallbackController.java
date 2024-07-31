@@ -31,9 +31,17 @@ public class CallbackController {
     private UserService userService;
 
     @GetMapping
-    public String callback(@RequestParam("code") String code,
-                           @RequestParam("state") String state,
+    public String callback(@RequestParam(value = "code", required = false) String code,
+                           @RequestParam(value = "state", required = false) String state,
+                           @RequestParam(value = "error", required = false) String error,
+                           @RequestParam(value = "error_description", required = false) String errorDescription,
                            HttpSession session) throws IOException {
+        if (error != null) {
+            // 에러가 발생한 경우
+            session.setAttribute("isLogin", false);
+            return "redirect:/login";
+        }
+
         String storedState = (String) session.getAttribute("state");
         if (storedState == null || !storedState.equals(state)) {
             session.setAttribute("isLogin", false);

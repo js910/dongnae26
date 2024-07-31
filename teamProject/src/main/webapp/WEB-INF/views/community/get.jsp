@@ -253,9 +253,11 @@ textarea {
 </div>
     <!-- 댓글 작성 폼 -->
     <div>
-        <h3>댓글 작성하기</h3>
+   	 <c:if test="${not empty user_email }">
+   	         <h3>댓글 작성하기</h3>
         <textarea id="newCommentContent" rows="4" placeholder="댓글을 입력하세요"></textarea>
         <button id="submitComment">댓글 등록</button>
+     </c:if>
     </div>
 
     <!-- 댓글 수정 모달 -->
