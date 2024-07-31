@@ -42,21 +42,23 @@ public class CultureBoardController {
     	Criteria cri = new Criteria(pageNum, amount);
         int total = cultureboardService.getTotalCount(cri);
         
+        
         System.out.println("total: "+total);
         List<CultureBoardDTO> list = cultureboardService.listAll(cri, culture_area, culture_classify);
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(cri, total));
         model.addAttribute("selectedArea", culture_area);
         model.addAttribute("selectedClassify", culture_classify);
+        
     }
     
     
     
     @GetMapping("/get/{culture_bno}")
-    public String get(@PathVariable("culture_bno") int culture_bno, Model model, HttpSession session) {
+    public String get(@PathVariable("culture_bno") int culture_bno, Criteria cri, Model model, HttpSession session) {
     	CultureBoardDTO dto = cultureboardService.getBoard(culture_bno);
         model.addAttribute("dto", dto);
-        
+        model.addAttribute("cri", cri);
         UserDTO user = (UserDTO) session.getAttribute("user_info");
         if (user != null) {
             int user_num = user.getUser_num();

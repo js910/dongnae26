@@ -56,7 +56,7 @@
                 	<p class="mb-0" style="padding-top: 10px; padding-bottom: 10px;"><span class="text-primary">상세 위치 </span> <i class="fa fa-arrow-right text-primary me-2"></i></p>
                 	<div id="map" style="width: 100%; height: 400px;"></div>
                 </div>
-                <a href="http://localhost:8090/culture/list" class="btn btn-primary rounded-pill py-2 px-4 mt-4 float-end">go back to list</a>
+                <a href="${pageContext.request.contextPath}/culture/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}" class="btn btn-primary rounded-pill py-2 px-4 mt-4 float-end">go back to list</a>
             </div>
         </div>
         <!-- About End -->

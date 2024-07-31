@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <%@include file="../includes/header.jsp"%>
         
@@ -15,126 +16,9 @@
             </div>
         </div>
         <!-- Header End -->
+
 <head>
-    <meta charset="UTF-8">
-    <title>게시판 목록</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style type="text/css">
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* 검색 폼 및 지역 선택 */
-#searchForm, #areaSelect, #select1 {
-    margin-bottom: 20px;
-}
-
-#searchForm label, #searchForm select, #searchForm input {
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-#searchForm input[type="text"], #searchForm select {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-#searchForm button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-#searchForm button:hover {
-    background: #0056b3;
-}
-
-/* 테이블 스타일 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table th, table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-table th {
-    background-color: #007bff;
-    color: #fff;
-}
-
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-table tr:hover {
-    background-color: #e9ecef;
-}
-
-/* 페이지네이션 */
-.pagination {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.pagination a {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.pagination a:hover {
-    background: #0056b3;
-}
-
-/* 글 작성 버튼 */
-.write-link {
-    display: inline-block;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-.write-link:hover {
-    background: #0056b3;
-}
-</style>
     <title>동네26 - 커뮤니티 게시판</title>
 </head>
 <body>

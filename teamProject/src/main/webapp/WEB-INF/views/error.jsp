@@ -107,7 +107,7 @@
 	  font-size: 14px;
 	  text-decoration: none;
 	  text-transform: uppercase;
-	  background: #189cf0;
+	  background: #5bc1ac;
 	  display: inline-block;
 	  padding: 16px 38px;
 	  border: 2px solid transparent;
@@ -120,8 +120,8 @@
 	
 	.notfound a:hover {
 	  background-color: #fff;
-	  border-color: #189cf0;
-	  color: #189cf0;
+	  border-color: #5bc1ac;
+	  color: #5bc1ac;
 	}
 	
 	@media only screen and (max-width: 480px) {

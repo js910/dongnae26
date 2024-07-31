@@ -56,7 +56,7 @@
                             '<tr>' +
                             '<td>' + item.culture_area + '</td>' +
                             '<td>' + item.culture_classify + '</td>' +
-                            '<td><a href="/culture/get/' + item.culture_bno + '">' + item.culture_title + '</a></td>' +
+                            '<td><a href="/culture/get/' + item.culture_bno + '?pageNum=' + pageNum + '&amount=' + amount  + '&area=' + area + '&classify=' + classify + '&type=' + type + '&keyword=' + keyword + '">' + item.culture_title + '</a></td>' +
                             '<td>' + item.culture_place + '</td>' +
                             '<td>' + item.culture_regdate + '</td>' +
                             '</tr>'
