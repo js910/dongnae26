@@ -176,15 +176,15 @@ table tr:hover {
                 <option value="region">거주지</option>
                 <option value="writer">작성자</option>
             </select>
-            <input type="text" name="keyword" placeholder="검색어 입력">
-            <input type="hidden" name="amount" value="10"> <!-- 초기값 10으로 설정 -->
-            <input type="hidden" name="pageNum" value="1"> <!-- 초기값 1로 설정 -->
-            <input type="hidden" name="area" id="selectedArea"> <!-- 선택된 구를 전송하기 위한 hidden 필드 -->
+            <input type="text" name="keyword" value="${cri.keyword}" placeholder="검색어 입력">
+            <input type="hidden" name="pageNum" value="${cri.pageNum}">
+            <input type="hidden" name="amount" value="${cri.amount}">
+            <input type="hidden" name="area" id="selectedArea" value="${cri.area}"> <!-- 선택된 구를 전송하기 위한 hidden 필드 -->
             <button type="submit">검색</button>
         </form>
     </div>
     <label for="area">지역:</label>
-    <select id="areaSelect" name="area">
+       <select id="areaSelect" name="area">
         <option value="" ${selectedArea == '' ? 'selected' : ''}>지역 전체</option>
         <option value="강남구" ${selectedArea == '강남구' ? 'selected' : ''}>강남구</option>
         <option value="강동구" ${selectedArea == '강동구' ? 'selected' : ''}>강동구</option>
@@ -210,6 +210,7 @@ table tr:hover {
         <option value="종로구" ${selectedArea == '종로구' ? 'selected' : ''}>종로구</option>
         <option value="중구" ${selectedArea == '중구' ? 'selected' : ''}>중구</option>
         <option value="중랑구" ${selectedArea == '중랑구' ? 'selected' : ''}>중랑구</option>
+    </select>
     </select>
     <div>
         <label>Show 
@@ -245,27 +246,23 @@ table tr:hover {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
-        // 초기 페이지 로딩 시 데이터 표시
         loadBoardList();
 
-        // 검색 폼 제출
         $("#searchForm").submit(function(event) {
-            event.preventDefault(); // 폼 제출 방지
-            $("#searchForm input[name='pageNum']").val(1); // 검색 시 페이지 번호 초기화
+            event.preventDefault();
+            $("#searchForm input[name='pageNum']").val(1);
             loadBoardList();
         });
 
-        // Show 변경 시 데이터 갱신
         $("#select1").change(function() {
-            $("#searchForm input[name='amount']").val($(this).val()); // 선택한 amount 값을 폼에 설정
-            $("#searchForm input[name='pageNum']").val(1); // 페이지 번호 초기화
+            $("#searchForm input[name='amount']").val($(this).val());
+            $("#searchForm input[name='pageNum']").val(1);
             loadBoardList();
         });
 
-        // 지역 선택 시 데이터 갱신
         $("#areaSelect").change(function() {
-            $("#searchForm input[name='area']").val($(this).val()); // 선택한 area 값을 hidden 필드에 설정
-            $("#searchForm input[name='pageNum']").val(1); // 페이지 번호 초기화
+            $("#searchForm input[name='area']").val($(this).val());
+            $("#searchForm input[name='pageNum']").val(1);
             loadBoardList();
         });
     });
@@ -274,28 +271,34 @@ table tr:hover {
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/community/getList",
-            data: $("#searchForm").serialize(), // 폼 데이터 직렬화
+            data: $("#searchForm").serialize(),
             dataType: "json",
             success: function(response) {
                 var boardList = response.boardlist;
                 var pageMaker = response.pageMaker;
+                var pageNum = $("#searchForm").find("input[name='pageNum']").val();
+                var amount = $("#searchForm").find("input[name='amount']").val();
+                var keyword = $("#searchForm").find("input[name='keyword']").val();
+                var area = $("#searchForm").find("input[name='area']").val();
 
-                // 게시물 목록 업데이트
                 var boardListHtml = "";
-                $.each(boardList, function(index, board) {
-                    boardListHtml += "<tr>";
-                    boardListHtml += "<td>" + board.community_bno + "</td>";
-                    boardListHtml += "<td>" + board.region + "</td>";
-                    boardListHtml += "<td><a href='${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "'>" + board.community_title + "</a></td>";
-                    boardListHtml += "<td>" + board.community_content + "</td>";
-                    boardListHtml += "<td>" + board.writer + "</td>";
-                    boardListHtml += "<td>" + board.community_viewcnt + "</td>";
-                    boardListHtml += "<td>" + board.formattedRegdate + "</td>";
-                    boardListHtml += "</tr>";
-                });
+                if (boardList.length === 0) {
+                    boardListHtml = "<tr><td colspan='7' class='text-center'>검색 결과가 없습니다.</td></tr>";
+                } else {
+                    $.each(boardList, function(index, board) {
+                        boardListHtml += "<tr>";
+                        boardListHtml += "<td>" + board.community_bno + "</td>";
+                        boardListHtml += "<td>" + board.region + "</td>";
+                        boardListHtml += "<td><a href='" + "${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "&pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword + "&area=" + area + "'>" + board.community_title + "</a></td>";
+                        boardListHtml += "<td>" + board.community_content + "</td>";
+                        boardListHtml += "<td>" + board.writer + "</td>";
+                        boardListHtml += "<td>" + board.community_viewcnt + "</td>";
+                        boardListHtml += "<td>" + board.formattedRegdate + "</td>";
+                        boardListHtml += "</tr>";
+                    });
+                }
                 $("#boardList").html(boardListHtml);
 
-                // 페이지네이션 업데이트
                 var paginationHtml = "";
                 if (pageMaker.prev) {
                     paginationHtml += "<a href='#' onclick='loadPage(" + (pageMaker.startPage - 1) + ")'>이전</a> ";
@@ -307,6 +310,9 @@ table tr:hover {
                     paginationHtml += "<a href='#' onclick='loadPage(" + (pageMaker.endPage + 1) + ")'>다음</a>";
                 }
                 $("#pagination").html(paginationHtml);
+            },
+            error: function() {
+                console.log("error");
             }
         });
     }

@@ -227,7 +227,7 @@ textarea {
     </div>
 
     <div class="button-group">
-        <a href="${pageContext.request.contextPath}/community/list">목록으로</a>
+		<a href="${pageContext.request.contextPath}/community/list?pageNum=${param.pageNum}&amount=${param.amount}&type=${param.type}&keyword=${param.keyword}&area=${param.area}">목록으로</a>
         <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
             <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
             <form id="deleteForm" action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
@@ -253,9 +253,11 @@ textarea {
 </div>
     <!-- 댓글 작성 폼 -->
     <div>
-        <h3>댓글 작성하기</h3>
+   	 <c:if test="${not empty user_email }">
+   	         <h3>댓글 작성하기</h3>
         <textarea id="newCommentContent" rows="4" placeholder="댓글을 입력하세요"></textarea>
         <button id="submitComment">댓글 등록</button>
+     </c:if>
     </div>
 
     <!-- 댓글 수정 모달 -->

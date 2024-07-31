@@ -133,6 +133,7 @@ public class CommunityBoardController {
         PageDTO pageResult = new PageDTO(cri, total);
         System.out.println(total);
         model.addAttribute("pageMaker", pageResult);
+        model.addAttribute("cri", cri);
         return "community/list"; 
     }
     
@@ -157,8 +158,9 @@ public class CommunityBoardController {
     
     
     @GetMapping("/get")
-    public String getList(@RequestParam("community_bno") Integer community_bno, Model model, HttpSession session,
+    public String getList(@RequestParam("community_bno") Integer community_bno, Criteria cri, Model model, HttpSession session,
             HttpServletRequest request, HttpServletResponse response) {
+    	model.addAttribute("cri", cri);
     	UserDTO user = (UserDTO) session.getAttribute("user_info");
         String name = user != null ? user.getUser_name() : null;
         Integer userId = user != null ? user.getUser_num() : null;
