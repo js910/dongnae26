@@ -2,37 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <%@include file="../includes/header.jsp"%>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="../main" class="nav-item nav-link">Home</a>
-                        <a href="/policy/list" class="nav-item nav-link">정책</a>
-                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
-                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
-                        <a href="/community/list" class="nav-item nav-link active">커뮤니티</a>
-                        <!-- 
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="destination.html" class="dropdown-item">Destination</a>
-                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
-                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
-                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
-                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
-                         -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
-                    </div>
-                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
-                </div>
-            </nav>
-        <!-- Navbar & Hero End -->
         
         <!-- Header Start -->
         <div class="container-fluid bg-breadcrumb">
@@ -166,12 +135,13 @@ table tr:hover {
     background: #0056b3;
 }
 </style>
+    <title>동네26 - 커뮤니티 게시판</title>
 </head>
 <body>
     <div>
         <form id="searchForm" action="${pageContext.request.contextPath}/community/getList" method="post">
             <label for="type">검색 유형:</label>
-            <select id="type" name="type">
+            <select class="form-select form-control" id="type" name="type">
                 <option value="all">전체</option>
                 <option value="community_title">제목</option>
                 <option value="community_content">내용</option>
@@ -213,7 +183,6 @@ table tr:hover {
         <option value="중구" ${selectedArea == '중구' ? 'selected' : ''}>중구</option>
         <option value="중랑구" ${selectedArea == '중랑구' ? 'selected' : ''}>중랑구</option>
     </select>
-    </select>
     <div>
         <label>Show 
             <select id="select1" name="select1">
@@ -224,9 +193,19 @@ table tr:hover {
         </label>
     </div>
     <div id="content">
-        <table id="community_board">
-            <thead>
-                <tr>
+        <!-- /.row -->
+            <div class="row">
+                <div class="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Hover Rows
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="community_board" class="table table-hover">
+                                    <thead>
+                                        <tr>
                     <th>글번호</th>
                     <th>구</th>
                     <th>제목</th>
@@ -235,11 +214,18 @@ table tr:hover {
                     <th>조회수</th>
                     <th>작성일</th>
                 </tr>
-            </thead>
-            <tbody id="boardList">
-                <!-- 게시물 목록을 여기에 렌더링 -->
-            </tbody>
-        </table>
+                                    </thead>
+                                    <tbody id="boardList">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+               </div> 
         <div class="pagination" id="pagination">
             <!-- 페이지네이션 링크를 여기에 렌더링 -->
         </div>

@@ -3,6 +3,8 @@
 
 <%@include file="../includes/header.jsp"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<title>동네26 - 일자리 정보 게시판</title>
+
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -150,25 +152,10 @@
         border-left: none;
         border-right: none;
     }
-    td a:hover{
-        color: blue;
-    }
+
 </style>
 
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-    <span class="fa fa-bars"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarCollapse">
-    <div class="navbar-nav ms-auto py-0">
-        <a href="../main" class="nav-item nav-link">Home</a>
-        <a href="/policy/list" class="nav-item nav-link">정책</a>
-        <a href="/job/list" class="nav-item nav-link active">일자리 정보</a>
-        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
-        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
-    </div>
-</div>
-</nav>
-<!-- Navbar & Hero End -->
+
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
@@ -279,6 +266,7 @@
                 </table>           
             </form>
         </div>
+
         <div class="form-group input-group">
             <label for="amount">게시글 갯수:</label>
             <select id="amount" name="amount" class="form-control">
@@ -287,6 +275,7 @@
                 <option value="30" ${pageMaker.cri.amount == 30 ? "selected" : ""}>30</option>
             </select>
         </div>
+        <!-- 
         <table id="boardTable" class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -299,6 +288,38 @@
             </thead>
             <tbody></tbody>
         </table>
+         -->
+         <!-- /.row -->
+            <div class="row">
+                <div class="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Hover Rows
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="boardTable" class="table table-hover">
+                                    <thead>
+					                    <tr>
+						                    <th>자치구</th>
+						                    <th>회사명</th>
+						                    <th>채용공고명/모집요강</th>
+						                    <th>근무시간</th>
+						                    <th>등록일</th>
+                						</tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+         	</div>
         <div>
             <ul class="pagination" id="pagination">
                 <c:if test="${pageMaker.prev}">
