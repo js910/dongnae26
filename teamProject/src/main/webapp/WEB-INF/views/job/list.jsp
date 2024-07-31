@@ -2,7 +2,11 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 
 <%@include file="../includes/header.jsp"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="wageType" value="${pageMaker.cri.wageType}" />
+<c:if test="${wageType == null || wageType == ''}">
+    <c:set var="wageType" value="all" />
+</c:if>
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -373,30 +377,43 @@
                         var boardTbody = $("#boardTable tbody"); // 테이블 본문(tbody) 요소 저장
                         boardTbody.empty(); // 테이블 본문을 비워서 기존 데이터를 삭제
 
-                        $.each(data.list, function(index, jobBoard) {
-                            var row = $("<tr>"); // tr태그 생성
+                        if (data.list.length === 0) {
+                            var noDataMessage = $("<tr>").append($("<td>").attr("colspan", 5).text("검색 결과가 없습니다."));
+                            boardTbody.append(noDataMessage);
+                        } else {
+                            $.each(data.list, function(index, jobBoard) {
+                                var row = $("<tr>"); // tr태그 생성
 
-                            row.append($("<td>").text(jobBoard.mngrInsttNm)); // 자치구 추가
-                            var companyName = $("<td>").text(jobBoard.cmpnyNm); // 기업명 추가
-                            row.append(companyName);
+                                row.append($("<td>").text(jobBoard.mngrInsttNm)); // 자치구 추가
+                                var companyName = $("<td>").text(jobBoard.cmpnyNm); // 기업명 추가
+                                row.append(companyName);
 
-                            var jobTitle = $("<td>");
-                            var titleLink = $("<a>").attr("href", "/job/detail?jobId=" + jobBoard.joRegistNo + "&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + "&amount=" + $("#pageForm").find("input[name='amount']").val() + "&type=" + $("#pageForm").find("input[name='type']").val() + "&keyword=" + $("#pageForm").find("input[name='keyword']").val() + "&district=" + $("#pageForm").find("input[name='district']").val()).text(jobBoard.joSj);
+                                var jobTitle = $("<td>");
+                                var titleLink = $("<a>")
+                                    .attr("href", "/job/detail?jobId=" + jobBoard.joRegistNo + 
+                                        "&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + 
+                                        "&amount=" + $("#pageForm").find("input[name='amount']").val() + 
+                                        "&type=" + $("#searchType").val() + 
+                                        "&keyword=" + $("#searchForm").find("input[type='search']").val() + 
+                                        "&district=" + $("#pageForm").find("input[name='district']").val() + 
+                                        "&wageType=" + $("#pageForm").find("input[name='wageType']").val() + 
+                                        "&career=" + $("#pageForm").find("input[name='career']").val() + 
+                                        "&education=" + $("#pageForm").find("input[name='education']").val() + 
+                                        "&workDay=" + $("#pageForm").find("input[name='workDay']").val())
+                                    .text(jobBoard.joSj);
+                                jobTitle.append(titleLink);
+                                jobTitle.append($("<div>").addClass("wage").text(jobBoard.hopeWage)); // 구인제목/모집요강 추가
+                                row.append(jobTitle);
 
-                            jobTitle.append(titleLink);
-                            jobTitle.append($("<div>").addClass("wage").text(jobBoard.hopeWage)); // 구인제목/모집요강 추가
-                            row.append(jobTitle);
+                                var holidayAndWorkTime = $("<td>").text(jobBoard.holidayNm + '(' + jobBoard.workTimeNm + ')');
+                                row.append(holidayAndWorkTime);
 
-                            var holidayAndWorkTime = $("<td>").text(jobBoard.holidayNm + '(' + jobBoard.workTimeNm + ')');
-                            row.append(holidayAndWorkTime);
-                            
-                            boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
-                            
-                            var regDate = $("<td>").text(formatDate(jobBoard.joRegDt)); // 등록일/마감일 추가
-                            row.append(regDate);
+                                var regDate = $("<td>").text(formatDate(jobBoard.joRegDt)); // 등록일/마감일 추가
+                                row.append(regDate);
 
-                            boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
-                        });
+                                boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
+                            });
+                        }
 
                         // 페이지네이션 업데이트
                         updatePagination(data.pageMaker);

@@ -75,7 +75,7 @@ public interface UserMapper {
 			+ "VALUES (#{user_num}, #{inquiry_purpose}, #{inquiry_details}, NOW())")
 	public void insertInquiry(InquiryDTO inquiryDTO);
 
-	@Select("SELECT * FROM user_inquiry WHERE user_num = #{userNum}")
+	@Select("SELECT * FROM user_inquiry WHERE user_num = #{userNum} ORDER BY inquiry_regdate DESC LIMIT 5")
 	public List<InquiryDTO> selectAllInquiries(int userNum);
 	
 	

@@ -227,7 +227,7 @@ textarea {
     </div>
 
     <div class="button-group">
-        <a href="${pageContext.request.contextPath}/community/list">목록으로</a>
+		<a href="${pageContext.request.contextPath}/community/list?pageNum=${param.pageNum}&amount=${param.amount}&type=${param.type}&keyword=${param.keyword}&area=${param.area}">목록으로</a>
         <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
             <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
             <form id="deleteForm" action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
