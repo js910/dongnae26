@@ -61,6 +61,7 @@
         </div>
         <!-- About End -->
 		
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50c5816205d710d59a41cf8115b05655"></script>
 	    <script type="text/javascript">
 	        var mapContainer = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

@@ -12,12 +12,10 @@
     <title>채용 상세 정보</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
             background-color: #f4f4f4;
         }
-        .container {
+        .container2 {
             width: 60%;
             margin: 0 auto;
             background: #fff;
@@ -105,17 +103,7 @@
 </head>
 <body>
 
-        
-        <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px;">
-                <h3 class="text-white display-3 mb-4">일자리 정보 상세보기</h3>
-                <ol class="breadcrumb justify-content-center mb-0">
-                </ol>    
-            </div>
-        </div>
-        <!-- Header End -->
-    <div class="container">
+    <div class="container2">
         <h1>채용 상세 정보</h1>
 
         <div class="section">
@@ -225,7 +213,7 @@
             </div>
         </div>
 
-         <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}&wageType=${cri.wageType}&career=${cri.career}&education=${cri.education}&workDay=${cri.workDay}" class="back-link">채용 목록으로 돌아가기</a>
+         <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}" class="back-link">채용 목록으로 돌아가기</a>
     </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
