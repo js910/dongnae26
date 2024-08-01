@@ -1,9 +1,14 @@
 package org.spring.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.spring.domain.BookmarkDTO;
+import org.spring.domain.UserDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
 import org.spring.domain.culture.PageDTO;
@@ -40,22 +45,30 @@ public class CultureBoardController {
         int total = cultureboardService.getTotalCount(cri);
         
         System.out.println("total: "+total);
-        List<CultureBoardDTO> list = cultureboardService.listPage(cri, culture_area, culture_classify);
+        List<CultureBoardDTO> list = cultureboardService.listAll(cri, culture_area, culture_classify);
         model.addAttribute("list", list);
         model.addAttribute("pageMaker", new PageDTO(cri, total));
         model.addAttribute("selectedArea", culture_area);
         model.addAttribute("selectedClassify", culture_classify);
     }
     
+    
+    
     @GetMapping("/get/{culture_bno}")
-    public String get(@PathVariable("culture_bno") int culture_bno, Model model) {
+    public String get(@PathVariable("culture_bno") int culture_bno, Model model, HttpSession session) {
     	CultureBoardDTO dto = cultureboardService.getBoard(culture_bno);
         model.addAttribute("dto", dto);
         
-        String user_email = "test@example.com";
-        model.addAttribute("user_email", user_email);
-        boolean bookmarked = cultureboardServiceImpl.bookmarkChk(culture_bno, user_email);
-        model.addAttribute("bookmarked", bookmarked);
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if (user != null) {
+            int user_num = user.getUser_num();
+            boolean bookmarked = cultureboardService.bookmarkChk(culture_bno, user_num);
+            model.addAttribute("bookmarked", bookmarked);
+            model.addAttribute("user_num", user_num);
+        } else {
+            model.addAttribute("bookmarked", false);
+            model.addAttribute("user_num", null);
+        }
         return "culture/get";
     }
     
@@ -64,10 +77,12 @@ public class CultureBoardController {
     public Map<String, Object> ajaxList(@RequestParam(value="pageNum") int pageNum,
                                         @RequestParam(value="amount") int amount,
                                         @RequestParam(value="area") String culture_area,
-                                        @RequestParam(value="classify") String culture_classify) {
+                                        @RequestParam(value="classify") String culture_classify,
+                                        Criteria cri) {
     	System.out.println("ajax >> " + "pageNum: " + pageNum + ", amount: " + amount);
-        Criteria cri = new Criteria(pageNum, amount);
-        cri.setArea(culture_area);
+        cri.setPageNum(pageNum);
+    	cri.setAmount(amount);
+    	cri.setArea(culture_area);
         cri.setClassify(culture_classify);
         
         int total = cultureboardService.getTotalCount(cri);
@@ -82,13 +97,48 @@ public class CultureBoardController {
     
     @ResponseBody
     @PostMapping("/bookmark")
-    public boolean policyBookmark(@RequestParam("user_email") String userEmail, @RequestParam("culture_bno") int culture_bno) throws Exception {
-        boolean bookmark = cultureboardServiceImpl.bookmarkChk(culture_bno, userEmail);
-        if (!bookmark) {
-        	cultureboardServiceImpl.bookmark(culture_bno, userEmail);
-        } else {
-        	cultureboardServiceImpl.bookmarkDel(culture_bno, userEmail);
+    public Map<String, Object> cultureBookmark(HttpSession session, @RequestParam("culture_bno") int culture_bno,
+                                                               @RequestParam("culture_classify") String culture_classify,
+                                                               @RequestParam("culture_title") String culture_title,
+                                                               @RequestParam("culture_place") String culture_place) throws Exception {
+        Map<String, Object> result = new HashMap<>();
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        if(user == null) {
+            result.put("loggedIn", false);
+            return result;
         }
-        return !bookmark;
+        int user_num = user.getUser_num();
+        boolean bookmark = cultureboardService.bookmarkChk(culture_bno, user_num);
+        if (!bookmark) {
+        	cultureboardService.bookmark(culture_bno, user_num, culture_classify, culture_title, culture_place);
+        } else {
+        	cultureboardService.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
+        }
+        result.put("loggedIn", true);
+        result.put("bookmarked", !bookmark);
+        return result;
+    }
+    
+    @GetMapping("/bookmarks")public String showCultureBookmarks(Model model, HttpSession session) {
+        // Log entry into the method
+        System.out.println("showCultureBookmarks");
+
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        System.out.println("User session info: " + user);
+
+        if (user != null) {
+            int user_num = user.getUser_num();
+           
+
+            List<BookmarkDTO> bookmarks = cultureboardService.getBookmarkedPosts(user_num);
+            System.out.println("bookmarks: " + bookmarks);
+
+            model.addAttribute("cultureBookmarks", bookmarks);
+        } else {
+            model.addAttribute("cultureBookmarks", new ArrayList<>());
+        }
+
+        System.out.println("Model after setting attributes: " + model);
+        return "culture/bookmarks";  
     }
 }

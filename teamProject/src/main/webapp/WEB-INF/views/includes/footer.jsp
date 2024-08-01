@@ -43,6 +43,7 @@
                             <a href=""><i class="fas fa-angle-right me-2"></i> Cookie policy</a>
                         </div>
                     </div>
+                    <!-- 
                     <div class="col-md-6 col-lg-6 col-xl-3">
                         <div class="footer-item">
                             <div class="row gy-3 gx-2 mb-4">
@@ -84,6 +85,7 @@
                             </div>
                         </div>
                     </div>
+                     -->
                 </div>
             </div>
         </div>

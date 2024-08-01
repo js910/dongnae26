@@ -4,24 +4,17 @@
 <!-- Header -->
 <%@include file="includes/header.jsp"%>
 
-
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                <a href="" class="navbar-brand p-0">
-                    <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>Travela</h1>
-                    <!-- <img src="img/logo.png" alt="Logo"> -->
-                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="main.jsp" class="nav-item nav-link active">Home</a>
+                        <a href="../main" class="nav-item nav-link active">Home</a>
                         <a href="/policy/list" class="nav-item nav-link">정책</a>
                         <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
-                        <a href="/culture/list" class="nav-item nav-link">문화 행사</a>
+                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
                         <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
+                        <!-- 
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0">
@@ -34,11 +27,13 @@
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                         -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
                     </div>
-                    <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a>
+                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
                 </div>
             </nav>
+        <!-- Navbar & Hero End -->
 
             <!-- Carousel Start -->
             <div class="carousel-header">

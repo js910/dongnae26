@@ -12,6 +12,9 @@ public class UserDTO {
     private String user_name;
     private String user_phone;
     private String user_interest;
+    private String login_type;
+    
+   
     
     private String pw;
     private String email;
@@ -22,6 +25,7 @@ public class UserDTO {
     public UserDTO(String user_email) {
     	this.user_email = user_email;
     }
+    
     
     public UserDTO(Integer user_num, String user_email, String user_pw, String user_name, String user_phone, String user_interest) {
         this.user_num = user_num;

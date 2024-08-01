@@ -242,15 +242,15 @@
 </select>
 
  	<insert id="bookmarkJob" parameterType="map">
-	    INSERT INTO job_bookmark_board (joRegistNo, user_num, cmpnyNm, bsnsSumryCn)
-	    VALUES (#{joRegistNo}, #{user_num}, #{cmpnyNm}, #{bsnsSumryCn})
+	    INSERT INTO job_bookmark_board (joRegistNo, user_num, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage)
+	    VALUES (#{joRegistNo}, #{user_num}, #{cmpnyNm}, #{bsnsSumryCn}, #{receptClosNm}, #{hopeWage})
 	</insert>
  	
  	
  	
  	<insert id="bookmark">
-        INSERT INTO bookmark_job_board (joRegistNo, user_num, cmpnyNm, bsnsSumryCn) 
-        VALUES (#{joRegistNo}, #{user_num}, #{cmpnyNm}, #{bsnsSumryCn})
+        INSERT INTO bookmark_job_board (joRegistNo, user_num, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage) 
+        VALUES (#{joRegistNo}, #{user_num}, #{cmpnyNm}, #{bsnsSumryCn}, #{receptClosNm}, #{hopeWage})
     </insert>
 
     <delete id="bookmarkDel">
@@ -266,11 +266,14 @@
 
     <select id="getUserBookmarks" resultType="org.spring.domain.BookmarkDTO">
         SELECT 
-            joRegistNo as id, 
-            cmpnyNm as name, 
-            bsnsSumryCn as summary 
+            joRegistNo, 
+            cmpnyNm , 
+            bsnsSumryCn,
+            receptClosNm,
+            hopeWage
         FROM bookmark_job_board 
         WHERE user_num = #{user_num}
+        LIMIT 5
     </select>
     
     </mapper>

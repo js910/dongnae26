@@ -25,13 +25,13 @@
         SELECT * FROM community_comment
         WHERE community_cno = #{community_cno}
     </select>
-
+    
     <select id="getCommentsByBoardId" parameterType="int" resultType="org.spring.domain.community.CommunityCommentDTO"> <!-- 추가 -->
         SELECT * FROM community_comment
         WHERE community_bno = #{community_bno}
     </select>
-
+    
     <select id="getCommentCno" parameterType="int">
-        SELECT * FROM community_comment WHERE user_num = #{user_num}
+    	SELECT * FROM community_comment WHERE user_num = #{user_num}
     </select>
 </mapper>

@@ -25,17 +25,48 @@
     </insert>-->
 
 
+    <!-- 구글 로그인
+    <insert id="insertOrUpdate" parameterType="org.spring.domain.UserDTO">
+        INSERT INTO user (social_user_email, user_name, login_type)
+        VALUES (#{user_email}, #{user_name}, #{login_type})
+        ON DUPLICATE KEY UPDATE user_name = VALUES(user_name),user_num = LAST_INSERT_ID(user_num)
+    </insert> -->
+    
     <!-- 구글 로그인 -->
     <insert id="insertOrUpdate" parameterType="org.spring.domain.UserDTO">
-        INSERT INTO user (social_user_email, user_name)
-        VALUES (#{user_email}, #{user_name})
-        ON DUPLICATE KEY UPDATE user_name = VALUES(user_name),user_num = LAST_INSERT_ID(user_num)
-    </insert>
+	    INSERT INTO user (social_user_email, user_name, login_type)
+	    VALUES (#{user_email}, #{user_name}, #{login_type})
+	    ON DUPLICATE KEY UPDATE 
+	        user_name = VALUES(user_name),
+	        login_type = VALUES(login_type)
+	</insert>
+	
+	
+	<select id="findUserByEmail" parameterType="string" resultType="org.spring.domain.UserDTO">
+    SELECT * FROM user WHERE social_user_email = #{user_email}
+</select>
+
+<update id="updateGoogleUser" parameterType="org.spring.domain.UserDTO">
+    UPDATE user 
+    SET 
+        user_name = #{user_name},
+        login_type = #{login_type}
+    WHERE social_user_email = #{user_email}
+</update>
+
+<insert id="insertGoogleUser" parameterType="org.spring.domain.UserDTO">
+    INSERT INTO user (social_user_email, user_name, login_type)
+    VALUES (#{user_email}, #{user_name}, #{login_type})
+</insert>
+	
+	
+	
+    
 
     <!-- 회원가입 -->
     <insert id="registerUser" parameterType="org.spring.domain.RegisterDTO">
-        INSERT INTO user (user_email,user_pw,user_name,user_phone)
-        VALUES (#{user_email},#{user_pw},#{user_name},#{user_phone})
+        INSERT INTO user (user_email,user_pw,user_name,user_phone,login_type)
+        VALUES (#{user_email},#{user_pw},#{user_name},#{user_phone},"basic")
         ON DUPLICATE KEY UPDATE 
         user_email = VALUES(user_email)
     </insert>
@@ -70,10 +101,10 @@
 		WHERE user_email = #{email};
 	</select>
 	
-	<update id="updatePassword" parameterType="org.spring.domain.UserDTO">
+	<update id="updatePassword" parameterType="org.spring.domain.UserDTO" >
     	UPDATE user 
-    	SET user_pw = #{user_pw} 
-    	WHERE user_email = #{user_email};
+    	SET user_pw = #{user_pw}
+    	WHERE user_email = #{email} AND login_type = #{login_type};
 	</update>
 
 

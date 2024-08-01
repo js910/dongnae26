@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.spring.domain.BookmarkDTO;
 import org.spring.domain.UserDTO;
+import org.spring.domain.policy.PolicyBookmarkDTO;
+import org.spring.service.CultureBoardService;
 import org.spring.service.JobBoardService;
 import org.spring.service.PolicyBoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class BookmarkController {
 
     @Autowired
     private PolicyBoardService policyBoardService;
+    @Autowired
+    private CultureBoardService cultureBoardService;
 
     @ResponseBody
     @PostMapping("/bookmark")
@@ -42,24 +46,26 @@ public class BookmarkController {
             return result;
         }
         int user_num = user.getUser_num();
-        boolean bookmark;
-        if ("job".equals(type)) {
-            bookmark = jobBoardService.bookmarkChk(id, user_num);
-            if (!bookmark) {
-                jobBoardService.bookmark(id, user_num, name, summary);
-            } else {
-                jobBoardService.bookmarkDel(id, user_num, summary, summary);
-            }
-        } else if ("policy".equals(type)) {
-            bookmark = policyBoardService.bookmarkChk(id, user_num);
-            if (!bookmark) {
-                policyBoardService.bookmark(id, user_num, name, summary);
-            } else {
-                policyBoardService.bookmarkDel(id, user_num);
-            }
-        } else {
-            throw new IllegalArgumentException("Invalid bookmark type");
-        }
+        boolean bookmark =false;
+//        if ("job".equals(type)) {
+//            bookmark = jobBoardService.bookmarkChk(id, user_num);
+//            if (!bookmark) {
+//                jobBoardService.bookmark(id, user_num, name, summary);
+//            } else {
+//                jobBoardService.bookmarkDel(id, user_num, summary, summary);
+//            }
+//        } 
+//        else if ("policy".equals(type)) {
+//           bookmark = policyBoardService.bookmarkChk(id, user_num);
+//            if (!bookmark) {
+//                policyBoardService.bookmark(id, user_num, name, summary);
+//            } else {
+//                policyBoardService.bookmarkDel(id, user_num);
+//            }
+//        } 
+//        else {
+//            throw new IllegalArgumentException("Invalid bookmark type");
+//        }
         result.put("loggedIn", true);
         result.put("bookmarked", !bookmark);
         return result;
@@ -74,8 +80,10 @@ public class BookmarkController {
         int user_num = user.getUser_num();
         List<BookmarkDTO> jobBookmarks = jobBoardService.getUserBookmarks(user_num);
         List<BookmarkDTO> policyBookmarks = policyBoardService.getUserBookmarks(user_num);
+        List<BookmarkDTO> cultureBookmarks = cultureBoardService.getUserBookmarks(user_num);
         model.addAttribute("jobBookmarks", jobBookmarks);
         model.addAttribute("policyBookmarks", policyBookmarks);
+        model.addAttribute("cultureBookmarks", cultureBookmarks);
         return "bookmarks"; // JSP page name
     }
 }

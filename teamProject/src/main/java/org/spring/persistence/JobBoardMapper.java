@@ -37,10 +37,10 @@ public interface JobBoardMapper {
 	public JobBoardDTO getJobDetail(String jobId);
 
 	// 북마크 추가
-    public void bookmark(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num, @Param("cmpnyNm") String cmpnyNm, @Param("bsnsSumryCn") String bsnsSumryCn);
+    public void bookmark(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num, @Param("cmpnyNm") String cmpnyNm, @Param("bsnsSumryCn") String bsnsSumryCn, @Param("receptClosNm") String receptClosNm, @Param("hopeWage") String hopeWage);
 
     // 북마크 삭제
-    public void bookmarkDel(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num, @Param("cmpnyNm") String cmpnyNm, @Param("bsnsSumryCn") String bsnsSumryCn);
+    public void bookmarkDel(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num, @Param("cmpnyNm") String cmpnyNm, @Param("bsnsSumryCn") String bsnsSumryCn, @Param("receptClosNm") String receptClosNm ,@Param("hopeWage") String hopeWage);
 
     // 북마크 여부 확인
     public int bookmarkChk(@Param("joRegistNo") String joRegistNo, @Param("user_num") int user_num);

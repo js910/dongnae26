@@ -38,24 +38,26 @@ public class LoginController {
 			HttpSession session, RedirectAttributes redirectAttributes) {
 		logger.info("사용자 로그인 실행"+user_email);
 		UserDTO user = new UserDTO(user_email); 
+		user.setLogin_type("basic");
+		System.out.println("첫 user: "+ user);
 		user = userService.getUserInfo(user);
-		System.out.println(user);
+		System.out.println("user : " + user);
 		
-		if(userService.login(user_email, user_pw) != null) {
-			
-			session.setAttribute("loginUserID", user_email);
-			session.setAttribute("loginType", "basic");
-			logger.info("사용자 로그인 성공 : "+user_email);
-			
-			session.setAttribute("user_info", user);
-			
-			redirectAttributes.addFlashAttribute("메세지","로그인 성공");
+		if (user != null && userService.login(user_email, user_pw) != null) {
+	        session.setAttribute("loginUserID", user_email);
+	        session.setAttribute("loginType", "basic");
+	        logger.info("사용자 로그인 성공 : " + user_email);
+	        
+	        session.setAttribute("user_info", user);
+	        redirectAttributes.addFlashAttribute("message", "로그인 성공");
+	        return "/main";
 		}else {
 			logger.info("로그인 실패");
-			redirectAttributes.addFlashAttribute("error","로그인 실패");
+	        redirectAttributes.addFlashAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
+	        return "redirect:/login";
 		}
 		
-		return "redirect:/main";
+		
 	}
 	
 	@GetMapping("/logout")

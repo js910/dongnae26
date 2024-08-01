@@ -3,6 +3,7 @@ package org.spring.service;
 import java.util.List;
 import java.util.Map;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
 import org.spring.persistence.CultureBoardMapper;
@@ -16,14 +17,8 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	private CultureBoardMapper cultureboardMapper;
 
 	@Override
-	public List<CultureBoardDTO> listAll() {
-		System.out.println("service listAll ~~~" + cultureboardMapper.selectAll());
-		return cultureboardMapper.selectAll();
-	}
-	
-	@Override
     public CultureBoardDTO getBoard(int culture_bno) {
-        return cultureboardMapper.selectBoard(culture_bno); // 추가된 메서드
+        return cultureboardMapper.selectBoard(culture_bno); 
     }
 
 	@Override
@@ -36,20 +31,35 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 		return cultureboardMapper.getTotalCount(cri);
 	}
 
-	
-	// 북마크 추가 메서드
-	public void bookmark(int culture_bno, String user_email) {
-		cultureboardMapper.bookmark(culture_bno, user_email);
+	@Override
+	public boolean bookmarkChk(int culture_bno, int user_num) {
+		return cultureboardMapper.bookmarkChk(culture_bno, user_num) > 0;
 	}
-	// 북마크 삭제 메서드
-	public void bookmarkDel(int culture_bno, String user_email) {
-		cultureboardMapper.bookmarkDel(culture_bno, user_email);
+	@Override
+	public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title, String culture_place) {
+		cultureboardMapper.bookmark(culture_bno, user_num, culture_classify, culture_title, culture_place);
 	}
-	// 북마크 여부 확인 메서드
-	public boolean bookmarkChk(int culture_bno, String user_email) {
-	    return cultureboardMapper.bookmarkChk(culture_bno, user_email) > 0;
+	@Override
+	public void bookmarkDel(int culture_bno, int user_num, String culture_classify, String culture_title) {
+		cultureboardMapper.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
 	}
 
+	@Override
+	public List<CultureBoardDTO> listAll(Criteria cri, String culture_area, String culture_classify) {
+		System.out.println("service listAll ~~~" + cultureboardMapper.selectAll(cri, culture_area, culture_classify));
+		return cultureboardMapper.selectAll(cri, culture_area, culture_classify);
+	}
 
+//	  @Override
+    public List<BookmarkDTO> getBookmarkedPosts(int user_num) {
+        System.out.println("Service: Fetching bookmarks for user_num: " + user_num);
+        List<BookmarkDTO> bookmarks = cultureboardMapper.getBookmarkedPosts(user_num);
+        System.out.println("Service: Retrieved bookmarks: " + bookmarks);
+        return bookmarks;
+    }
+    public List<BookmarkDTO> getUserBookmarks(int user_num) {
+		
+		 return cultureboardMapper.getUserBookmarks(user_num);
+	}
 
 }

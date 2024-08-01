@@ -111,12 +111,12 @@ public class JobBoardService {
 		return jobBoardMapper.bookmarkChk(joRegistNo, user_num) > 0;
 	}
 
-	public void bookmarkDel(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
-		jobBoardMapper.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+	public void bookmarkDel(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn, String receptClosNm,String hopeWage) {
+		jobBoardMapper.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage);
 	}
 
-	public void bookmark(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn) {
-		jobBoardMapper.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);		
+	public void bookmark(String joRegistNo, int user_num, String cmpnyNm, String bsnsSumryCn, String receptClosNm, String hopeWage) {
+		jobBoardMapper.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage);		
 	}
 
 	public List<BookmarkDTO> getUserBookmarks(int user_num) {

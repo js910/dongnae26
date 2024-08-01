@@ -40,22 +40,16 @@ public class PolicyBoardController {
 		int total = response.getMatchCount();
 		PageDTO pageResult = new PageDTO(cri, total);
 		model.addAttribute("pageMaker", pageResult);
-		System.out.println("total: "+response.getMatchCount());
-		
 		return "/policy/list";
 	}
     
 	@ResponseBody
     @PostMapping("/ajaxList")
     public Map<String, Object> ajaxList(@RequestBody Criteria cri) {
-        System.out.println("ajaxList() called");
         PolicyResponse r = policyService.getList(cri);
-
         int total = r.getMatchCount();
 		PageDTO pageResult = new PageDTO(cri, total);
-		
-		System.out.println("total: " + r.getMatchCount());
-	    System.out.println(pageResult.toString());
+		System.out.println("검색 결과 수: " + r.getMatchCount());
 
 	    Map<String, Object> result = new HashMap<>();
 	    result.put("policyapi", r);
@@ -66,16 +60,11 @@ public class PolicyBoardController {
 	
 	@GetMapping("/get")
     public String get(@RequestParam("serviceID") String serviceID, Model model, HttpSession session) {
-        System.out.println("read >>>");
-        policyService.testDatabaseConnection();
         PolicyResponse2 response = policyService.get(serviceID);
         PolicyResponse3 engResponse = convertToEngResponse(response);
-        System.out.println("get: "+engResponse.getData().get(0));
         
         if (engResponse.getData() != null && !engResponse.getData().isEmpty()) {
-        	System.out.println("if문 안: " + engResponse.getData().get(0));
             model.addAttribute("policyDetail", engResponse.getData().get(0));
-            
             UserDTO user = (UserDTO) session.getAttribute("user_info");
             if (user != null) {
                 int user_num = user.getUser_num();
@@ -91,27 +80,27 @@ public class PolicyBoardController {
     }
 	
 	@ResponseBody
-    @PostMapping("/bookmark")
-    public Map<String, Object> policyBookmark(HttpSession session, @RequestParam("serviceID") String serviceID) throws Exception {
-        Map<String, Object> result = new HashMap<>();
-        UserDTO user = (UserDTO) session.getAttribute("user_info");
-        if (user == null) {
-            result.put("loggedIn", false);
-            return result;
-        }
-        int user_num = user.getUser_num();
-        boolean bookmark = policyService.bookmarkChk(serviceID, user_num);
-        if (!bookmark) {
-            policyService.bookmark(serviceID, user_num, "Name placeholder", "Summary placeholder"); // 이름과 요약 정보를 적절히 설정하세요.
-        } else {
-            policyService.bookmarkDel(serviceID, user_num);
-        }
-        result.put("loggedIn", true);
-        result.put("bookmarked", !bookmark);
-        return result;
-    }
-	
-	
+	@PostMapping("/bookmark")
+	public Map<String, Object> policyBookmark(HttpSession session, @RequestBody PolicyBookmarkDTO dto) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		UserDTO user = (UserDTO) session.getAttribute("user_info");
+		if(user==null) {
+			result.put("loggedIn", false);
+	        return result;
+		}
+		int user_num = user.getUser_num();
+	    dto.setUser_num(user_num);
+	    boolean bookmark = policyService.bookmarkChk(dto.getServiceID(), user_num);
+	    
+	    if (!bookmark) {
+	        policyService.bookmark(dto);
+	    } else {
+	        policyService.bookmarkDel(dto);
+	    }
+	    result.put("loggedIn", true);
+	    result.put("bookmarked", !bookmark);
+	    return result;
+	}
 	
 	private PolicyResponse3 convertToEngResponse(PolicyResponse2 response2) {
         PolicyResponse3 response3 = new PolicyResponse3();

@@ -18,24 +18,17 @@
 		    background-image: url('/resources/images/yellow-star.png');
 		}
 	</style>
-	
-        <!-- Navbar & Hero Start -->
-        <div class="container-fluid position-relative p-0">
-            <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                <a href="" class="navbar-brand p-0">
-                    <h1 class="m-0"><i class="fa fa-map-marker-alt me-3"></i>Travela</h1>
-                    <!-- <img src="img/logo.png" alt="Logo"> -->
-                </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="main" class="nav-item nav-link">Home</a>
-                        <a href="about.html" class="nav-item nav-link">정책</a>
-                        <a href="services.html" class="nav-item nav-link">일자리 정보</a>
-                        <a href="list" class="nav-item nav-link active">문화 행사</a>
-                        <a href="blog.html" class="nav-item nav-link">커뮤니티</a>
+                        <a href="../main" class="nav-item nav-link">Home</a>
+		                <a href="/policy/list" class="nav-item nav-link">정책</a>
+		                <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
+		                <a href="/culture/list" class="nav-item nav-link active">문화·행사</a>
+		                <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
                     </div>
                 </div>
             </nav>
@@ -43,17 +36,14 @@
         <!-- Navbar & Hero End -->
 
         <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px;">
-                <h3 class="text-white display-3 mb-4">About Us</h3>
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                    <li class="breadcrumb-item active text-white">About</li>
-                </ol>    
-            </div>
-        </div>
-        <!-- Header End -->
+		<div class="container-fluid bg-breadcrumb">
+		    <div class="container text-center py-5" style="max-width: 900px;">
+		        <h3 class="text-white display-3 mb-4">문화·행사 상세보기</h3>
+		        <ol class="breadcrumb justify-content-center mb-0">
+		        </ol>    
+		    </div>
+		</div>
+		<!-- Header End -->
 
         <!-- About Start -->
         <div class="container-fluid about py-5">
@@ -66,7 +56,7 @@
                     </div>
                     <div class="col-lg-7" style="background: linear-gradient(rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)), url(#);">
                     	<div style="block;">
-						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark(${dto.culture_bno}, '${user_email}')"></span>
+						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}','${dto.culture_place}')"></span>
 						</div>
                         <h5 class="section-about-title pe-3">About Us</h5>
                         <h1 class="mb-4"><span class="text-primary"><c:out value="${dto.culture_title }"/></span></h1>
@@ -142,29 +132,47 @@
 	                }
 	            }
 	            
-	            const bookmarked = ${bookmarked};
-	            if (${bookmarked}) {
-	                $("#bookmark").addClass("bookmarked");
-	            }
-	            function toggleBookmark(culture_bno, userEmail) {
-	                $.ajax({
-	                    type: "POST",
-	                    url: "/board/bookmark",
-	                    dataType: "json",
-	                    data: { 'culture_bno': culture_bno, 'user_email': userEmail },
-	                    success: function(response) {
-	                        if (response) {
-	                            $("#bookmark").addClass("bookmarked");
-	                            alert("북마크 완료");
-	                        } else {
-	                            $("#bookmark").removeClass("bookmarked");
-	                            alert("북마크 취소");
+	            $(document).ready(function() {
+	                const bookmarked = ${bookmarked ? 'true' : 'false'};
+
+	                if (bookmarked) {
+	                    $("#bookmark").addClass("bookmarked");
+	                }
+
+	                window.toggleBookmark = function(culture_bno, culture_classify, culture_title, culture_place) {
+	                    $.ajax({
+	                        type: "POST",
+	                        url: "/culture/bookmark",
+	                        dataType: "json",
+	                        data: {
+	                            'culture_bno': culture_bno,
+	                            'culture_classify': culture_classify,
+	                            'culture_title': culture_title,
+	                            'culture_place' : culture_place
+	                        },
+	                        success: function(response) {
+	                            console.log("AJAX success response:", response);
+	                            if (!response.loggedIn) {
+	                                alert("로그인이 필요한 기능입니다");
+	                                return;
+	                            }
+
+	                            if (response.bookmarked) {
+	                                $("#bookmark").addClass("bookmarked");
+	                                alert("북마크 완료");
+	                            } else {
+	                                $("#bookmark").removeClass("bookmarked");
+	                                alert("북마크 취소");
+	                            }
+	                        },
+	                        error: function(xhr, status, error) {
+	                            console.log("AJAX error response:", status, error);
+	                            alert("북마크 처리 중 오류가 발생했습니다. 상태: " + status + ", 오류: " + error);
 	                        }
-	                    },
-	                    error: function() {
-	                        alert("북마크 처리 중 오류가 발생했습니다.");
-	                    }
-	                });
-	            }
+	                    });
+	                }
+
+	                
+	            });
 	    </script>
         <%@include file="../includes/footer.jsp"%>

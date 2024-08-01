@@ -226,6 +226,50 @@ table th:nth-child(5), table td:nth-child(5) {
 
 </style>
 
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="../main" class="nav-item nav-link">Home</a>
+                        <a href="/policy/list" class="nav-item nav-link active">정책</a>
+                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
+                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
+                        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
+                        <!-- 
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="destination.html" class="dropdown-item">Destination</a>
+                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
+                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
+                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
+                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
+                         -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
+                    </div>
+                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
+                </div>
+            </nav>
+        <!-- Navbar & Hero End -->
+        
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h3 class="text-white display-3 mb-4">정책 게시판</h3>
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="../main">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/policy/list">정책 게시판</a></li>
+                    <li class="breadcrumb-item active text-white">About</li>
+                </ol>    
+            </div>
+        </div>
+        <!-- Header End -->
+
 <div id="page-wrapper">
 	<div class="row">
 		<div class="col-lg-12">
@@ -245,7 +289,8 @@ table th:nth-child(5), table td:nth-child(5) {
             </div>
 			<div class="col-lg-6">
 				<div class="form-group input-group">
-					<input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+					<input type="search" class="form-control" name="keyword"
+						placeholder="서비스명 검색" value="${pageMaker.cri.keyword}">
                     <span class="input-group-btn">
                         <button class="btn btn-default" type="submit">
                             <i class="fa fa-search"></i>
@@ -387,6 +432,7 @@ table th:nth-child(5), table td:nth-child(5) {
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
     // Initialize district select options
     const districts = [
         "서울특별시", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구",
@@ -470,7 +516,7 @@ $(document).ready(function() {
             contentType: "application/json; charset=UTF-8",
             dataType : "json",
             success : function(response) {
-            	console.log("Response:", response);
+            	console.log("list loadTable()");
             	var data = response.policyapi.data;
                 var boardTbody = $("#boardTable tbody");
                 boardTbody.empty();

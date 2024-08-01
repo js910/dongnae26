@@ -145,8 +145,14 @@ public class NaverLoginService {
             user.setUser_email(responseNode.path("email").asText());
             user.setUser_name(responseNode.path("name").asText());
             user.setUser_phone(responseNode.path("mobile").asText());
+            //추가
+            user.setLogin_type("naver");
+            
             session.setAttribute("user_name", user.getUser_name());
             session.setAttribute("user_email", user.getUser_email());
+            //추가
+            session.setAttribute("login_type", user.getLogin_type());
+            
             UserDTO user_info = user;
             session.setAttribute("user_info", user_info);
             session.setAttribute("isLogin", true);

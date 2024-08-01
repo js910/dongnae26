@@ -9,6 +9,47 @@
 
 <%@include file="../includes/header.jsp"%>
 
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto py-0">
+                        <a href="../main" class="nav-item nav-link">Home</a>
+                        <a href="/policy/list" class="nav-item nav-link active">정책</a>
+                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
+                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
+                        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
+                        <!-- 
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                            <div class="dropdown-menu m-0">
+                                <a href="destination.html" class="dropdown-item">Destination</a>
+                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
+                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
+                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
+                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
+                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
+                                <a href="404.html" class="dropdown-item">404 Page</a>
+                            </div>
+                        </div>
+                         -->
+                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
+                    </div>
+                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
+                </div>
+            </nav>
+        <!-- Navbar & Hero End -->
+        
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h3 class="text-white display-3 mb-4">정책 상세보기</h3>
+                <ol class="breadcrumb justify-content-center mb-0">
+                </ol>    
+            </div>
+        </div>
+        <!-- Header End -->
+
 <%
     List<String> policyDetailKeys = Arrays.asList("servicePurpose", "selectionCriteria", "supportContent",
             "supportTarget", "supportType", "applicationDeadline", "applicationMethod",
@@ -141,10 +182,16 @@ body {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                	<em class="cate">${policyDetail.agencyName}</em>
-                	<span class="service-name">${policyDetail.serviceName}</span>
-                	<span id="bookmark" class="bookmark" onclick="toggleBookmark(${policyDetail.serviceID})"></span>
-				</div>
+                    <em class="cate">${policyDetail.agencyName}</em>
+                    <span class="service-name">${policyDetail.serviceName}</span>
+                    <span id="bookmark" class="bookmark"
+                          data-service-id="${policyDetail.serviceID}"
+                          data-service-name="${policyDetail.serviceName}"
+                          data-service-content="${policyDetail.supportContent}"
+                          data-service-deadline="${policyDetail.applicationDeadline}"
+                          data-user-num="${user_num}"
+                          onclick="toggleBookmark(this)"></span>
+                </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
                      <table class="table policy-table" id="policyTable">
@@ -173,22 +220,37 @@ body {
 <!-- /#page-wrapper -->
 
 <script type="text/javascript">
-const bookmarked = ${bookmarked};
+$(document).ready(function() {
+    // Add 'bookmarked' class based on the server-side state
+    const bookmarked = ${bookmarked};
+    if (bookmarked) {
+        $("#bookmark").addClass("bookmarked");
+    }
 
-if (${bookmarked}) {
-    $("#bookmark").addClass("bookmarked");
-}
-
-$("#list").on("click", function() {
-    location.href = "/policy/list";
+    $("#list").on("click", function() {
+        location.href = "/policy/list";
+    });
 });
 
-function toggleBookmark(serviceID) {
+function toggleBookmark(element) {
+    const serviceID = $(element).data('service-id');
+    const serviceName = $(element).data('service-name');
+    const serviceContent = $(element).data('service-content');
+    const serviceDeadline = $(element).data('service-deadline');
+    const userNum = $(element).data('user-num');
+    
     $.ajax({
         type: "POST",
         url: "/policy/bookmark",
         dataType: "json",
-        data: { 'serviceID': serviceID },
+        contentType: "application/json; charset=UTF-8",
+        data: JSON.stringify({
+        	serviceID: serviceID,
+            serviceName: serviceName,
+            serviceContent: serviceContent,
+            serviceDeadline: serviceDeadline,
+            userNum: userNum
+        }),
         success: function(response) {
             if (!response.loggedIn) {
                 alert("로그인이 필요한 기능입니다");
@@ -208,7 +270,6 @@ function toggleBookmark(serviceID) {
         }
     });
 }
-
 </script>
 
 <%@include file="../includes/footer.jsp"%>
