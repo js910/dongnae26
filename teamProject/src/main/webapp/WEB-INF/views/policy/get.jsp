@@ -95,7 +95,7 @@ body {
 	 padding: 5px 8px;
 	 font-size: 0.8rem;
 	 color: #fff;
-	 background: #3E8EDE;
+	 background: #5bc1ac;
 	 border-radius: .3rem;
 	 margin-right: 1em;
 }
@@ -118,16 +118,19 @@ body {
     padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: #3E8EDE;
+    background-color: #5bc1ac;
     color: white;
     cursor: pointer;
     font-size: 14px;
     font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn:hover {
-    background-color: #2C6EB2;
+#list:hover {
+    background-color: #4a9d8c; /* hover 색상 */
+    color: white; /* hover 시 텍스트 색상 유지 */
 }
+
 </style>
 
 <div id="page-wrapper">
