@@ -94,7 +94,7 @@
         <nav class="navbar navbar-expand-lg bg-light shadow-lg">
             <div class="container">
 
-                <a class="navbar-brand" href="../main">
+                <a class="navbar-brand" href="/main">
                     <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity" style="width:60px; margin:5px;">
                     <span style="margin-left: 15px; font-size: 1.8rem;">
                         동네26
