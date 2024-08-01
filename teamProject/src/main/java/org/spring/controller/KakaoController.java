@@ -65,6 +65,6 @@ public class KakaoController {
     public String logout(HttpSession session, Model model) {
         session.invalidate();
         model.addAttribute("isLogin", false);
-        return "redirect:/login";
+        return "redirect:/main";
     }
 }

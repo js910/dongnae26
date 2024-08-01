@@ -32,7 +32,7 @@ public interface UserMapper {
 	void insertOrUpdate(UserDTO userDTO);
 
 	
-	@Update("UPDATE user SET user_name = #{user_name}, user_email = #{user_email}, user_phone = #{user_phone} WHERE user_num = #{user_num}")
+	@Update("UPDATE user SET user_name = #{user_name}, user_phone = #{user_phone}, user_interest = #{user_interest} WHERE user_num = #{user_num}")
 	void updateUserProfile(UserDTO user);
 
 	// 아이디 중복 확인

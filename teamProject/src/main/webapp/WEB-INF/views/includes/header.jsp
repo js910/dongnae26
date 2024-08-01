@@ -10,21 +10,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
-    	a{
-        text-decoration: none;
-        color: black;
-        font-weight: bold;
-    }
-    
+        a {
+            text-decoration: none;
+            color: black;
+            font-weight: bold;
+        }
+
         .navv-link.active {
             color: #5bc1ac !important;
         }
-        
+
         .navbar-nav .nav-item {
-            margin-right: 15px; /* 원하는 간격으로 조절 */
+            margin-right: 15px;
         }
+
         .navbar-nav .nav-item:last-child {
-            margin-right: 0; /* 마지막 항목에는 간격을 적용하지 않음 */
+            margin-right: 0;
         }
     </style>
 
@@ -34,23 +35,15 @@
 
     <!-- CSS FILES -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
-
     <link href="/resources/css/bootstrap-icons.css" rel="stylesheet">
-
     <link href="/resources/css/templatemo-kind-heart-charity.css" rel="stylesheet">
-    <!--
-
-TemplateMo 581 Kind Heart Charity
-
-https://templatemo.com/tm-581-kind-heart-charity
-
--->
+    <!-- TemplateMo 581 Kind Heart Charity https://templatemo.com/tm-581-kind-heart-charity -->
 
 </head>
 
 <body>
 
-	<header class="site-header">
+    <header class="site-header">
         <div class="container">
             <div class="row">
 
@@ -132,16 +125,29 @@ https://templatemo.com/tm-581-kind-heart-charity
         </nav>
     </div>
 
-     <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var navLinks = document.querySelectorAll('.navv-link');
-            
+            var currentUrl = window.location.href;
+
             // 메뉴바 동적 설정
             var activeLink = localStorage.getItem('activeNavLink');
-            if (activeLink) {
-                var activeElement = document.querySelector('.navv-link[href="' + activeLink + '"]');
-                if (activeElement) {
-                    activeElement.classList.add('active');
+            var activeElement = document.querySelector('.navv-link[href="' + currentUrl + '"]');
+            
+            if (activeElement) {
+                activeElement.classList.add('active');
+                localStorage.setItem('activeNavLink', currentUrl);
+            } else if (activeLink) {
+                var storedActiveElement = document.querySelector('.navv-link[href="' + activeLink + '"]');
+                if (storedActiveElement) {
+                    storedActiveElement.classList.add('active');
+                }
+            } else {
+                // 기본적으로 main에 색칠이 되어있도록 설정
+                var mainLink = document.querySelector('.navv-link[href="http://localhost:8090/main"]');
+                if (mainLink) {
+                    mainLink.classList.add('active');
+                    localStorage.setItem('activeNavLink', mainLink.getAttribute('href'));
                 }
             }
 
@@ -155,5 +161,20 @@ https://templatemo.com/tm-581-kind-heart-charity
                     localStorage.setItem('activeNavLink', this.getAttribute('href'));
                 });
             });
+
+            // 동네26 로고 클릭 시
+            document.getElementById('logo-link').addEventListener('click', function () {
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+                var mainLink = document.querySelector('.navv-link[href="http://localhost:8090/main"]');
+                if (mainLink) {
+                    mainLink.classList.add('active');
+                    localStorage.setItem('activeNavLink', mainLink.getAttribute('href'));
+                }
+            });
         });
     </script>
+</body>
+
+</html>
