@@ -14,14 +14,6 @@ body {
     background-color: #f4f4f4;
 }
 
-.container {
-    width: 70%;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
 
 /* 폼 레이아웃 */
 form {
