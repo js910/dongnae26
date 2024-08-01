@@ -1,21 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@include file="../includes/header.jsp"%>
 <title>동네26 - 일자리 정보 게시판</title>
-
+<link rel="stylesheet" href="">
 <style>
+    /* General Page Layout */
+	@media (min-width: 1000px) {
+	  #page-wrapper {
+	    margin: 0 150px 0 150px;
+	    background-color: white;
+	  }
+	}
+	
+	#page-wrapper {
+	    padding: 50px;
+	    background-color: white;
+	}
+    
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f8f9fa;
+        background-color: #f5f5f5; /* Outer div background color */
     }
-    .container_2 {
-        max-width: 1400px;
-        margin: 0 auto;
-        padding: 20px;
-        background-color: #fff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+    
     .forh1 {
         font-size: 24px;
         margin-bottom: 20px;
@@ -59,34 +67,47 @@
     .job-title a:hover {
         text-decoration: underline;
     }
+    
     .pagination {
-        display: flex;
-        justify-content: center;
-        margin-top: 20px;
-        list-style: none;
-    }
-    .pagination a {
-        text-decoration: none;
-        padding: 8px 16px;
-        margin: 0 4px;
-        color: black;
-        border: 1px solid #ddd;
-        border-radius: 5px;           
-    }
-    .pagination a.active {
-        background-color: #blue;
-        color: white;
-        border: 1px solid #007bff;
-    }
-    .pagination a:hover {
-        background-color: #ddd;
-    }
-    .pagination .current {
-    background-color: #007bff;
-    color: white;
-    border: 1px solid #007bff;
-    border-radius: 5px;
-	}
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination li {
+    margin: 0; /* 페이지 선택 칸 사이의 간격 제거 */
+}
+
+.pagination li a {
+    display: block;
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #5fb886; /* 텍스트 색상 */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination li a:hover {
+    background-color: #5bc1ac; /* 호버 색상 */
+    color: #fff;
+}
+
+.pagination li.active a {
+    color: #fff;
+    background-color: #5bc1ac; /* 강조된 현재 페이지의 배경 색상 */
+    border-color: #5bc1ac;
+}
+
+.pagination li.disabled a {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #fff;
+    border-color: #ddd;
+}
+    
     label{
         margin-right: 10px;
     }
@@ -95,8 +116,6 @@
     }
     a{
         text-decoration: none;
-        color: black;
-        font-weight: bold;
     }
     .form-group.input-group.search {
         display: flex;
@@ -152,6 +171,32 @@
         border-right: none;
     }
 
+	/*button style 수정*/
+    .search-form button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5bc1ac;
+    color: white;
+    border: none; /* 수정: border 속성 설정 */
+    height: 38px;
+    font-size: 1rem;
+    padding: 0 2rem;
+    position: relative;
+    transition: background-color 0.15s ease-in-out;
+    white-space: nowrap; /* 수정: 텍스트 줄 바꿈 방지 */
+    box-sizing: border-box; /* 수정: 패딩 및 테두리 포함 계산 */
+    flex: 0;
+    }
+    .search-form button[type="submit"]:hover {
+    background: #4a9d8c;
+    color: white;
+}
+    .search-container {
+    display: flex;
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 5px; /* 요소 사이의 간격 조절 */
+}
 </style>
 
 
@@ -159,18 +204,19 @@
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
     <div class="container text-center py-5" style="max-width: 900px;">
-        <h3 class="text-white display-3 mb-4">일자리 정보 게시판</h3>
+        <h3 class="text-white display-3 mb-4" style="color: #336B60;">일자리 정보 게시판</h3>
         <ol class="breadcrumb justify-content-center mb-0">
             <li class="breadcrumb-item"><a href="../main">Home</a></li>
             <li class="breadcrumb-item"><a href="/job/list">일자리 정보 게시판</a></li>
-            <li class="breadcrumb-item active text-white">About</li>
         </ol>    
     </div>
 </div>
 <!-- Header End -->
+
 </head>
 <body>
-    <div class="container_2">
+    <div id="page-wrapper">
+    	<div class="">
         <h1 class="forh1">채용정보 상세검색</h1>       
         <div class="search-form">
             <form id="searchForm" action="/job/list" method="get">
@@ -248,20 +294,22 @@
                         </td>
                     </tr>
                     <tr>
-                        <th>키워드 검색</th>
-                        <td>
-                            <select id="searchType" class="form-control" name="type">
-                                <option value="all" ${pageMaker.cri.type == "all" ? "selected" : ""}>전체</option>
-                                <option value="cmpnyNm" ${pageMaker.cri.type == "cmpnyNm" ? "selected" : ""}>회사명</option>
-                                <option value="joSj" ${pageMaker.cri.type == "joSj" ? "selected" : ""}>채용공고명</option>
-                                <option value="dtyCn" ${pageMaker.cri.type == "dtyCn" ? "selected" : ""}>직무내용</option>
-                            </select>
-                            <input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 검색</button>
-                            </span>
-                        </td>
-                    </tr>
+						<th>키워드 검색</th>
+						<td>
+							<select id="searchType" class="form-control" name="type">
+	                                <option value="all" ${pageMaker.cri.type == "all" ? "selected" : ""}>전체</option>
+	                                <option value="cmpnyNm" ${pageMaker.cri.type == "cmpnyNm" ? "selected" : ""}>회사명</option>
+	                                <option value="joSj" ${pageMaker.cri.type == "joSj" ? "selected" : ""}>채용공고명</option>
+	                                <option value="dtyCn" ${pageMaker.cri.type == "dtyCn" ? "selected" : ""}>직무내용</option>
+	                        </select>
+	                        <div class="search-container">
+		                        <input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+		                        <span class="input-group-btn">
+		                            <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 검색</button>
+		                        </span>
+	                     	</div>
+						</td>
+					</tr>
                 </table>           
             </form>
         </div>
@@ -319,20 +367,20 @@
                     <!-- /.panel -->
                 </div>
          	</div>
-        <div>
+        <div class="d-flex justify-content-center">
             <ul class="pagination" id="pagination">
                 <c:if test="${pageMaker.prev}">
-                    <li class="paginate_button previous">
+                    <li class="page-item">
                         <a href="#" data-page="${pageMaker.startPage - 1}">Previous</a>
                     </li>
                 </c:if>
                 <c:forEach var="num" begin="${pageMaker.startPage}" end="${pageMaker.endPage}">
-                    <li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+                    <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
                         <a href="#" class="${pageMaker.cri.pageNum == num ? 'current' : ''}" data-page="${num}">${num}</a>
                     </li>
                 </c:forEach>
                 <c:if test="${pageMaker.next}">
-                    <li class="paginate_button next">
+                    <li class="page-item">
                         <a href="#" data-page="${pageMaker.endPage + 1}">Next</a>
                     </li>
                 </c:if>
@@ -349,6 +397,7 @@
             <input type="hidden" name="education" value="${pageMaker.cri.education}">
             <input type="hidden" name="workDay" value="${pageMaker.cri.workDay}">
         </form>
+    </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
