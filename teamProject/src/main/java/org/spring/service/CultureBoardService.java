@@ -39,3 +39,4 @@ public interface CultureBoardService {
 		public List<BookmarkDTO> getUserBookmarks(int user_num);
 
 }
+

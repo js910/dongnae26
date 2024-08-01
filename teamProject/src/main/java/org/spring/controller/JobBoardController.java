@@ -115,7 +115,7 @@ public class JobBoardController {
 	}
     
     @GetMapping("/bookmarks")
-    public String getUserBookmarks(HttpSession session, Model model) {
+    public String getUserBookmarks(HttpSession session, Model model) {    
         UserDTO user = (UserDTO) session.getAttribute("user_info");
         if (user != null) {
             int user_num = user.getUser_num();

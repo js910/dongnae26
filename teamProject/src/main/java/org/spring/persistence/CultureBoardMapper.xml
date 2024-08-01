@@ -38,57 +38,71 @@
         <if test="area != null and area != ''">
             culture_area LIKE CONCAT("%", #{area}, "%")
         </if>
-        
+
         <!-- Handle classify condition -->
         <if test="classify != null and classify != ''">
-            <choose>
-                <when test="area != null and area != ''">
-                    AND culture_classify LIKE CONCAT("%", #{classify}, "%")
-                </when>
-                <otherwise>
-                    culture_classify LIKE CONCAT("%", #{classify}, "%")
-                </otherwise>
-            </choose>
+            <if test="area != null and area != ''">
+                AND culture_classify LIKE CONCAT("%", #{classify}, "%")
+            </if>
+            <if test="area == null or area == ''">
+                culture_classify LIKE CONCAT("%", #{classify}, "%")
+            </if>
         </if>
 
         <!-- Handle type and keyword conditions -->
         <if test="type != null and keyword != null and type != '' and keyword != ''">
+            <if test="area != null and area != '' or classify != null and classify != ''">
+                AND
+            </if>
             <choose>
                 <when test="type == 'all'">
-                    <choose>
-                        <when test="area == null or area == '' and classify == null or classify == ''">
-                            AND (culture_title LIKE CONCAT("%", #{keyword}, "%") OR culture_place LIKE CONCAT("%", #{keyword}, "%"))
-                        </when>
-                        <otherwise>
-                            (culture_title LIKE CONCAT("%", #{keyword}, "%") OR culture_place LIKE CONCAT("%", #{keyword}, "%"))
-                        </otherwise>
-                    </choose>
+                    (culture_title LIKE CONCAT("%", #{keyword}, "%") OR culture_place LIKE CONCAT("%", #{keyword}, "%"))
                 </when>
                 <otherwise>
-                    AND ${type} LIKE CONCAT("%", #{keyword}, "%")
+                    ${type} LIKE CONCAT("%", #{keyword}, "%")
                 </otherwise>
             </choose>
         </if>
     </where>
-	</select>
+</select>
 
 	
-	<select id="getListWithSearch" parameterType="org.spring.domain.culture.Criteria" resultType="org.spring.domain.culture.CultureBoardDTO">
-		SELECT * FROM culture_board 
-		<where>
-			<if test="type != null and keyword != null and type != '' and keyword != ''">
-				<choose>
-					<when test="type == 'all'">
-					(culture_title LIKE CONCAT("%",#{keyword},"%") OR
-					culture_place LIKE CONCAT("%",#{keyword},"%"))
-					</when>
-					<otherwise>
-						${type} LIKE CONCAT("%",#{keyword},"%")
-					</otherwise>
-				</choose>
-			</if>
-		</where>
-		ORDER BY culture_regdate DESC LIMIT #{start}, #{amount}
+		<select id="getListWithSearch" parameterType="org.spring.domain.culture.Criteria" resultType="org.spring.domain.culture.CultureBoardDTO">
+	    SELECT * 
+	    FROM culture_board 
+	    <where>
+	        <!-- Handle area condition -->
+	        <if test="area != null and area != ''">
+	            culture_area LIKE CONCAT("%", #{area}, "%")
+	        </if>
+	
+	        <!-- Handle classify condition -->
+	        <if test="classify != null and classify != ''">
+	            <if test="area != null and area != ''">
+	                AND culture_classify LIKE CONCAT("%", #{classify}, "%")
+	            </if>
+	            <if test="area == null or area == ''">
+	                culture_classify LIKE CONCAT("%", #{classify}, "%")
+	            </if>
+	        </if>
+	
+	        <!-- Handle type and keyword conditions -->
+	        <if test="type != null and keyword != null and type != '' and keyword != ''">
+	            <if test="area != null and area != '' or classify != null and classify != ''">
+	                AND
+	            </if>
+	            <choose>
+	                <when test="type == 'all'">
+	                    (culture_title LIKE CONCAT("%", #{keyword}, "%") OR culture_place LIKE CONCAT("%", #{keyword}, "%"))
+	                </when>
+	                <otherwise>
+	                    ${type} LIKE CONCAT("%", #{keyword}, "%")
+	                </otherwise>
+	            </choose>
+	        </if>
+	    </where>
+	    ORDER BY culture_regdate DESC 
+	    LIMIT #{start}, #{amount}
 	</select>
 	
 	
@@ -104,7 +118,6 @@
         SELECT *
         FROM bookmark_culture_board 
         WHERE user_num = #{user_num}
-        LIMIT 5
     </select>
 	
   </mapper>

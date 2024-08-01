@@ -273,7 +273,6 @@
             hopeWage
         FROM bookmark_job_board 
         WHERE user_num = #{user_num}
-        LIMIT 5
     </select>
     
     </mapper>

@@ -59,6 +59,8 @@
 		<property name="defaultEncoding" value="utf-8" />
 	</bean>
 	
+	<bean id="mailConfig" class="config.MailConfig" />
+	
 	<context:component-scan base-package="org.spring.service"/>
 	<mybatis-spring:scan base-package="org.spring.persistence"/>
 		

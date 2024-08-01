@@ -32,16 +32,16 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	}
 
 	@Override
-	public boolean bookmarkChk(int culture_bno, int user_num) {
-		return cultureboardMapper.bookmarkChk(culture_bno, user_num) > 0;
+	public boolean bookmarkChk(int culture_bno, int userNum) {
+		return cultureboardMapper.bookmarkChk(culture_bno, userNum) > 0;
 	}
 	@Override
-	public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title, String culture_place) {
-		cultureboardMapper.bookmark(culture_bno, user_num, culture_classify, culture_title, culture_place);
+	public void bookmark(int culture_bno, int userNum, String culture_classify, String culture_title, String culture_place) {
+		cultureboardMapper.bookmark(culture_bno, userNum, culture_classify, culture_title, culture_place);
 	}
 	@Override
-	public void bookmarkDel(int culture_bno, int user_num, String culture_classify, String culture_title) {
-		cultureboardMapper.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
+	public void bookmarkDel(int culture_bno, int userNum, String culture_classify, String culture_title) {
+		cultureboardMapper.bookmarkDel(culture_bno, userNum, culture_classify, culture_title);
 	}
 
 	@Override
@@ -51,15 +51,14 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	}
 
 //	  @Override
-    public List<BookmarkDTO> getBookmarkedPosts(int user_num) {
-        System.out.println("Service: Fetching bookmarks for user_num: " + user_num);
-        List<BookmarkDTO> bookmarks = cultureboardMapper.getBookmarkedPosts(user_num);
+    public List<BookmarkDTO> getBookmarkedPosts(int userNum) {
+        System.out.println("Service: Fetching bookmarks for userNum: " + userNum);
+        List<BookmarkDTO> bookmarks = cultureboardMapper.getBookmarkedPosts(userNum);
         System.out.println("Service: Retrieved bookmarks: " + bookmarks);
         return bookmarks;
     }
-    public List<BookmarkDTO> getUserBookmarks(int user_num) {
+    public List<BookmarkDTO> getUserBookmarks(int userNum) {
 		
-		 return cultureboardMapper.getUserBookmarks(user_num);
+		 return cultureboardMapper.getUserBookmarks(userNum);
 	}
-
 }

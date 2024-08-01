@@ -9,46 +9,6 @@
 
 <%@include file="../includes/header.jsp"%>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="../main" class="nav-item nav-link">Home</a>
-                        <a href="/policy/list" class="nav-item nav-link active">정책</a>
-                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
-                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
-                        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
-                        <!-- 
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="destination.html" class="dropdown-item">Destination</a>
-                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
-                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
-                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
-                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
-                         -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
-                    </div>
-                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
-                </div>
-            </nav>
-        <!-- Navbar & Hero End -->
-        
-        <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px;">
-                <h3 class="text-white display-3 mb-4">정책 상세보기</h3>
-                <ol class="breadcrumb justify-content-center mb-0">
-                </ol>    
-            </div>
-        </div>
-        <!-- Header End -->
 
 <%
     List<String> policyDetailKeys = Arrays.asList("servicePurpose", "selectionCriteria", "supportContent",
@@ -228,7 +188,7 @@ $(document).ready(function() {
     }
 
     $("#list").on("click", function() {
-        location.href = "/policy/list";
+        location.href = "${pageContext.request.contextPath}/policy/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}";
     });
 });
 

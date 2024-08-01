@@ -28,11 +28,7 @@ public class Criteria {
 		this.start = (pageNum - 1) * amount; // 시작 인덱스 계산
 	}
 
-//	public Criteria(int pageNum, int amount) {
-//		this.pageNum = pageNum;
-//		this.amount = amount;
-//		this.start = getStart();
-//	}
+
 
 	public void type(String searchType) {
 		this.type = searchType;
@@ -53,10 +49,6 @@ public class Criteria {
 	public String[] getTypeArr() {
 		return type == null ? new String[] {} : type.split("");
 	}
-	// 페이지 시작위치 계산 메서드
-//		private int calculateStart() {
-//			// 1p -> 0 , 2p -> 10
-//			return (this.pageNum-1) * this.amount;
-//		}
+
 
 }

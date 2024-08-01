@@ -97,8 +97,8 @@ public class PolicyBoardService {
     }
 
     // 북마크 여부 확인 메서드
-    public boolean bookmarkChk(String serviceID, int user_num) {
-        return boardMapper.bookmarkChk(serviceID, user_num) > 0;
+    public boolean bookmarkChk(String serviceID, int userNum) {
+        return boardMapper.bookmarkChk(serviceID, userNum) > 0;
     }
 
 	public List<BookmarkDTO> getUserBookmarks(int user_num) {

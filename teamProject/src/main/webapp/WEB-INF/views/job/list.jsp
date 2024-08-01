@@ -2,6 +2,8 @@
     pageEncoding="UTF-8" isELIgnored="false"%>
 
 <%@include file="../includes/header.jsp"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<title>동네26 - 일자리 정보 게시판</title>
 
 <style>
     body {
@@ -150,25 +152,10 @@
         border-left: none;
         border-right: none;
     }
-    td a:hover{
-        color: blue;
-    }
+
 </style>
 
-<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-    <span class="fa fa-bars"></span>
-</button>
-<div class="collapse navbar-collapse" id="navbarCollapse">
-    <div class="navbar-nav ms-auto py-0">
-        <a href="../main" class="nav-item nav-link">Home</a>
-        <a href="/policy/list" class="nav-item nav-link">정책</a>
-        <a href="/job/list" class="nav-item nav-link active">일자리 정보</a>
-        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
-        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
-    </div>
-</div>
-</nav>
-<!-- Navbar & Hero End -->
+
 
 <!-- Header Start -->
 <div class="container-fluid bg-breadcrumb">
@@ -279,14 +266,16 @@
                 </table>           
             </form>
         </div>
+
         <div class="form-group input-group">
             <label for="amount">게시글 갯수:</label>
             <select id="amount" name="amount" class="form-control">
                 <option value="10" ${pageMaker.cri.amount == 10 ? "selected" : ""}>10</option>
                 <option value="20" ${pageMaker.cri.amount == 20 ? "selected" : ""}>20</option>
-                <option value="50" ${pageMaker.cri.amount == 50 ? "selected" : ""}>50</option>
+                <option value="30" ${pageMaker.cri.amount == 30 ? "selected" : ""}>30</option>
             </select>
         </div>
+        <!-- 
         <table id="boardTable" class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -299,6 +288,38 @@
             </thead>
             <tbody></tbody>
         </table>
+         -->
+         <!-- /.row -->
+            <div class="row">
+                <div class="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Hover Rows
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="boardTable" class="table table-hover">
+                                    <thead>
+					                    <tr>
+						                    <th>자치구</th>
+						                    <th>회사명</th>
+						                    <th>채용공고명/모집요강</th>
+						                    <th>근무시간</th>
+						                    <th>등록일</th>
+                						</tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+         	</div>
         <div>
             <ul class="pagination" id="pagination">
                 <c:if test="${pageMaker.prev}">
@@ -373,31 +394,66 @@
                         var boardTbody = $("#boardTable tbody"); // 테이블 본문(tbody) 요소 저장
                         boardTbody.empty(); // 테이블 본문을 비워서 기존 데이터를 삭제
 
-                        $.each(data.list, function(index, jobBoard) {
-                            var row = $("<tr>"); // tr태그 생성
+                        if (data.list.length === 0) {
+                            var noDataMessage = $("<tr>").append($("<td>").attr("colspan", 5).text("검색 결과가 없습니다."));
+                            boardTbody.append(noDataMessage);
+                        } else {
+                            $.each(data.list, function(index, jobBoard) {
+                                var row = $("<tr>"); // tr태그 생성
 
-                            row.append($("<td>").text(jobBoard.mngrInsttNm)); // 자치구 추가
-                            var companyName = $("<td>").text(jobBoard.cmpnyNm); // 기업명 추가
-                            row.append(companyName);
+                                row.append($("<td>").text(jobBoard.mngrInsttNm)); // 자치구 추가
+                                var companyName = $("<td>").text(jobBoard.cmpnyNm); // 기업명 추가
+                                row.append(companyName);
 
-                            var jobTitle = $("<td>");
-                            var titleLink = $("<a>").attr("href", "/job/detail?jobId=" + jobBoard.joRegistNo + "&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + "&amount=" + $("#pageForm").find("input[name='amount']").val() + "&type=" + $("#pageForm").find("input[name='type']").val() + "&keyword=" + $("#pageForm").find("input[name='keyword']").val() + "&district=" + $("#pageForm").find("input[name='district']").val()).text(jobBoard.joSj);
+                                var jobTitle = $("<td>");
+                                var titleLink = $("<a>")
+                                    .attr("href", "/job/detail?jobId=" + jobBoard.joRegistNo + 
+                                        "&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + 
+                                        "&amount=" + $("#pageForm").find("input[name='amount']").val() + 
+                                        "&type=" + $("#searchType").val() + 
+                                        "&keyword=" + $("#searchForm").find("input[type='search']").val() + 
+                                        "&district=" + $("#pageForm").find("input[name='district']").val() + 
+                                        "&wageType=" + $("#pageForm").find("input[name='wageType']").val() + 
+                                        "&career=" + $("#pageForm").find("input[name='career']").val() + 
+                                        "&education=" + $("#pageForm").find("input[name='education']").val() + 
+                                        "&workDay=" + $("#pageForm").find("input[name='workDay']").val())
+                                    .text(jobBoard.joSj);
+                                jobTitle.append(titleLink);
+                                jobTitle.append($("<div>").addClass("wage").text(jobBoard.hopeWage)); // 구인제목/모집요강 추가
+                                row.append(jobTitle);
 
-                            jobTitle.append(titleLink);
-                            jobTitle.append($("<div>").addClass("wage").text(jobBoard.hopeWage)); // 구인제목/모집요강 추가
-                            row.append(jobTitle);
+                                var holidayAndWorkTime = $("<td>").text(jobBoard.holidayNm + '(' + jobBoard.workTimeNm + ')');
+                                row.append(holidayAndWorkTime);
 
-                            var holidayAndWorkTime = $("<td>").text(jobBoard.holidayNm + '(' + jobBoard.workTimeNm + ')');
-                            row.append(holidayAndWorkTime);
-                            
-                            boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
-                            
-                            var regDate = $("<td>").text(formatDate(jobBoard.joRegDt)); // 등록일/마감일 추가
-                            row.append(regDate);
+                                var regDate = $("<td>").text(formatDate(jobBoard.joRegDt)); // 등록일/마감일 추가
+                                row.append(regDate);
 
-                            boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
-                        });
+                                boardTbody.append(row); // 생성한 tr 요소를 테이블 본문에 추가
+                            });
+                        }
+                        var wageType = $("#pageForm").find("input[name='wageType']").val();
+                        if (!wageType) {
+                            wageType = "all"; // 초기 값 설정
+                        }
+                        $('input[name="wageType"][value="' + wageType + '"]').prop('checked', true);
 
+                        var education = $("#pageForm").find("input[name='education']").val();
+                        if (!education) {
+                            education = "all"; // 초기 값 설정
+                        }
+                        $('input[name="education"][value="' + education + '"]').prop('checked', true);
+
+                        var career = $("#pageForm").find("input[name='career']").val();
+                        if (!career) {
+                            career = "all"; // 초기 값 설정
+                        }
+                        $('input[name="career"][value="' + career + '"]').prop('checked', true);
+
+                        var workDay = $("#pageForm").find("input[name='workDay']").val();
+                        if (!workDay) {
+                            workDay = "all"; // 초기 값 설정
+                        }
+                        $('input[name="workDay"][value="' + workDay + '"]').prop('checked', true);
                         // 페이지네이션 업데이트
                         updatePagination(data.pageMaker);
                     },

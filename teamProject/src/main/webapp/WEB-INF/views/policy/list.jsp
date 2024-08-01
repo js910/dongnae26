@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <%@ include file="../includes/header.jsp"%>
+<title>동네26 - 정책 게시판</title>
 <style>
 /* General Page Layout */
 @media (min-width: 1000px) {
   #page-wrapper {
-    margin: 0 100px 0 100px;
+    margin: 0 150px 0 150px;
     background-color: white;
   }
 }
@@ -114,11 +115,11 @@ body {
 
 .service-icon:hover {
     transform: scale(1.1);
-    border-color: #3E8EDE;
+    border-color: #5BC28A;
 }
 
 .service-icon.selected {
-    border-color: #3E8EDE;
+    border-color: #5BC28A;
 }
 
 /* Table Styling */
@@ -134,9 +135,6 @@ body {
 }
 
 .table thead th {
-    background-color: #3E8EDE;
-    color: #ffffff;
-    text-align: center;
     padding: 8px;
 }
 
@@ -225,37 +223,6 @@ table th:nth-child(5), table td:nth-child(5) {
 }
 
 </style>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="../main" class="nav-item nav-link">Home</a>
-                        <a href="/policy/list" class="nav-item nav-link active">정책</a>
-                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
-                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
-                        <a href="/community/list" class="nav-item nav-link">커뮤니티</a>
-                        <!-- 
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="destination.html" class="dropdown-item">Destination</a>
-                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
-                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
-                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
-                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
-                         -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
-                    </div>
-                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
-                </div>
-            </nav>
-        <!-- Navbar & Hero End -->
         
         <!-- Header Start -->
         <div class="container-fluid bg-breadcrumb">
@@ -374,11 +341,12 @@ table th:nth-child(5), table td:nth-child(5) {
         </div>
     </div>
     
-	<!-- /.row -->
+	<!-- 
+	<!-- /.row 
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="panel panel-default">
-				<!-- /.panel-heading -->
+				<!-- /.panel-heading 
 				<div class="panel-body">
 					<table id="boardTable" width="100%" class="table table-striped table-bordered table-hover">
 						<thead>
@@ -392,7 +360,40 @@ table th:nth-child(5), table td:nth-child(5) {
 						</thead>
 						<tbody></tbody>
 					</table>
-					<!-- /.table-responsive -->
+					<!-- /.table-responsive 
+	 -->
+	 
+	 <!-- /.row -->
+            <div class="row">
+                <div class="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Hover Rows
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="boardTable" class="table table-hover">
+                                    <thead>
+                                        <tr>
+						                    <th>소관기관명</th>
+											<th>서비스분야</th>
+											<th>서비스명</th>
+											<th>서비스목적요약</th>
+											<th>신청기한</th>
+                						</tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+	 
 
 					<div>
 						<ul class="pagination">
@@ -525,7 +526,12 @@ $(document).ready(function() {
                     var row = $("<tr>");
                     row.append($("<td>").text(item.소관기관명).addClass('summary'));
                     row.append($("<td>").text(item.서비스분야).addClass('summary'));
-                    var titleLink = $("<a>").attr("href", "/policy/get?serviceID=" + item.서비스ID).text(item.서비스명);
+                    var titleLink = $("<a>").attr("href", "/policy/get?serviceID=" + item.서비스ID + 
+                    		"&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + 
+                    		"&amount=" + $("#pageForm").find("input[name='amount']").val() + 
+                            "&type=" + $("#searchType").val() + 
+                            "&keyword=" + $("#searchForm").find("input[type='search']").val() + 
+                            "&district=" + $("#pageForm").find("input[name='district']").val()).text(item.서비스명);
                     var titleTd = $("<td>").append(titleLink);
                     row.append(titleTd.addClass('summary'));
                     row.append($("<td>").text(item.서비스목적요약).addClass('summary'));

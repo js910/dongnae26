@@ -3,37 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <%@include file="../includes/header.jsp"%>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto py-0">
-                        <a href="../main" class="nav-item nav-link">Home</a>
-                        <a href="/policy/list" class="nav-item nav-link">정책</a>
-                        <a href="/job/list" class="nav-item nav-link">일자리 정보</a>
-                        <a href="/culture/list" class="nav-item nav-link">문화·행사</a>
-                        <a href="/community/list" class="nav-item nav-link active">커뮤니티</a>
-                        <!-- 
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0">
-                                <a href="destination.html" class="dropdown-item">Destination</a>
-                                <a href="tour.html" class="dropdown-item">Explore Tour</a>
-                                <a href="booking.html" class="dropdown-item">Travel Booking</a>
-                                <a href="gallery.html" class="dropdown-item">Our Gallery</a>
-                                <a href="guides.html" class="dropdown-item">Travel Guides</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div>
-                         -->
-                        <!-- <a href="contact.html" class="nav-item nav-link">Contact</a> -->
-                    </div>
-                    <!-- <a href="" class="btn btn-primary rounded-pill py-2 px-4 ms-lg-4">Book Now</a> -->
-                </div>
-            </nav>
-        <!-- Navbar & Hero End -->
         
         <!-- Header Start -->
         <div class="container-fluid bg-breadcrumb">
@@ -49,143 +18,29 @@
         <!-- Header End -->
 
 <head>
-<style type="text/css">
-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-/* 검색 폼 및 지역 선택 */
-#searchForm, #areaSelect, #select1 {
-    margin-bottom: 20px;
-}
-
-#searchForm label, #searchForm select, #searchForm input {
-    font-size: 16px;
-    margin-right: 10px;
-}
-
-#searchForm input[type="text"], #searchForm select {
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-#searchForm button {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-#searchForm button:hover {
-    background: #0056b3;
-}
-
-/* 테이블 스타일 */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-}
-
-table th, table td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-table th {
-    background-color: #007bff;
-    color: #fff;
-}
-
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-table tr:hover {
-    background-color: #e9ecef;
-}
-
-/* 페이지네이션 */
-.pagination {
-    text-align: center;
-    margin: 20px 0;
-}
-
-.pagination a {
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    text-decoration: none;
-    font-size: 16px;
-    margin: 0 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.pagination a:hover {
-    background: #0056b3;
-}
-
-/* 글 작성 버튼 */
-.write-link {
-    display: inline-block;
-    background: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 16px;
-    transition: background 0.3s ease;
-}
-
-.write-link:hover {
-    background: #0056b3;
-}
-</style>
-    <title>게시판 목록</title>
+    <title>동네26 - 커뮤니티 게시판</title>
 </head>
 <body>
     <div>
         <form id="searchForm" action="${pageContext.request.contextPath}/community/getList" method="post">
             <label for="type">검색 유형:</label>
-            <select id="type" name="type">
+            <select class="form-select form-control" id="type" name="type">
                 <option value="all">전체</option>
                 <option value="community_title">제목</option>
                 <option value="community_content">내용</option>
                 <option value="region">거주지</option>
                 <option value="writer">작성자</option>
             </select>
-            <input type="text" name="keyword" placeholder="검색어 입력">
-            <input type="hidden" name="amount" value="10"> <!-- 초기값 10으로 설정 -->
-            <input type="hidden" name="pageNum" value="1"> <!-- 초기값 1로 설정 -->
-            <input type="hidden" name="area" id="selectedArea"> <!-- 선택된 구를 전송하기 위한 hidden 필드 -->
+            <input type="text" name="keyword" value="${cri.keyword}" placeholder="검색어 입력">
+            <input type="hidden" name="pageNum" value="${cri.pageNum}">
+            <input type="hidden" name="amount" value="${cri.amount}">
+            <input type="hidden" name="area" id="selectedArea" value="${cri.area}"> <!-- 선택된 구를 전송하기 위한 hidden 필드 -->
             <button type="submit">검색</button>
         </form>
     </div>
     <label for="area">지역:</label>
-    <select id="areaSelect" name="area">
+       <select id="areaSelect" name="area">
         <option value="" ${selectedArea == '' ? 'selected' : ''}>지역 전체</option>
         <option value="강남구" ${selectedArea == '강남구' ? 'selected' : ''}>강남구</option>
         <option value="강동구" ${selectedArea == '강동구' ? 'selected' : ''}>강동구</option>
@@ -222,9 +77,19 @@ table tr:hover {
         </label>
     </div>
     <div id="content">
-        <table id="community_board">
-            <thead>
-                <tr>
+        <!-- /.row -->
+            <div class="row">
+                <div class="">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Hover Rows
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table id="community_board" class="table table-hover">
+                                    <thead>
+                                        <tr>
                     <th>글번호</th>
                     <th>구</th>
                     <th>제목</th>
@@ -233,11 +98,18 @@ table tr:hover {
                     <th>조회수</th>
                     <th>작성일</th>
                 </tr>
-            </thead>
-            <tbody id="boardList">
-                <!-- 게시물 목록을 여기에 렌더링 -->
-            </tbody>
-        </table>
+                                    </thead>
+                                    <tbody id="boardList">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+               </div> 
         <div class="pagination" id="pagination">
             <!-- 페이지네이션 링크를 여기에 렌더링 -->
         </div>
@@ -246,27 +118,23 @@ table tr:hover {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
-        // 초기 페이지 로딩 시 데이터 표시
         loadBoardList();
 
-        // 검색 폼 제출
         $("#searchForm").submit(function(event) {
-            event.preventDefault(); // 폼 제출 방지
-            $("#searchForm input[name='pageNum']").val(1); // 검색 시 페이지 번호 초기화
+            event.preventDefault();
+            $("#searchForm input[name='pageNum']").val(1);
             loadBoardList();
         });
 
-        // Show 변경 시 데이터 갱신
         $("#select1").change(function() {
-            $("#searchForm input[name='amount']").val($(this).val()); // 선택한 amount 값을 폼에 설정
-            $("#searchForm input[name='pageNum']").val(1); // 페이지 번호 초기화
+            $("#searchForm input[name='amount']").val($(this).val());
+            $("#searchForm input[name='pageNum']").val(1);
             loadBoardList();
         });
 
-        // 지역 선택 시 데이터 갱신
         $("#areaSelect").change(function() {
-            $("#searchForm input[name='area']").val($(this).val()); // 선택한 area 값을 hidden 필드에 설정
-            $("#searchForm input[name='pageNum']").val(1); // 페이지 번호 초기화
+            $("#searchForm input[name='area']").val($(this).val());
+            $("#searchForm input[name='pageNum']").val(1);
             loadBoardList();
         });
     });
@@ -275,28 +143,45 @@ table tr:hover {
         $.ajax({
             type: "POST",
             url: "${pageContext.request.contextPath}/community/getList",
-            data: $("#searchForm").serialize(), // 폼 데이터 직렬화
+            data: $("#searchForm").serialize(),
             dataType: "json",
             success: function(response) {
                 var boardList = response.boardlist;
                 var pageMaker = response.pageMaker;
+                var pageNum = $("#searchForm").find("input[name='pageNum']").val();
+                var amount = $("#searchForm").find("input[name='amount']").val();
+                var keyword = $("#searchForm").find("input[name='keyword']").val();
+                var area = $("#searchForm").find("input[name='area']").val();
 
-                // 게시물 목록 업데이트
                 var boardListHtml = "";
                 $.each(boardList, function(index, board) {
                     boardListHtml += "<tr>";
                     boardListHtml += "<td>" + board.community_bno + "</td>";
                     boardListHtml += "<td>" + board.region + "</td>";
-                    boardListHtml += "<td><a href='${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "'>" + board.community_title + "</a></td>";
+                    boardListHtml += "<td><a href='" + "${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "&pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword + "&area=" + area + "'>" + board.community_title + "</a></td>";
                     boardListHtml += "<td>" + board.community_content + "</td>";
                     boardListHtml += "<td>" + board.writer + "</td>";
                     boardListHtml += "<td>" + board.community_viewcnt + "</td>";
                     boardListHtml += "<td>" + board.formattedRegdate + "</td>";
                     boardListHtml += "</tr>";
                 });
+                if (boardList.length === 0) {
+                    boardListHtml = "<tr><td colspan='7' class='text-center'>검색 결과가 없습니다.</td></tr>";
+                } else {
+                    $.each(boardList, function(index, board) {
+                        boardListHtml += "<tr>";
+                        boardListHtml += "<td>" + board.community_bno + "</td>";
+                        boardListHtml += "<td>" + board.region + "</td>";
+                        boardListHtml += "<td><a href='" + "${pageContext.request.contextPath}/community/get?community_bno=" + board.community_bno + "&pageNum=" + pageNum + "&amount=" + amount + "&keyword=" + keyword + "&area=" + area + "'>" + board.community_title + "</a></td>";
+                        boardListHtml += "<td>" + board.community_content + "</td>";
+                        boardListHtml += "<td>" + board.writer + "</td>";
+                        boardListHtml += "<td>" + board.community_viewcnt + "</td>";
+                        boardListHtml += "<td>" + board.formattedRegdate + "</td>";
+                        boardListHtml += "</tr>";
+                    });
+                }
                 $("#boardList").html(boardListHtml);
 
-                // 페이지네이션 업데이트
                 var paginationHtml = "";
                 if (pageMaker.prev) {
                     paginationHtml += "<a href='#' onclick='loadPage(" + (pageMaker.startPage - 1) + ")'>이전</a> ";
@@ -308,6 +193,9 @@ table tr:hover {
                     paginationHtml += "<a href='#' onclick='loadPage(" + (pageMaker.endPage + 1) + ")'>다음</a>";
                 }
                 $("#pagination").html(paginationHtml);
+            },
+            error: function() {
+                console.log("error");
             }
         });
     }

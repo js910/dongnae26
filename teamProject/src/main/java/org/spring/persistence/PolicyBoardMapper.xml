@@ -14,22 +14,22 @@
 	<!-- 북마크 기능 -->
 	<insert id="bookmark">
 	    INSERT INTO bookmark_policy_board 
-	    (serviceID, user_num, serviceName, serviceContent, serviceDeadline)
+	    (serviceID, userNum, serviceName, serviceContent, serviceDeadline)
 	    VALUES 
-	    (#{serviceID}, #{user_num}, #{serviceName}, #{serviceContent}, #{serviceDeadline})
+	    (#{serviceID}, #{userNum}, #{serviceName}, #{serviceContent}, #{serviceDeadline})
 	</insert>
 	
 	<!-- 북마크 취소 -->
 	<delete id="bookmarkDel">
 		DELETE FROM bookmark_policy_board
-    	WHERE serviceID = #{serviceID} AND user_num = #{user_num}
+    	WHERE serviceID = #{serviceID} AND userNum = #{userNum}
 	</delete>
 	
 	<!-- 게시글의 스크랩 수 -->
 	<select id="bookmarkChk" parameterType="map" resultType="int">
 		SELECT COUNT(*)
     	FROM bookmark_policy_board
-    	WHERE serviceID = #{serviceID} AND user_num = #{user_num}
+    	WHERE serviceID = #{serviceID} AND userNum = #{userNum}
 	</select>
 	
 	<select id="getUserBookmarks" resultType="org.spring.domain.BookmarkDTO">
@@ -39,7 +39,7 @@
             serviceContent,
             serviceDeadline
         FROM bookmark_policy_board 
-        WHERE user_num = #{user_num}
+        WHERE userNum = #{userNum}
         LIMIT 5
     </select>
 </mapper>

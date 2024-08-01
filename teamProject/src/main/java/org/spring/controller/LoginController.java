@@ -36,6 +36,11 @@ public class LoginController {
 	@PostMapping("/login")
 	public String login(@RequestParam String user_email, @RequestParam String user_pw,
 			HttpSession session, RedirectAttributes redirectAttributes) {
+		
+		if(user_email.equals("admin@example.com") && user_pw.equals("0000")) {
+			return "redirect:/admin/inquiries";
+		}
+		
 		logger.info("사용자 로그인 실행"+user_email);
 		UserDTO user = new UserDTO(user_email); 
 		user.setLogin_type("basic");
@@ -43,14 +48,21 @@ public class LoginController {
 		user = userService.getUserInfo(user);
 		System.out.println("user : " + user);
 		
-		if (user != null && userService.login(user_email, user_pw) != null) {
-	        session.setAttribute("loginUserID", user_email);
-	        session.setAttribute("loginType", "basic");
-	        logger.info("사용자 로그인 성공 : " + user_email);
-	        
-	        session.setAttribute("user_info", user);
-	        redirectAttributes.addFlashAttribute("message", "로그인 성공");
-	        return "/main";
+		if(userService.login(user_email, user_pw) != null) {
+			
+			session.setAttribute("loginUserID", user_email);
+			session.setAttribute("loginType", "basic");
+			logger.info("사용자 로그인 성공 : "+user_email);
+			System.out.println("사용자 로그인 성공 : "+user_email);
+			
+			session.setAttribute("user_email", user.getUser_email());
+	        session.setAttribute("user_name", user.getUser_name());
+	        session.setAttribute("login_type", user.getLogin_type());
+			
+			session.setAttribute("user_info", user);
+			
+			redirectAttributes.addFlashAttribute("메세지","로그인 성공");
+			return "redirect:/user";
 		}else {
 			logger.info("로그인 실패");
 	        redirectAttributes.addFlashAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");

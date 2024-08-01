@@ -52,7 +52,7 @@ public class KakaoController {
             System.out.println("카카오컨트롤러 user: " + user);
             // 사용자 정보 저장 또는 업데이트
             userService.insertOrUpdate(user);
-            return "redirect:/test";
+            return "redirect:/user";
             
         } else {
             model.addAttribute("isLogin", false);
@@ -65,6 +65,6 @@ public class KakaoController {
     public String logout(HttpSession session, Model model) {
         session.invalidate();
         model.addAttribute("isLogin", false);
-        return "redirect:/login";
+        return "redirect:/main";
     }
 }

@@ -34,43 +34,45 @@ public class CultureBoardController {
 	@Autowired
 	private CultureBoardServiceImpl cultureboardServiceImpl;
 
-    @GetMapping("/list")
-    public void listAll(@RequestParam(value="pageNum", defaultValue="1") int pageNum,
-    					@RequestParam(value="amount", defaultValue="10") int amount,
-    					@RequestParam(value="area", defaultValue="") String culture_area,
-    					@RequestParam(value="classify", defaultValue="") String culture_classify,
-    					Model model) {
-    	System.out.println("listAll >> " + "pageNum: " + pageNum + ", amount: " + amount);
-    	Criteria cri = new Criteria(pageNum, amount);
-        int total = cultureboardService.getTotalCount(cri);
-        
-        System.out.println("total: "+total);
-        List<CultureBoardDTO> list = cultureboardService.listAll(cri, culture_area, culture_classify);
-        model.addAttribute("list", list);
-        model.addAttribute("pageMaker", new PageDTO(cri, total));
-        model.addAttribute("selectedArea", culture_area);
-        model.addAttribute("selectedClassify", culture_classify);
-    }
+	@GetMapping("/list")
+	public void listAll(@RequestParam(value="pageNum", defaultValue="1") int pageNum,
+	                    @RequestParam(value="amount", defaultValue="10") int amount,
+	                    @RequestParam(value="area", defaultValue="") String culture_area,
+	                    @RequestParam(value="classify", defaultValue="") String culture_classify,
+	                    @RequestParam(value="type", defaultValue="") String type,
+	                    @RequestParam(value="keyword", defaultValue="") String keyword,
+	                    Model model) {
+	    Criteria cri = new Criteria(pageNum, amount);
+	    cri.setType(type);
+	    cri.setKeyword(keyword);
+
+	    int total = cultureboardService.getTotalCount(cri);
+	    List<CultureBoardDTO> list = cultureboardService.listAll(cri, culture_area, culture_classify);
+	    model.addAttribute("list", list);
+	    model.addAttribute("pageMaker", new PageDTO(cri, total));
+	    model.addAttribute("selectedArea", culture_area);
+	    model.addAttribute("selectedClassify", culture_classify);
+	    model.addAttribute("cri", cri);
+	}
     
-    
-    
-    @GetMapping("/get/{culture_bno}")
-    public String get(@PathVariable("culture_bno") int culture_bno, Model model, HttpSession session) {
-    	CultureBoardDTO dto = cultureboardService.getBoard(culture_bno);
-        model.addAttribute("dto", dto);
-        
-        UserDTO user = (UserDTO) session.getAttribute("user_info");
-        if (user != null) {
-            int user_num = user.getUser_num();
-            boolean bookmarked = cultureboardService.bookmarkChk(culture_bno, user_num);
-            model.addAttribute("bookmarked", bookmarked);
-            model.addAttribute("user_num", user_num);
-        } else {
-            model.addAttribute("bookmarked", false);
-            model.addAttribute("user_num", null);
-        }
-        return "culture/get";
-    }
+	@GetMapping("/get/{culture_bno}")
+	public String get(@PathVariable("culture_bno") int culture_bno, Criteria cri, Model model, HttpSession session) {
+	    CultureBoardDTO dto = cultureboardService.getBoard(culture_bno);
+	    model.addAttribute("dto", dto);
+	    model.addAttribute("cri", cri);
+
+	    UserDTO user = (UserDTO) session.getAttribute("user_info");
+	    if (user != null) {
+	        int user_num = user.getUser_num();
+	        boolean bookmarked = cultureboardService.bookmarkChk(culture_bno, user_num);
+	        model.addAttribute("bookmarked", bookmarked);
+	        model.addAttribute("user_num", user_num);
+	    } else {
+	        model.addAttribute("bookmarked", false);
+	        model.addAttribute("user_num", null);
+	    }
+	    return "culture/get";
+	}
     
     @PostMapping("/ajaxList")
     @ResponseBody

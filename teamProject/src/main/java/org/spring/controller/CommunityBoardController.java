@@ -47,7 +47,8 @@ public class CommunityBoardController {
     @Autowired
     private CommunityBoardService service;
 
-    private final String uploadPath = "C:/Users/wlghk/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
+    private final String uploadPath = "C:/Users/bcy12/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
+
 
 
     @GetMapping("/register")
@@ -133,8 +134,8 @@ public class CommunityBoardController {
         PageDTO pageResult = new PageDTO(cri, total);
         System.out.println(total);
         model.addAttribute("pageMaker", pageResult);
-
-        return "community/list"; // JSP 파일 경로
+        model.addAttribute("cri", cri);
+        return "community/list"; 
     }
     
     @ResponseBody
@@ -158,8 +159,9 @@ public class CommunityBoardController {
     
     
     @GetMapping("/get")
-    public String getList(@RequestParam("community_bno") Integer community_bno, Model model, HttpSession session,
+    public String getList(@RequestParam("community_bno") Integer community_bno, Criteria cri, Model model, HttpSession session,
             HttpServletRequest request, HttpServletResponse response) {
+    	model.addAttribute("cri", cri);
     	UserDTO user = (UserDTO) session.getAttribute("user_info");
         String name = user != null ? user.getUser_name() : null;
         Integer userId = user != null ? user.getUser_num() : null;
@@ -198,6 +200,9 @@ public class CommunityBoardController {
         int connunutyBno = board.getCommunity_bno();
         List<CommunityCommentDTO> comments = service.getCommentsByBoardId(connunutyBno);
         model.addAttribute("comments", comments);
+        if (userId != null) {
+            model.addAttribute("loggedInUserId", userId);
+        }
         return "/community/get";
     }
 
@@ -340,5 +345,3 @@ public class CommunityBoardController {
 		return ResponseEntity.ok(comments);
 	}
 }
-
-

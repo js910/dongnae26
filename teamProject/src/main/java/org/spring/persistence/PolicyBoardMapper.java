@@ -19,7 +19,8 @@ public interface PolicyBoardMapper {
     public void bookmarkDel(PolicyBookmarkDTO dto);
 
     // 북마크 여부 확인
-    public int bookmarkChk(@Param("serviceID") String serviceID, @Param("user_num") int user_num);
 
 	public List<BookmarkDTO> getUserBookmarks(int user_num);
+
+    public int bookmarkChk(@Param("serviceID") String serviceID, @Param("userNum") int userNum);
 }

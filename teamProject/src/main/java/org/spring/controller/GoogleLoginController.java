@@ -53,71 +53,84 @@ public class GoogleLoginController {
     }
 
     @RequestMapping(value = "/login_project/oauth2callback", method = { RequestMethod.GET, RequestMethod.POST })
-    public String googleCallback(UserDTO dto, Model model, @RequestParam String code, HttpSession session,
-            HttpServletRequest request, HttpServletResponse response) throws IOException {
-        System.out.println("로그인 콜백 호출됨");
-        System.out.println("Authorization Code: " + code);
+    public String googleCallback(UserDTO dto, Model model,
+            @RequestParam(value = "code", required = false) String code,
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "error_description", required = false) String errorDescription,
+            HttpSession session, HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-        AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
-
-        String accessToken = accessGrant.getAccessToken();
-        System.out.println("Access Token: " + accessToken);
-
-        Long expireTime = accessGrant.getExpireTime(); // 만료시 리프레시 토큰 발급
-        if (expireTime != null && expireTime < System.currentTimeMillis()) {
-            accessToken = accessGrant.getRefreshToken();
-            System.out.printf("Access token is expired. Refresh token = %s%n", accessToken);
-        }
-        if (accessToken != null) {
-            session.setAttribute("accessToken", accessToken);
-            session.setAttribute("loginUserID", accessToken);
-            session.setAttribute("loginType", "google");
-            System.out.println("세션에 토큰 저장");
-            
+        // 에러가 발생한 경우
+        if (error != null) {
+            System.err.println("로그인 실패: " + error + " - " + errorDescription);
+            model.addAttribute("error", "로그인에 실패했습니다. 다시 시도해 주세요.");
+            return "redirect:/login"; // 로그인 페이지로 리디렉션
         }
 
-        try {
-            // 사용자 프로필 정보 가져오기
-            RestTemplate restTemplate = new RestTemplate();
-            String url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + accessToken;
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer " + accessToken);
-            HttpEntity<String> entity = new HttpEntity<>(headers);
-            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-            String profile = responseEntity.getBody();
-            System.out.println("User Profile: " + profile);
+        // 권한 코드가 제공된 경우
+        if (code != null) {
+            System.out.println("로그인 콜백 호출됨");
+            System.out.println("Authorization Code: " + code);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(profile);
+            OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+            AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
 
-            // 사용자 정보를 UserDTO에 매핑
-            UserDTO userProfile = new UserDTO();
-            userProfile.setUser_email(rootNode.path("email").asText());
-            userProfile.setUser_name(rootNode.path("name").asText());
-            userProfile.setLogin_type("google"); // login_type 설정
-            //userProfile.setSocial_user_email(rootNode.path("email").asText());
-            //userProfile.setId(rootNode.path("id").asText());
-            //userProfile.setGiven_name(rootNode.path("given_name").asText());
-            //userProfile.setFamily_name(rootNode.path("family_name").asText());
-            //userProfile.setPicture(rootNode.path("picture").asText());
+            String accessToken = accessGrant.getAccessToken();
+            System.out.println("Access Token: " + accessToken);
 
-            // 데이터베이스에 저장 또는 업데이트
-            userService.insertOrUpdate(userProfile);
-            
-            // 세션에 사용자 정보 저장
-            session.setAttribute("user_email", userProfile.getUser_email());
-            session.setAttribute("user_name", userProfile.getUser_name());
-            session.setAttribute("login_type", userProfile.getLogin_type());
-            model.addAttribute("userProfile", userProfile);
+            Long expireTime = accessGrant.getExpireTime(); // 만료시 리프레시 토큰 발급
+            if (expireTime != null && expireTime < System.currentTimeMillis()) {
+                accessToken = accessGrant.getRefreshToken();
+                System.out.printf("Access token is expired. Refresh token = %s%n", accessToken);
+            }
 
-            return "redirect:/test"; // 성공 시 리턴 페이지
-        } catch (Exception e) {
-            System.err.println("Google API 호출 중 오류 발생: " + e.getMessage());
-            e.printStackTrace();
-            model.addAttribute("error", "Failed to retrieve user profile from Google.");
-            return "error"; // 에러 페이지로 리디렉션
+            if (accessToken != null) {
+                session.setAttribute("accessToken", accessToken);
+                session.setAttribute("loginUserID", accessToken);
+                session.setAttribute("loginType", "google");
+                System.out.println("세션에 토큰 저장");
+
+                try {
+                    // 사용자 프로필 정보 가져오기
+                    RestTemplate restTemplate = new RestTemplate();
+                    String url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token=" + accessToken;
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.add("Authorization", "Bearer " + accessToken);
+                    HttpEntity<String> entity = new HttpEntity<>(headers);
+                    ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
+                    String profile = responseEntity.getBody();
+                    System.out.println("User Profile: " + profile);
+
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    JsonNode rootNode = objectMapper.readTree(profile);
+
+                    // 사용자 정보를 UserDTO에 매핑
+                    UserDTO userProfile = new UserDTO();
+                    userProfile.setUser_email(rootNode.path("email").asText());
+                    userProfile.setUser_name(rootNode.path("name").asText());
+                    userProfile.setLogin_type("google"); // login_type 설정
+
+                    // 데이터베이스에 저장 또는 업데이트
+                    userService.insertOrUpdate(userProfile);
+
+                    // 세션에 사용자 정보 저장
+                    session.setAttribute("user_email", userProfile.getUser_email());
+                    session.setAttribute("user_name", userProfile.getUser_name());
+                    session.setAttribute("login_type", userProfile.getLogin_type());
+                    session.setAttribute("user_num", userProfile.getUser_num());
+                    model.addAttribute("userProfile", userProfile);
+
+                    return "redirect:/user"; // 성공 시 리턴 페이지
+                } catch (Exception e) {
+                    System.err.println("Google API 호출 중 오류 발생: " + e.getMessage());
+                    e.printStackTrace();
+                    model.addAttribute("error", "Google API 호출 중 오류가 발생했습니다.");
+                    return "error"; // 에러 페이지로 리디렉션
+                }
+            }
         }
+
+        // 코드와 에러가 모두 없는 경우
+        return "redirect:/login"; // 로그인 페이지로 리디렉션
     }
 
     // 로그아웃 처리
