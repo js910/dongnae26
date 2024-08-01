@@ -70,21 +70,20 @@ public class UserService {
 	 public boolean isPhoneNumberDuplicated(String user_phone) {
 	        return userMapper.countByPhoneNumber(user_phone) > 0;
 	    }
-		 
+	 
+	// 비밀번호 변경
 	 public int updatePassword(UserDTO userDTO) {
-			System.out.println("Before update - userDTO: " + userDTO);
-			userDTO.setUser_pw(userDTO.getPw());
-			userDTO.setEmail(userDTO.getEmail()); 
-			//추가
-			userDTO.setLogin_type(userDTO.getLogin_type());
-			System.out.println("Updating password for user_email: " + userDTO.getUser_email() + 
-								" with new password: " + userDTO.getUser_pw());
-			int updateResult = userMapper.updatePassword(userDTO);
-			System.out.println("updateResult in service: " + updateResult);
-			return updateResult;
-			
-		 }
+		 log.info("업데이트 전 비밀번호: " + userDTO);
 		 
+	     log.info("아이디: " + userDTO.getEmail() + 
+	    		 " 새 비밀번호: " + userDTO.getUser_pw());
+		    
+		    int updateResult = userMapper.updatePassword(userDTO);
+		    System.out.println("업데이트 결과: " + updateResult);
+		    
+		    return updateResult;
+		
+	 }
 
 	 
 	 //카카오

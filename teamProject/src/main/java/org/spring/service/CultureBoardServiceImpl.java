@@ -3,6 +3,7 @@ package org.spring.service;
 import java.util.List;
 import java.util.Map;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
 import org.spring.persistence.CultureBoardMapper;
@@ -17,7 +18,7 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 
 	@Override
     public CultureBoardDTO getBoard(int culture_bno) {
-        return cultureboardMapper.selectBoard(culture_bno); // 추가된 메서드
+        return cultureboardMapper.selectBoard(culture_bno); 
     }
 
 	@Override
@@ -31,16 +32,16 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 	}
 
 	@Override
-	public boolean bookmarkChk(int culture_bno, int user_num) {
-		return cultureboardMapper.bookmarkChk(culture_bno, user_num) > 0;
+	public boolean bookmarkChk(int culture_bno, int userNum) {
+		return cultureboardMapper.bookmarkChk(culture_bno, userNum) > 0;
 	}
 	@Override
-	public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title) {
-		cultureboardMapper.bookmark(culture_bno, user_num, culture_classify, culture_title);
+	public void bookmark(int culture_bno, int userNum, String culture_classify, String culture_title, String culture_place) {
+		cultureboardMapper.bookmark(culture_bno, userNum, culture_classify, culture_title, culture_place);
 	}
 	@Override
-	public void bookmarkDel(int culture_bno, int user_num, String culture_classify, String culture_title) {
-		cultureboardMapper.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
+	public void bookmarkDel(int culture_bno, int userNum, String culture_classify, String culture_title) {
+		cultureboardMapper.bookmarkDel(culture_bno, userNum, culture_classify, culture_title);
 	}
 
 	@Override
@@ -49,7 +50,15 @@ public class CultureBoardServiceImpl implements CultureBoardService {
 		return cultureboardMapper.selectAll(cri, culture_area, culture_classify);
 	}
 
-
-
-
+//	  @Override
+    public List<BookmarkDTO> getBookmarkedPosts(int userNum) {
+        System.out.println("Service: Fetching bookmarks for userNum: " + userNum);
+        List<BookmarkDTO> bookmarks = cultureboardMapper.getBookmarkedPosts(userNum);
+        System.out.println("Service: Retrieved bookmarks: " + bookmarks);
+        return bookmarks;
+    }
+    public List<BookmarkDTO> getUserBookmarks(int userNum) {
+		
+		 return cultureboardMapper.getUserBookmarks(userNum);
+	}
 }

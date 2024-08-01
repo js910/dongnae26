@@ -101,10 +101,10 @@
 		WHERE user_email = #{email};
 	</select>
 	
-	<update id="updatePassword" parameterType="org.spring.domain.UserDTO">
+	<update id="updatePassword" parameterType="org.spring.domain.UserDTO" >
     	UPDATE user 
-    	SET user_pw = #{user_pw} 
-    	WHERE user_email = #{user_email} AND login_type = #{login_type};
+    	SET user_pw = #{user_pw}
+    	WHERE user_email = #{email} AND login_type = #{login_type};
 	</update>
 
 

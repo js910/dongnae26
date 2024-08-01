@@ -1,7 +1,9 @@
 package org.spring.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.policy.*;
 import org.spring.model.PolicyResponse;
 import org.spring.model.PolicyResponse2;
@@ -98,4 +100,9 @@ public class PolicyBoardService {
     public boolean bookmarkChk(String serviceID, int userNum) {
         return boardMapper.bookmarkChk(serviceID, userNum) > 0;
     }
+
+	public List<BookmarkDTO> getUserBookmarks(int user_num) {
+		
+		return boardMapper.getUserBookmarks(user_num);
+	}
 }

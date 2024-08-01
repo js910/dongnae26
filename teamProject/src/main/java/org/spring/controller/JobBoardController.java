@@ -1,5 +1,6 @@
 package org.spring.controller;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.UserDTO;
 import org.spring.domain.job.JobBoardDTO;
 import org.spring.domain.job.JobCriteria;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,25 +90,41 @@ public class JobBoardController {
     }
     
     @ResponseBody
-    @PostMapping("/bookmark")
-    public Map<String, Object> jobBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
-                                                               @RequestParam("cmpnyNm") String cmpnyNm,
-                                                               @RequestParam("bsnsSumryCn") String bsnsSumryCn) throws Exception {
-        Map<String, Object> result = new HashMap<>();
+	@PostMapping("/bookmark")
+	public Map<String, Object> JobyBookmark(HttpSession session, @RequestParam("joRegistNo") String joRegistNo,
+																   @RequestParam("cmpnyNm") String cmpnyNm,
+																   @RequestParam("bsnsSumryCn") String bsnsSumryCn,
+																   @RequestParam("receptClosNm") String receptClosNm,
+																   @RequestParam("hopeWage") String hopeWage) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		UserDTO user = (UserDTO) session.getAttribute("user_info");
+		if(user==null) {
+			result.put("loggedIn", false);
+	        return result;
+		}
+		int user_num = user.getUser_num();
+		boolean bookmark = jobBoardService.bookmarkChk(joRegistNo, user_num);
+		if (!bookmark) {
+	    	jobBoardService.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage);
+	    } else {
+	    	jobBoardService.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage);
+	    }
+	    result.put("loggedIn", true);
+	    result.put("bookmarked", !bookmark);
+	    return result;
+	}
+    
+    @GetMapping("/bookmarks")
+    public String getUserBookmarks(HttpSession session, Model model) {    
         UserDTO user = (UserDTO) session.getAttribute("user_info");
-        if(user == null) {
-            result.put("loggedIn", false);
-            return result;
-        }
-        int user_num = user.getUser_num();
-        boolean bookmark = jobBoardService.bookmarkChk(joRegistNo, user_num);
-        if (!bookmark) {
-            jobBoardService.bookmark(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+        if (user != null) {
+            int user_num = user.getUser_num();
+            List<BookmarkDTO> jobBookmarks = jobBoardService.getUserBookmarks(user_num);
+            model.addAttribute("jobBookmarks", jobBookmarks);
         } else {
-            jobBoardService.bookmarkDel(joRegistNo, user_num, cmpnyNm, bsnsSumryCn);
+            model.addAttribute("jobBookmarks", new ArrayList<>());
         }
-        result.put("loggedIn", true);
-        result.put("bookmarked", !bookmark);
-        return result;
+        return "/job/bookmark";
     }
+    
 }

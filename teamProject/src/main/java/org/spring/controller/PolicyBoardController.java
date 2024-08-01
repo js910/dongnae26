@@ -89,6 +89,7 @@ public class PolicyBoardController {
 	        return result;
 		}
 		int user_num = user.getUser_num();
+	    //dto.setUser_num(user_num);
 	    dto.setUserNum(user_num);
 	    boolean bookmark = policyService.bookmarkChk(dto.getServiceID(), user_num);
 	    

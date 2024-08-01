@@ -31,7 +31,7 @@
                     </div>
                     <div class="col-lg-7" style="background: linear-gradient(rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)), url(#);">
                     	<div style="block;">
-						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}')"></span>
+						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}','${dto.culture_place}')"></span>
 						</div>
                         <h5 class="section-about-title pe-3">About Us</h5>
                         <h1 class="mb-4"><span class="text-primary"><c:out value="${dto.culture_title }"/></span></h1>
@@ -59,7 +59,6 @@
                 <a href="${pageContext.request.contextPath}/culture/list?pageNum=${cri.pageNum}&amount=${cri.amount}&keyword=${cri.keyword}&type=${cri.type}&area=${cri.area}&classify=${cri.classify}" class="btn btn-primary rounded-pill py-2 px-4 mt-4 float-end">go back to list</a>
             </div>
         </div>
-        <!-- About End -->		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50c5816205d710d59a41cf8115b05655"></script>
 	    <script type="text/javascript">
@@ -114,7 +113,7 @@
 	                    $("#bookmark").addClass("bookmarked");
 	                }
 
-	                window.toggleBookmark = function(culture_bno, culture_classify, culture_title) {
+	                window.toggleBookmark = function(culture_bno, culture_classify, culture_title, culture_place) {
 	                    $.ajax({
 	                        type: "POST",
 	                        url: "/culture/bookmark",
@@ -122,7 +121,8 @@
 	                        data: {
 	                            'culture_bno': culture_bno,
 	                            'culture_classify': culture_classify,
-	                            'culture_title': culture_title
+	                            'culture_title': culture_title,
+	                            'culture_place': culture_place
 	                        },
 	                        success: function(response) {
 	                            console.log("AJAX success response:", response);

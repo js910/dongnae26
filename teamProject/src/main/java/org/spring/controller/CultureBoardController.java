@@ -1,11 +1,13 @@
 package org.spring.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.UserDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
@@ -53,8 +55,6 @@ public class CultureBoardController {
 	    model.addAttribute("cri", cri);
 	}
     
-    
-    
 	@GetMapping("/get/{culture_bno}")
 	public String get(@PathVariable("culture_bno") int culture_bno, Criteria cri, Model model, HttpSession session) {
 	    CultureBoardDTO dto = cultureboardService.getBoard(culture_bno);
@@ -99,9 +99,10 @@ public class CultureBoardController {
     
     @ResponseBody
     @PostMapping("/bookmark")
-    public Map<String, Object> jobBookmark(HttpSession session, @RequestParam("culture_bno") int culture_bno,
+    public Map<String, Object> cultureBookmark(HttpSession session, @RequestParam("culture_bno") int culture_bno,
                                                                @RequestParam("culture_classify") String culture_classify,
-                                                               @RequestParam("culture_title") String culture_title) throws Exception {
+                                                               @RequestParam("culture_title") String culture_title,
+                                                               @RequestParam("culture_place") String culture_place) throws Exception {
         Map<String, Object> result = new HashMap<>();
         UserDTO user = (UserDTO) session.getAttribute("user_info");
         if(user == null) {
@@ -111,12 +112,35 @@ public class CultureBoardController {
         int user_num = user.getUser_num();
         boolean bookmark = cultureboardService.bookmarkChk(culture_bno, user_num);
         if (!bookmark) {
-        	cultureboardService.bookmark(culture_bno, user_num, culture_classify, culture_title);
+        	cultureboardService.bookmark(culture_bno, user_num, culture_classify, culture_title, culture_place);
         } else {
         	cultureboardService.bookmarkDel(culture_bno, user_num, culture_classify, culture_title);
         }
         result.put("loggedIn", true);
         result.put("bookmarked", !bookmark);
         return result;
+    }
+    
+    @GetMapping("/bookmarks")public String showCultureBookmarks(Model model, HttpSession session) {
+        // Log entry into the method
+        System.out.println("showCultureBookmarks");
+
+        UserDTO user = (UserDTO) session.getAttribute("user_info");
+        System.out.println("User session info: " + user);
+
+        if (user != null) {
+            int user_num = user.getUser_num();
+           
+
+            List<BookmarkDTO> bookmarks = cultureboardService.getBookmarkedPosts(user_num);
+            System.out.println("bookmarks: " + bookmarks);
+
+            model.addAttribute("cultureBookmarks", bookmarks);
+        } else {
+            model.addAttribute("cultureBookmarks", new ArrayList<>());
+        }
+
+        System.out.println("Model after setting attributes: " + model);
+        return "culture/bookmarks";  
     }
 }

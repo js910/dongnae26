@@ -54,7 +54,7 @@
 				            <a href="http://localhost:8090/user/myPage">
 				                <small class="me-3 text-light"><i class="bi bi-person me-2"></i>마이페이지</small>
 				            </a>
-				            <a href="http://localhost:8090/user/bookmark">
+				            <a href="http://localhost:8090/bookmark">
 				                <small class="me-3 text-light"><i class="bi bi-bookmark me-2"></i>북마크</small>
 				            </a>
 				            <c:choose>

@@ -109,7 +109,7 @@
         <div class="section">
             <div class="section-title">
                 기본 정보
-                <span id="bookmark" class="bookmark" onclick="toggleBookmark('${jobDetail.joRegistNo}','${jobDetail.cmpnyNm}','${jobDetail.bsnsSumryCn}')"></span>
+                <span id="bookmark" class="bookmark" onclick="toggleBookmark('${jobDetail.joRegistNo}','${jobDetail.cmpnyNm}','${jobDetail.bsnsSumryCn}','${jobDetail.receptClosNm}','${jobDetail.hopeWage}')"></span>
             </div>
             <div class="section-content">
                 <table>
@@ -213,7 +213,7 @@
             </div>
         </div>
 
-         <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}" class="back-link">채용 목록으로 돌아가기</a>
+                  <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}&wageType=${cri.wageType}&career=${cri.career}&education=${cri.education}&workDay=${cri.workDay}" class="back-link">채용 목록으로 돌아가기</a>
     </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
@@ -224,7 +224,7 @@ $(document).ready(function() {
         $("#bookmark").addClass("bookmarked");
     }
 
-    window.toggleBookmark = function(joRegistNo, cmpnyNm, bsnsSumryCn) {
+    window.toggleBookmark = function(joRegistNo, cmpnyNm, bsnsSumryCn, receptClosNm, hopeWage) {
         $.ajax({
             type: "POST",
             url: "/job/bookmark",
@@ -232,7 +232,9 @@ $(document).ready(function() {
             data: {
                 'joRegistNo': joRegistNo,
                 'cmpnyNm': cmpnyNm,
-                'bsnsSumryCn': bsnsSumryCn
+                'bsnsSumryCn': bsnsSumryCn,
+                'receptClosNm': receptClosNm,
+                'hopeWage': hopeWage
             },
             success: function(response) {
                 console.log("AJAX success response:", response);

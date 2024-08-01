@@ -445,6 +445,7 @@ table th:nth-child(5), table td:nth-child(5) {
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
     // Initialize district select options
     const districts = [
         "서울특별시", "강남구", "강동구", "강북구", "강서구", "관악구", "광진구",

@@ -12,12 +12,13 @@ public class UserDTO {
     private String user_name;
     private String user_phone;
     private String user_interest;
-    
-    //추가
     private String login_type;
+    
+   
     
     private String pw;
     private String email;
+    
     
     public UserDTO() {}
     
@@ -69,6 +70,14 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.user_email = email;  // set user_email to the provided email value
+    }
+    
+    public String getSocialUserEmail() {
+        return social_user_email;
+    }
+
+    public void setSocialUserEmail(String social_user_email) {
+        this.social_user_email = social_user_email;
     }
 
 	public UserDTO(String user_email, String social_user_email, String user_name, String user_phone) {
