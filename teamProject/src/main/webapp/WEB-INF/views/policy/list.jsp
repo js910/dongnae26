@@ -61,15 +61,29 @@ body {
 }
 
 .input-group-btn .btn {
-    background-color: #3E8EDE; /* Button color */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #5bc1ac;
     color: white;
     border: none;
     height: 38px;
     border-radius: 0 10px 10px 0;
+    font-size: 1rem;
+    padding: 0 0.7rem; /* 좌우 여백 조정 */
+    position: relative;
+    transition: background-color 0.15s ease-in-out;
 }
 
 .input-group-btn .btn:hover {
-    background-color: #2C6EB2; /* Button hover color */
+    background-color: #4a9d8c; /* Button hover color */
+}
+
+.input-group-btn .btn::before {
+    content: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"%3E%3Ccircle cx="11" cy="11" r="8" /%3E%3Cline x1="21" y1="21" x2="16.65" y2="16.65" /%3E%3C/svg%3E');
+    margin-right: 0.25rem; /* 아이콘과 텍스트 사이의 간격 조정 */
+    width: 16px; /* 아이콘 크기 조정 */
+    height: 16px; /* 아이콘 크기 조정 */
 }
 
 /* Service Icons */
@@ -191,16 +205,20 @@ table th:nth-child(5), table td:nth-child(5) {
 
 .pagination li a {
     text-decoration: none;
-    color: #3E8EDE;
+    color: #5bc1ac;
     padding: 5px 10px;
     border: 1px solid #ddd;
     border-radius: 3px;
 }
 
+.pagination li a:hover {
+    background-color: rgba(91, 193, 172, 0.2); /* Button hover color */
+}
+
 .pagination li.active a {
-    background-color: #3E8EDE;
+    background-color: #5bc1ac;
     color: white;
-    border: 1px solid #3E8EDE;
+    border: 1px solid #5bc1ac;
 }
 
 /* Entry Selection */
@@ -208,18 +226,29 @@ table th:nth-child(5), table td:nth-child(5) {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 15px;
+    margin-left: 5px;
+    position: relative;
 }
 
 .dataTables_length label {
-    margin-bottom: 0;
+    margin-bottom: 10px;
     font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 10px;
 }
 
 .dataTables_length select {
-    padding: 5px;
+    padding: 5px 30px 5px 10px;
     border: 1px solid #ddd;
-    border-radius: 4px;
+    background-color: #fff;
+    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E') no-repeat right 10px center;
+    background-size: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
 }
 
 </style>
@@ -340,33 +369,22 @@ table th:nth-child(5), table td:nth-child(5) {
 	       </div>
         </div>
     </div>
-    
-	<!-- 
-	<!-- /.row 
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel panel-default">
-				<!-- /.panel-heading 
-				<div class="panel-body">
-					<table id="boardTable" width="100%" class="table table-striped table-bordered table-hover">
-						<thead>
-							<tr>
-								<th>소관기관명</th>
-								<th>서비스분야</th>
-								<th>서비스명</th>
-								<th>서비스목적요약</th>
-								<th>신청기한</th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-					<!-- /.table-responsive 
-	 -->
 	 
 	 <!-- /.row -->
             <div class="row">
                 <div class="">
                     <div class="panel panel-default">
+	                    <div class="col-lg-6">
+			                    <div class="dataTables_length" id="dataTables-example_length">
+			                        <label>Show entries: 
+			                            <select name="dataTables-example_length" aria-controls="dataTables-example" class="form-control input-sm">
+			                                <option value="10" ${pageMaker.cri.amount == 10 ? 'selected' : ''}>10</option>
+			                                <option value="20" ${pageMaker.cri.amount == 20 ? 'selected' : ''}>20</option>
+			                                <option value="30" ${pageMaker.cri.amount == 30 ? 'selected' : ''}>30</option>
+			                            </select>
+			                        </label>
+			                    </div>
+			                </div>
                         <div class="panel-heading">
                             Hover Rows
                         </div>
@@ -520,23 +538,26 @@ $(document).ready(function() {
             	var data = response.policyapi.data;
                 var boardTbody = $("#boardTable tbody");
                 boardTbody.empty();
-                
-                $.each(data, function(index, item) {
-                    var row = $("<tr>");
-                    row.append($("<td>").text(item.소관기관명).addClass('summary'));
-                    row.append($("<td>").text(item.서비스분야).addClass('summary'));
-                    var titleLink = $("<a>").attr("href", "/policy/get?serviceID=" + item.서비스ID + 
-                    		"&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + 
-                    		"&amount=" + $("#pageForm").find("input[name='amount']").val() + 
-                            "&type=" + $("#searchType").val() + 
-                            "&keyword=" + $("#searchForm").find("input[type='search']").val() + 
-                            "&district=" + $("#pageForm").find("input[name='district']").val()).text(item.서비스명);
-                    var titleTd = $("<td>").append(titleLink);
-                    row.append(titleTd.addClass('summary'));
-                    row.append($("<td>").text(item.서비스목적요약).addClass('summary'));
-                    row.append($("<td>").text(item.신청기한).addClass('summary'));
-                    boardTbody.append(row);
-                });
+                if (data.length === 0) {
+                    boardTbody.append("<tr><td colspan='7' class='text-center'>검색 결과가 없습니다.</td></tr>");
+                } else {
+	                $.each(data, function(index, item) {
+	                    var row = $("<tr>");
+	                    row.append($("<td>").text(item.소관기관명).addClass('summary'));
+	                    row.append($("<td>").text(item.서비스분야).addClass('summary'));
+	                    var titleLink = $("<a>").attr("href", "/policy/get?serviceID=" + item.서비스ID + 
+	                    		"&pageNum=" + $("#pageForm").find("input[name='pageNum']").val() + 
+	                    		"&amount=" + $("#pageForm").find("input[name='amount']").val() + 
+	                            "&type=" + $("#searchType").val() + 
+	                            "&keyword=" + $("#searchForm").find("input[type='search']").val() + 
+	                            "&district=" + $("#pageForm").find("input[name='district']").val()).text(item.서비스명);
+	                    var titleTd = $("<td>").append(titleLink);
+	                    row.append(titleTd.addClass('summary'));
+	                    row.append($("<td>").text(item.서비스목적요약).addClass('summary'));
+	                    row.append($("<td>").text(item.신청기한).addClass('summary'));
+	                    boardTbody.append(row);
+	                });
+                }
                 updatePagination(response.pageMaker);
             },
             error: function() {
