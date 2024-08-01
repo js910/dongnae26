@@ -30,6 +30,10 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
+	<welcome-file-list>
+        <welcome-file>/WEB-INF/views/main.jsp</welcome-file>
+    </welcome-file-list>
+	
 	<!-- 문자 인코딩을 위한 필터 생성 -->
 	<filter>
 		<filter-name>encoding</filter-name>
