@@ -46,6 +46,7 @@ body {
     background-color: white;
 }
 
+
 /* Header Styling */
 .page-header {
     margin: 25px 20px;
@@ -260,7 +261,6 @@ table th:nth-child(5), table td:nth-child(5) {
                 <ol class="breadcrumb justify-content-center mb-0">
                     <li class="breadcrumb-item"><a href="../main">Home</a></li>
                     <li class="breadcrumb-item"><a href="/policy/list">정책 게시판</a></li>
-                    <li class="breadcrumb-item active text-white">About</li>
                 </ol>    
             </div>
         </div>

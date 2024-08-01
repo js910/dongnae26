@@ -31,6 +31,7 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
+    
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
     <!-- CSS FILES -->
@@ -92,6 +93,7 @@
     <div id="sticky-wrapper" class="sticky-wrapper" style="height: 150px;">
         <nav class="navbar navbar-expand-lg bg-light shadow-lg">
             <div class="container">
+
                 <a class="navbar-brand" href="../main">
                     <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity" style="width:60px; margin:5px;">
                     <span style="margin-left: 15px; font-size: 1.8rem;">

@@ -184,12 +184,17 @@
     #boardTable th:nth-child(5), #boardTable td:nth-child(5) { /* '진행 기간' 열 */
         width: 15%;
     }
+    
+    button[type="submit"]:hover {
+	    background: #4a9d8c;
+	    color: white;
+	}
 </style>
 
 </head>
 <body>
     <div id="page-wrapper">
-    	<div class="container">
+    	<div class="">
 	        <h1></h1>
 	        <form id="filterForm" method="GET" action="javascript:submitForm();">
 	            <div class="row">
@@ -258,7 +263,7 @@
 	                <div class="col-lg-6">
 	                    <div class="input-group">
 	                        <input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword }">
-	                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>search</button>
+	                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>검색</button>
 	                    </div>
 	                </div>
 	                <div>
