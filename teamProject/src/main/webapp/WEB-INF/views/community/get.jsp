@@ -58,14 +58,7 @@ h1 {
     color: #333;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
+
 
 /* 게시글 상세 보기 */
 div {
