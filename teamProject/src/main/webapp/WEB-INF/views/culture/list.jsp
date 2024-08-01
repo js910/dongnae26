@@ -20,7 +20,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>동네26 - 문화·행사게시판</title>
+<title>동네26 - 문화·행사 게시판</title>
 <link rel="stylesheet" href="">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script> 
@@ -125,7 +125,17 @@
 	    background-color: white;
 	  }
 	}
-
+	#filterForm, #searchForm {
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		padding-bottom: 10px;
+	}
+	
+	#searchForm {
+		padding-bottom: 30px;
+	}
+    
     .pagination .page-link {
         color: #5bc1ac; /* 페이지 링크 색상 */
     }
@@ -147,6 +157,41 @@
 	    padding: 50px;
 	    background-color: white;
 	}
+	
+.panel-heading {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    gap: 10px;
+    margin-left: 5px;
+    position: relative;
+    width: 200px;
+}
+
+#amount {
+	width: none;
+}
+
+.panel-heading label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 10px;
+}
+
+.panel-heading select {
+    padding: 5px 30px 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E') no-repeat right 10px center;
+    background-size: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+}
     
     /* 테이블 크기 유지 */
     #boardTable {
@@ -185,6 +230,10 @@
         width: 15%;
     }
     
+    button[type="submit"] {
+	    background: #5bc1ac;
+	    color: white;
+	}
     button[type="submit"]:hover {
 	    background: #4a9d8c;
 	    color: white;
@@ -194,11 +243,11 @@
 </head>
 <body>
     <div id="page-wrapper">
-    	<div class="">
+    	<div>
 	        <h1></h1>
 	        <form id="filterForm" method="GET" action="javascript:submitForm();">
-	            <div class="row">
-	                <div class="col-3">
+	            <div class="row" style="width: 70%">
+	                <div class="col-6">
 	                    <select class="form-select form-control" id="areaSelect" name="area" onchange="fetchPage(1)">
 	                        <option value="" ${selectedArea == '' ? 'selected' : ''}>지역 전체</option>
 	                        <option value="강남구" ${selectedArea == '강남구' ? 'selected' : ''}>강남구</option>
@@ -228,7 +277,7 @@
 	                        <option value="중랑구" ${selectedArea == '중랑구' ? 'selected' : ''}>중랑구</option>
 	                    </select>
 	                </div>
-	                <div class="col-3">
+	                <div class="col-6">
 	                    <select class="form-select form-control" id="classifySelect" name="classify" onchange="fetchPage(1)">
 	                        <option value="" ${selectedClassify == '' ? 'selected' : ''}>분류 전체</option>
 	                        <option value="교육/체험" ${selectedClassify == '교육/체험' ? 'selected' : ''}>교육/체험</option>
@@ -251,16 +300,17 @@
 	                </div>
 	            </div>
 	        </form>
-	        <div class="row">
-	            <form id="searchForm" action="javascript:submitForm();" method="get" class="d-flex">
-	                <div class="col-lg-4">
+	        </div>
+	        <form id="searchForm" action="javascript:submitForm();" method="get" class="d-flex">
+	        	<div class="row" style="width: 70%">
+	                <div class="col-lg-3">
 	                    <select id="searchType" class="form-select form-control" name="type">
 	                        <option value="all" ${pageMaker.cri.type == "all" ? "selected":"" }>전체</option>
 	                        <option value="culture_title" ${pageMaker.cri.type == "culture_title" ? "selected":"" }>행사 제목</option>
 	                        <option value="culture_place" ${pageMaker.cri.type == "culture_place" ? "selected":"" }>장소</option>
 	                    </select>
 	                </div>
-	                <div class="col-lg-6">
+	                <div class="col-lg-9">
 	                    <div class="input-group">
 	                        <input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword }">
 	                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i>검색</button>
@@ -269,8 +319,9 @@
 	                <div>
 	                	<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
 	                </div>
-	            </form>
-	        </div>
+	            </div>
+	        </form>
+	            
 	
 	        <!-- 게시물 목록 테이블 -->
 	        <!-- 
@@ -292,7 +343,6 @@
 	         -->
 	         <!-- /.row -->
 	            <div class="row">
-	                <div class="">
 	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
 					            <label for="amount">게시글 갯수:</label>
@@ -324,7 +374,6 @@
 	                        <!-- /.panel-body -->
 	                    </div>
 	                    <!-- /.panel -->
-	                </div>
 	              </div>
 	
 	        <!-- 페이지 네비게이션 -->
@@ -333,7 +382,6 @@
 	            </ul>
 	        </div>
 	    </div>
-    </div>
 
 </body>
 <%@include file="../includes/footer.jsp"%>

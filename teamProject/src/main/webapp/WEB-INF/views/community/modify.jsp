@@ -92,7 +92,7 @@ img[alt="기존 이미지"] {
     border-radius: 4px;
 }
 </style>
-<title>게시글 수정</title>
+<title>동네26 - 커뮤니티 게시판</title>
   
    
 </head>
