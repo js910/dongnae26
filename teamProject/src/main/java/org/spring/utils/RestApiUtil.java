@@ -55,28 +55,34 @@ public class RestApiUtil {
 	public static <T> T ConnHttpGetType2(String connUrl, HashMap<String, String> data,
             HashMap<String, String> headerData, Class<T> classType) {
 
-        StringBuilder urlBuilder = new StringBuilder(connUrl);
-        try {
-            int count = 0;
-            for (String key : data.keySet()) {
-                if (count == 0) {
-                    urlBuilder.append("?" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(data.get(key), "UTF-8"));
-                } else {
-                    urlBuilder.append("&" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(data.get(key), "UTF-8"));
-                }
-                count++;
-            }
-
-            if (urlBuilder.toString().startsWith("https")) {
-                return JsonUtil.parseJson(httpsConn(urlBuilder.toString(), headerData), classType);
+    StringBuilder urlBuilder = new StringBuilder(connUrl);
+    try {
+        int count = 0;
+        for (String key : data.keySet()) {
+            if (count == 0) {
+                urlBuilder.append("?" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(data.get(key), "UTF-8"));
             } else {
-                return JsonUtil.parseJson(httpConn(urlBuilder.toString(), headerData), classType);
+                urlBuilder.append("&" + URLEncoder.encode(key, "UTF-8") + "=" + URLEncoder.encode(data.get(key), "UTF-8"));
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            count++;
         }
+
+        String jsonResponse;
+        if (urlBuilder.toString().startsWith("https")) {
+            jsonResponse = httpsConn(urlBuilder.toString(), headerData);
+        } else {
+            jsonResponse = httpConn(urlBuilder.toString(), headerData);
+        }
+
+        // JSON 응답 출력
+        System.out.println("JSON Response: " + jsonResponse);
+
+        return JsonUtil.parseJson(jsonResponse, classType);
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
     }
+}
 
 	private static String httpConn(String connUrl, HashMap<String, String> headerData) throws IOException {
 		// System.out.println("HTTP connection to URL: " + connUrl);

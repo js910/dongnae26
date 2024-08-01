@@ -37,9 +37,9 @@
                     <a href="${pageContext.request.contextPath}/basic/logout">로그아웃</a>
                 </c:when>
                 <c:when test="${loginType == 'kakao'}">
-                    <a href='https://kauth.kakao.com/oauth/logout?client_id=57d63923a77bfe9b2640845383c5ee17&logout_redirect_uri=http://localhost:8090/kakao/logout'>
-                        <img src="/resources/images/logout_btn.png">
-                    </a>
+                	 <a href='https://kauth.kakao.com/oauth/logout?client_id=133dcac119e004b792bceaf4bca84d93&logout_redirect_uri=http://localhost:8090/kakao/logout'>
+                	<img src="/resources/images/logout_btn.png">
+            		</a>
                 </c:when>
             </c:choose>
         </c:when>
@@ -63,9 +63,9 @@
                 </a>
             </div>
             <div id="kakao_id_login">
-                <a href='https://kauth.kakao.com/oauth/authorize?client_id=57d63923a77bfe9b2640845383c5ee17&redirect_uri=http://localhost:8090/kakao/oauth&response_type=code'>
-                    <img width="230" src="/resources/images/kakao_login_btn.png">
-                </a>
+            <a href='https://kauth.kakao.com/oauth/authorize?client_id=133dcac119e004b792bceaf4bca84d93&redirect_uri=http://localhost:8090/kakao/oauth&response_type=code'>
+                <img width="230" src="/resources/images/kakao_login_btn.png">
+            </a>
             </div>
         </c:otherwise>
     </c:choose>

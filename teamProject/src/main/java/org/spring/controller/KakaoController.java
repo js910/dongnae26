@@ -42,9 +42,9 @@ public class KakaoController {
             session.setAttribute("loginUserID", userInfo.getKakao_account().getEmail());
             session.setAttribute("login_type", "kakao");
             session.setAttribute("kakaoUserInfo", userInfo);
-            session.setAttribute("user_name", userInfo.getKakao_account().getName());
+            session.setAttribute("user_name", userInfo.getKakao_account().getProfile().getNickname());
             session.setAttribute("user_email", userInfo.getKakao_account().getEmail());
-            session.setAttribute("user_phone", userInfo.getKakao_account().getPhone_number());
+           
             model.addAttribute("isLogin", true);
             
             
