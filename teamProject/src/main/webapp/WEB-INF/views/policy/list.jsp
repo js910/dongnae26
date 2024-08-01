@@ -267,12 +267,6 @@ table th:nth-child(5), table td:nth-child(5) {
         <!-- Header End -->
 
 <div id="page-wrapper">
-	<div class="row">
-		<div class="col-lg-12">
-			<h2 class="page-header">정책 게시판</h2>
-		</div>
-		<!-- /.col-lg-12 -->
-	</div>
 
 	<div class="row">
         <form id="searchForm" action="/policy/list" method="post">

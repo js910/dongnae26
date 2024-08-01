@@ -39,6 +39,32 @@
     .search-form .btn {
         flex: 0;
     }
+    /*button style 수정*/
+    .search-form button[type="submit"] {
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    background-color: #5bc1ac;
+	    color: white;
+	    border: none; /* 수정: border 속성 설정 */
+	    height: 38px;
+	    font-size: 1rem;
+	    padding: 0 2rem;
+	    position: relative;
+	    transition: background-color 0.15s ease-in-out;
+	    white-space: nowrap; /* 수정: 텍스트 줄 바꿈 방지 */
+	    box-sizing: border-box; /* 수정: 패딩 및 테두리 포함 계산 */
+	    flex: 0;
+    }
+    .search-form button[type="submit"]:hover {
+	    background: #4a9d8c;
+	    color: white;
+	}
+    .search-container {
+	    display: flex;
+	    align-items: center; /* 세로 중앙 정렬 */
+	    gap: 5px; /* 요소 사이의 간격 조절 */
+	}
     table {
         width: 100%;
         border-collapse: collapse;
@@ -111,9 +137,6 @@
 
     .form-group.input-group.search input.form-control {
         flex: 3;
-    }
-    input[type='search']{
-        width: 70%;
     }
     .form-table {
         width: 100%;
@@ -257,10 +280,12 @@
                                 <option value="joSj" ${pageMaker.cri.type == "joSj" ? "selected" : ""}>채용공고명</option>
                                 <option value="dtyCn" ${pageMaker.cri.type == "dtyCn" ? "selected" : ""}>직무내용</option>
                             </select>
-                            <input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
-                            <span class="input-group-btn">
-                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 검색</button>
-                            </span>
+                            <div class="search-container">
+	                            <input type="search" class="form-control" name="keyword" value="${pageMaker.cri.keyword}">
+	                            <span class="input-group-btn">
+	                                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 검색</button>
+	                            </span>
+	                        </div>
                         </td>
                     </tr>
                 </table>           

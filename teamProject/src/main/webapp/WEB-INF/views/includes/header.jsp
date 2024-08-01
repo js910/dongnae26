@@ -9,7 +9,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
     <style>
     	a{
         text-decoration: none;
@@ -31,8 +30,7 @@
 
     <meta name="description" content="">
     <meta name="author" content="">
-
-    
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
     <!-- CSS FILES -->
     <link href="/resources/css/bootstrap.min.css" rel="stylesheet">
@@ -56,29 +54,43 @@ https://templatemo.com/tm-581-kind-heart-charity
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-8 col-12 d-flex flex-wrap" style="float: right;">
-                    
-                    <c:choose>            
+                <div class="col-lg-8 col-12 ms-auto d-lg-block d-none" style="text-align: right;">
+				    <c:choose>
 				        <c:when test="${not empty loginUserID}">
-				        <a href="http://localhost:8090/myPage"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>마이페이지</small></a>
+				            <a href="http://localhost:8090/user/myPage">
+				                <small class="me-3 text-light"><i class="bi bi-person me-2"></i>마이페이지</small>
+				            </a>
+				            <a href="http://localhost:8090/user/bookmark">
+				                <small class="me-3 text-light"><i class="bi bi-bookmark me-2"></i>북마크</small>
+				            </a>
 				            <c:choose>
 				                <c:when test="${loginType == 'google'}">
-				                    <a href="${pageContext.request.contextPath}/social/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+				                    <a href="${pageContext.request.contextPath}/social/logout">
+				                        <small class="me-3 text-light"><i class="bi bi-box-arrow-right me-2"></i>로그아웃</small>
+				                    </a>
 				                </c:when>
 				                <c:when test="${loginType == 'naver'}">
-				                    <a href='http://localhost:8090/callback/performLogout'><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+				                    <a href='http://localhost:8090/callback/performLogout'>
+				                        <small class="me-3 text-light"><i class="bi bi-box-arrow-right me-2"></i>로그아웃</small>
+				                    </a>
 				                </c:when>
 				                <c:when test="${loginType == 'basic'}">
-				                    <a href="${pageContext.request.contextPath}/basic/logout"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그아웃</small></a>
+				                    <a href="${pageContext.request.contextPath}/basic/logout">
+				                        <small class="me-3 text-light"><i class="bi bi-box-arrow-right me-2"></i>로그아웃</small>
+				                    </a>
 				                </c:when>
 				            </c:choose>
 				        </c:when>
 				        <c:otherwise>
-				        <a href="http://localhost:8090/basic/join"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>회원가입</small></a>
-				        <a href="http://localhost:8090/login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>로그인</small></a>
+				            <a href="http://localhost:8090/basic/join">
+				                <small class="me-3 text-light"><i class="bi bi-person-plus me-2"></i>회원가입</small>
+				            </a>
+				            <a href="http://localhost:8090/login">
+				                <small class="me-3 text-light"><i class="bi bi-box-arrow-in-right me-2"></i>로그인</small>
+				            </a>
 				        </c:otherwise>
 				    </c:choose>
-                </div>
+				</div>
 
             </div>
         </div>
@@ -88,8 +100,8 @@ https://templatemo.com/tm-581-kind-heart-charity
         <nav class="navbar navbar-expand-lg bg-light shadow-lg">
             <div class="container">
                 <a class="navbar-brand" href="../main">
-                    <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity">
-                    <span>
+                    <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity" style="width:60px; margin:5px;">
+                    <span style="margin-left: 15px; font-size: 1.8rem;">
                         동네26
                         <small>- made by E1I4</small>
                     </span>
@@ -100,19 +112,19 @@ https://templatemo.com/tm-581-kind-heart-charity
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
                     	<li class="nav-item">
-                            <a class="navv-link" href="http://localhost:8090/main">main</a>
+                            <a class="navv-link" href="http://localhost:8090/main" style="font-size: 1.2rem;">main</a>
                         </li>
                         <li class="nav-item">
-                            <a class="navv-link" href="/policy/list">정책</a>
+                            <a class="navv-link" href="/policy/list" style="font-size: 1.1rem;">정책</a>
                         </li>
                         <li class="nav-item">
-                            <a class="navv-link" href="/job/list">일자리 정보</a>
+                            <a class="navv-link" href="/job/list" style="font-size: 1.1rem;">일자리 정보</a>
                         </li>
                         <li class="nav-item">
-                            <a class="navv-link" href="/culture/list">문화·행사</a>
+                            <a class="navv-link" href="/culture/list" style="font-size: 1.1rem;">문화·행사</a>
                         </li>
                         <li class="nav-item">
-                            <a class="navv-link" href="/community/list">커뮤니티</a>
+                            <a class="navv-link" href="/community/list" style="font-size: 1.1rem;">커뮤니티</a>
                         </li>
                     </ul>
                 </div>
