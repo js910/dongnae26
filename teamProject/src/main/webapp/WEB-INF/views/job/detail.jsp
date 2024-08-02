@@ -34,7 +34,7 @@
         .section-title {
             font-size: 18px;
             font-weight: bold;
-            color: #007bff;
+            color: #5bc1ac;
             border-bottom: 2px solid #ddd;
             padding-bottom: 5px;
             margin-bottom: 20px;
@@ -57,13 +57,13 @@
             margin-top: 20px;
             padding: 10px;
             background-color: #e9ecef;
-            border-left: 4px solid #007bff;
+            border-left: 4px solid #5bc1ac;
         }
         .back-link {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 15px;
-            background-color: #007bff;
+            background-color: #5bc1ac;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -212,8 +212,7 @@
                 <div class="detail-item"><a href="https://job.seoul.go.kr/www/job_offer_info/JobOfferInfo.do?method=selectJobOfferInfo" class="back-link">지원하러 가기</a></div>
             </div>
         </div>
-
-                  <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}&wageType=${cri.wageType}&career=${cri.career}&education=${cri.education}&workDay=${cri.workDay}" class="back-link">채용 목록으로 돌아가기</a>
+		<a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}&wageType=${cri.wageType}&career=${cri.career}&education=${cri.education}&workDay=${cri.workDay}" class="back-link">채용 목록으로 돌아가기</a>
     </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">

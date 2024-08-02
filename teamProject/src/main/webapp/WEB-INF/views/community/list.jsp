@@ -34,6 +34,7 @@
 		body {
 	        background-color: #f5f5f5; /* Outer div background color */
 	    }
+<<<<<<< HEAD
 	    
 	    .pagination-wrapper {
 	    	display: flex;
@@ -43,6 +44,8 @@
 	    .pagination {
 	    	justify-content: center;
 	    }
+=======
+>>>>>>> refs/remotes/origin/jyn
 	</style>
     
     <title>동네26 - 커뮤니티 게시판</title>
@@ -137,10 +140,15 @@
 	                <!-- /.panel -->
 	            </div>
 	        </div>
+<<<<<<< HEAD
 	        <div class="pagination-wrapper">
 	        	<div class="pagination" id="pagination">
 		            <!-- 페이지네이션 링크를 여기에 렌더링 -->
 		        </div>
+=======
+	        <div class="pagination" id="pagination">
+	            <!-- 페이지네이션 링크를 여기에 렌더링 -->
+>>>>>>> refs/remotes/origin/jyn
 	        </div>
 	    </div>
 	    <a href="${pageContext.request.contextPath}/community/register" class="write-link">글 작성</a>

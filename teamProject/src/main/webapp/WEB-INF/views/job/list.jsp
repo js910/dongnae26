@@ -31,6 +31,10 @@
         color: #333;
         text-align: center;
     }
+    .form-table select {
+	    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E') no-repeat right 10px center;
+    	background-size: 20px;
+    }
     .search-form {
         display: flex;
         justify-content: center;
@@ -382,10 +386,6 @@
             <div class="row">
                 <div class="">
                     <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Hover Rows
-                        </div>
-                        <!-- /.panel-heading -->
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table id="boardTable" class="table table-hover">

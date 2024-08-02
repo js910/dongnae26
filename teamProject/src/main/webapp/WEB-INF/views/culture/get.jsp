@@ -4,12 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@include file="../includes/header.jsp"%>
-<title>문화·행사 게시판 - 상세보기</title>
+<title>문화·행사 상세보기</title>
 	<style>
 		.bookmark {
 		    cursor: pointer;
 		    width: 40px;
 		    height: 40px;
+		    margin-bottom: 10px;
 		    background-image: url('/resources/images/star.png');
 		    background-size: contain;
 		    display: block;
@@ -18,6 +19,15 @@
 		    background-image: url('/resources/images/yellow-star.png');
 		}
 		
+		.btn-primary {
+			margin-bottom: 30px;	
+			--bs-btn-bg: #5bc1ac;
+			--bs-btn-border-color: #5bc1ac;
+			--bs-btn-hover-bg: #4a9d8c;
+			--bs-btn-hover-border-color: #4a9d8c;
+			--bs-btn-active-bg: #4a9d8c;
+			--bs-btn-active-border-color: #4a9d8c;
+		}
 	</style>
 
 
@@ -34,7 +44,7 @@
                     	<div style="block;">
 						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}','${dto.culture_place}')"></span>
 						</div>
-                        <h1 class="mb-4" style="color: #303B45;"><span class=""><c:out value="${dto.culture_title }"/></span></h1>
+                        <h2 class="mb-4" style="color: #303B45;"><span class=""><c:out value="${dto.culture_title }"/></span></h2>
                         <div class="row gy-2 gx-4 mb-4">
                             <div>
                                 <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="" style="color: #5BC28A;"> 지역구: </span></i><c:out value="${dto.culture_area }"/></p>

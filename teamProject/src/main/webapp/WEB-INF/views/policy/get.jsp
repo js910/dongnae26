@@ -33,11 +33,11 @@
     pageContext.setAttribute("tableHeaders", tableHeaders);
 %>
 
-<title>동네26 - 정책 게시판</title>
+<title>정책 상세 정보</title>
 <style>
 @media (min-width: 1000px) {
   #page-wrapper {
-    margin: 0 100px;
+    margin: 0 150px;
     background-color: white;
   }
 }
@@ -50,6 +50,7 @@ body {
 }
 .page-header {
     margin: 20px;
+    color: var(--secondary-color);
 }
 .policy-table {
     width: 100%;
@@ -137,7 +138,7 @@ body {
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h2 class="page-header">정책 게시판</h2>
+            <h3 class="page-header">정책 상세 정보</h3>
         </div>
         <!-- /.col-lg-12 -->
     </div>
