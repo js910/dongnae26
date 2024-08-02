@@ -33,6 +33,7 @@
     pageContext.setAttribute("tableHeaders", tableHeaders);
 %>
 
+<title>동네26 - 정책 게시판</title>
 <style>
 @media (min-width: 1000px) {
   #page-wrapper {

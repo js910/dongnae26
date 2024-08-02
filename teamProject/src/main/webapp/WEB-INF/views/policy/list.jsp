@@ -254,17 +254,17 @@ table th:nth-child(5), table td:nth-child(5) {
 
 </style>
         
-        <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px;">
-                <h3 class="text-white display-3 mb-4">정책 게시판</h3>
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="../main">Home</a></li>
-                    <li class="breadcrumb-item"><a href="/policy/list">정책 게시판</a></li>
-                </ol>    
-            </div>
-        </div>
-        <!-- Header End -->
+	<!-- Header Start -->
+	<div class="container-fluid bg-breadcrumb">
+	    <div class="container text-center py-5" style="max-width: 900px;">
+	        <h3 class="text-white display-3 mb-4">정책 게시판</h3>
+	        <ol class="breadcrumb justify-content-center mb-0">
+	            <li class="breadcrumb-item"><a href="../main">Home</a></li>
+	            <li class="breadcrumb-item"><a href="/policy/list">정책 게시판</a></li>
+	        </ol>    
+	    </div>
+	</div>
+	<!-- Header End -->
 
 <div id="page-wrapper">
 
@@ -365,79 +365,69 @@ table th:nth-child(5), table td:nth-child(5) {
     </div>
 	 
 	 <!-- /.row -->
-            <div class="row">
-                <div class="">
-                    <div class="panel panel-default">
-	                    <div class="col-lg-6">
-			                    <div class="dataTables_length" id="dataTables-example_length">
-			                        <label>Show entries: 
-			                            <select name="dataTables-example_length" aria-controls="dataTables-example" class="form-control input-sm">
-			                                <option value="10" ${pageMaker.cri.amount == 10 ? 'selected' : ''}>10</option>
-			                                <option value="20" ${pageMaker.cri.amount == 20 ? 'selected' : ''}>20</option>
-			                                <option value="30" ${pageMaker.cri.amount == 30 ? 'selected' : ''}>30</option>
-			                            </select>
-			                        </label>
-			                    </div>
-			                </div>
-                        <div class="panel-heading">
-                            Hover Rows
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table id="boardTable" class="table table-hover">
-                                    <thead>
-                                        <tr>
-						                    <th>소관기관명</th>
-											<th>서비스분야</th>
-											<th>서비스명</th>
-											<th>서비스목적요약</th>
-											<th>신청기한</th>
-                						</tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
+    <div class="row">
+        <div class="">
+            <div class="panel panel-default">
+             <div class="col-lg-6">
+               <div class="dataTables_length" id="dataTables-example_length">
+                   <label>Show entries: 
+                       <select name="dataTables-example_length" aria-controls="dataTables-example" class="form-control input-sm">
+                           <option value="10" ${pageMaker.cri.amount == 10 ? 'selected' : ''}>10</option>
+                           <option value="20" ${pageMaker.cri.amount == 20 ? 'selected' : ''}>20</option>
+                           <option value="30" ${pageMaker.cri.amount == 30 ? 'selected' : ''}>30</option>
+                       </select>
+                   </label>
+               </div>
+           </div>
+           <div class="panel-body">
+               <div class="table-responsive">
+                   <table id="boardTable" class="table table-hover">
+                       <thead>
+                        <tr>
+			               	<th>소관기관명</th>
+							<th>서비스분야</th>
+							<th>서비스명</th>
+							<th>서비스목적요약</th>
+							<th>신청기한</th>
+   						</tr>
+                       </thead>
+                       <tbody>
+                       </tbody>
+                   </table>
+               </div>
+               <!-- /.table-responsive -->
+           </div>
+           <!-- /.panel-body -->
+       </div>
+       <!-- /.panel -->
+   </div>
 	 
-
-					<div>
-						<ul class="pagination">
-							<c:if test="${pageMaker.prev}">
-								<li class="paginate_button previous">
-								<a href="${pageMaker.startPage - 1}">Previous</a></li>
-							</c:if>
-							<c:forEach var="num" begin="${pageMaker.startPage}"
-								end="${pageMaker.endPage}">
-								<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : ''}">
-								<a href="${num}">${num}</a></li>
-							</c:forEach>
-							<c:if test="${pageMaker.next}">
-								<li class="paginate_button next">
-								<a href="${pageMaker.endPage + 1}">Next</a></li>
-							</c:if>
-						</ul>
-					</div>
-
-					<form id="pageForm" action="/policy/list" method="get">
-						<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-						<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-						<input type="hidden" name="district" value="${pageMaker.cri.district}">
-						<input type="hidden" name="type" value="${pageMaker.cri.type}">
-						<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-					</form>
-				</div>
-				<!-- /.panel-body -->
-			</div>
-			<!-- /.panel -->
+		<div>
+			<ul class="pagination">
+				<c:if test="${pageMaker.prev}">
+					<li class="paginate_button previous">
+					<a href="${pageMaker.startPage - 1}">Previous</a></li>
+				</c:if>
+				<c:forEach var="num" begin="${pageMaker.startPage}"
+					end="${pageMaker.endPage}">
+					<li class="paginate_button ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+					<a href="${num}">${num}</a></li>
+				</c:forEach>
+				<c:if test="${pageMaker.next}">
+					<li class="paginate_button next">
+					<a href="${pageMaker.endPage + 1}">Next</a></li>
+				</c:if>
+			</ul>
 		</div>
-		<!-- /.col-lg-12 -->
+
+		<form id="pageForm" action="/policy/list" method="get">
+			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+			<input type="hidden" name="district" value="${pageMaker.cri.district}">
+			<input type="hidden" name="type" value="${pageMaker.cri.type}">
+			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+		</form>
+				
 	</div>
 	<!-- /.row -->
 </div>
