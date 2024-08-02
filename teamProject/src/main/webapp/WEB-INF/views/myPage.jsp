@@ -1,24 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@include file="includes/header.jsp"%>
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <title>동네26 - 마이페이지</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
             background-color: #f4f4f4;
         }
-        .container {
+        .container2 {
             width: 80%;
-            margin: 0 auto;
+            margin: 0 auto 64px auto;
             background: #fff;
-            padding: 20px;
+            padding: 50px 40px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         h1, h2 {
@@ -52,9 +50,9 @@
 		    overflow: auto; /* 필요 시 스크롤 가능 */
 		    background-color: rgba(0, 0, 0, 0.6); /* 배경 색상 */
 		}
-		.modal-content {
+		.modal-content2 {
 		    background-color: #fefefe;
-		    margin: 5% auto; /* 화면 중앙에 모달 위치 */
+		    margin: 200px auto; /* 화면 중앙에 모달 위치 */
 		    padding: 30px; /* 패딩 추가 */
 		    border: 1px solid #888;
 		    width: 70%; /* 모달 너비를 조정 */
@@ -74,12 +72,13 @@
 		
 		label {
 		    margin-bottom: 10px; /* 라벨과 라디오 버튼 사이의 간격을 설정 */
+		    margin-right: 10px;
 		}
-		.row input[type="radio"] {
-		    margin-right: 8px; /* 라디오 버튼과 텍스트 사이의 간격을 설정 */
+		.row2 input[type="radio"] {
+		    margin-right: 3px; /* 라디오 버튼과 텍스트 사이의 간격을 설정 */
 		    vertical-align: middle; /* 라디오 버튼과 텍스트가 수직으로 정렬되도록 설정 */
 		}
-		.row label {
+		.row2 label {
 		    line-height: 2; /* 라디오 버튼과 텍스트 사이의 수직 간격을 조정 */
 		}
 		input[type="file"] {
@@ -141,7 +140,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container2">
         <h1>마이 페이지</h1>
         
         <!-- 회원 정보 수정 폼 -->
@@ -200,11 +199,11 @@
 	</div>
 
 	<div id="myModal" class="modal">
-	    <div class="modal-content">
+	    <div class="modal-content2">
 	        <span class="close">&times;</span>
 	        <form id="useForm" action="${pageContext.request.contextPath}/user/formSubmit" method="post" enctype="multipart/form-data">
 	            <label for="purpose">문의종류 *</label>
-	            <div class="row">
+	            <div class="row2">
 	                <label><input type="radio" name="purpose" value="건의사항" required> 건의합니다</label>
 	                <label><input type="radio" name="purpose" value="칭찬사항" required> 칭찬합니다</label>
 	                <label><input type="radio" name="purpose" value="기타" required> 기타</label>
@@ -336,3 +335,4 @@
     </script>
 </body>
 </html>
+<%@include file="includes/footer.jsp"%>
