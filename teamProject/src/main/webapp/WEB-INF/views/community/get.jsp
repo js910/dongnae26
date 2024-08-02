@@ -155,7 +155,7 @@ textarea {
 }
 </style>
 <head>
-    <title>게시글 상세보기</title>
+<title>동네26 - 커뮤니티 게시판</title>
  
 </head>
 <body>

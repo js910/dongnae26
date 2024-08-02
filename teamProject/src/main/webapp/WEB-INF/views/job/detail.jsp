@@ -34,7 +34,7 @@
         .section-title {
             font-size: 18px;
             font-weight: bold;
-            color: #007bff;
+            color: #5bc1ac;
             border-bottom: 2px solid #ddd;
             padding-bottom: 5px;
             margin-bottom: 20px;
@@ -57,13 +57,13 @@
             margin-top: 20px;
             padding: 10px;
             background-color: #e9ecef;
-            border-left: 4px solid #007bff;
+            border-left: 4px solid #5bc1ac;
         }
         .back-link {
             display: inline-block;
             margin-top: 20px;
             padding: 10px 15px;
-            background-color: #007bff;
+            background-color: #5bc1ac;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;

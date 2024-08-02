@@ -4,18 +4,29 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@include file="../includes/header.jsp"%>
-
+<title>문화·행사 상세보기</title>
 	<style>
 		.bookmark {
 		    cursor: pointer;
 		    width: 40px;
 		    height: 40px;
+		    margin-bottom: 10px;
 		    background-image: url('/resources/images/star.png');
 		    background-size: contain;
 		    display: block;
 		}
 		.bookmarked {
 		    background-image: url('/resources/images/yellow-star.png');
+		}
+		
+		.btn-primary {
+			margin-bottom: 30px;	
+			--bs-btn-bg: #5bc1ac;
+			--bs-btn-border-color: #5bc1ac;
+			--bs-btn-hover-bg: #4a9d8c;
+			--bs-btn-hover-border-color: #4a9d8c;
+			--bs-btn-active-bg: #4a9d8c;
+			--bs-btn-active-border-color: #4a9d8c;
 		}
 	</style>
 
@@ -25,41 +36,39 @@
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-5">
-                        <div class="h-100" style="border: 50px solid; border-color: transparent #063604 transparent #063604;">
+                        <div class="h-100" style="border: 50px solid; border-color: transparent #5A6F80 transparent #5A6F80;">
                             <img src="${dto.culture_img }" class="img-fluid w-100 h-100" alt="">
                         </div>
                     </div>
                     <div class="col-lg-7" style="background: linear-gradient(rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)), url(#);">
                     	<div style="block;">
-						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}')"></span>
+						 	<span id="bookmark" class="bookmark" onclick="toggleBookmark('${dto.culture_bno}', '${dto.culture_classify}','${dto.culture_title}','${dto.culture_place}')"></span>
 						</div>
-                        <h5 class="section-about-title pe-3">About Us</h5>
-                        <h1 class="mb-4"><span class="text-primary"><c:out value="${dto.culture_title }"/></span></h1>
+                        <h2 class="mb-4" style="color: #303B45;"><span class=""><c:out value="${dto.culture_title }"/></span></h2>
                         <div class="row gy-2 gx-4 mb-4">
                             <div>
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="text-primary"> 지역구: </span></i><c:out value="${dto.culture_area }"/></p>
+                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="" style="color: #5BC28A;"> 지역구: </span></i><c:out value="${dto.culture_area }"/></p>
                             </div>
                             <div>
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="text-primary"> 분류: </span></i><c:out value="${dto.culture_classify }"/></p>
+                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="" style="color: #5BC28A;"> 분류: </span></i><c:out value="${dto.culture_classify }"/></p>
                             </div>
                             <div>
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="text-primary"> 이용대상: </span></i><c:out value="${dto.culture_target }"/></p>
+                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="" style="color: #5BC28A;"> 이용대상: </span></i><c:out value="${dto.culture_target }"/></p>
                             </div>
                             <div>
-                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="text-primary"> 이용요금 여부: </span></i><c:out value="${dto.culture_booleanfee }"/></p>
+                                <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"><span class="" style="color: #5BC28A;"> 이용요금 여부: </span></i><c:out value="${dto.culture_booleanfee }"/></p>
                             </div>
                         </div>
                         <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="${dto.culture_sitelink }">홈페이지 링크 바로가기</a>
                     </div>
                 </div>
-                <div>
-                	<p class="mb-0" style="padding-top: 10px; padding-bottom: 10px;"><span class="text-primary">상세 위치 </span> <i class="fa fa-arrow-right text-primary me-2"></i></p>
+                <div class="sangMap">
+                	<h4 style="padding-top: 20px; padding-bottom: 10px; color: #5BC28A;"><span class="">상세 위치</span></h4>
                 	<div id="map" style="width: 100%; height: 400px;"></div>
                 </div>
                 <a href="${pageContext.request.contextPath}/culture/list?pageNum=${cri.pageNum}&amount=${cri.amount}&keyword=${cri.keyword}&type=${cri.type}&area=${cri.area}&classify=${cri.classify}" class="btn btn-primary rounded-pill py-2 px-4 mt-4 float-end">go back to list</a>
             </div>
         </div>
-        <!-- About End -->		
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=50c5816205d710d59a41cf8115b05655"></script>
 	    <script type="text/javascript">
@@ -114,7 +123,7 @@
 	                    $("#bookmark").addClass("bookmarked");
 	                }
 
-	                window.toggleBookmark = function(culture_bno, culture_classify, culture_title) {
+	                window.toggleBookmark = function(culture_bno, culture_classify, culture_title, culture_place) {
 	                    $.ajax({
 	                        type: "POST",
 	                        url: "/culture/bookmark",
@@ -122,7 +131,8 @@
 	                        data: {
 	                            'culture_bno': culture_bno,
 	                            'culture_classify': culture_classify,
-	                            'culture_title': culture_title
+	                            'culture_title': culture_title,
+	                            'culture_place': culture_place
 	                        },
 	                        success: function(response) {
 	                            console.log("AJAX success response:", response);
