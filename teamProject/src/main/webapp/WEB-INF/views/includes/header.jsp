@@ -54,7 +54,7 @@
 				            <a href="http://localhost:8090/user/myPage">
 				                <small class="me-3 text-light"><i class="bi bi-person me-2"></i>마이페이지</small>
 				            </a>
-				            <a href="http://localhost:8090/bookmark">
+				            <a href="http://localhost:8090/user/bookmark">
 				                <small class="me-3 text-light"><i class="bi bi-bookmark me-2"></i>북마크</small>
 				            </a>
 				            <c:choose>
@@ -73,11 +73,6 @@
 				                        <small class="me-3 text-light"><i class="bi bi-box-arrow-right me-2"></i>로그아웃</small>
 				                    </a>
 				                </c:when>
-				                <c:when test="${loginType == 'kakao'}">
-				                	 <a href='https://kauth.kakao.com/oauth/logout?client_id=133dcac119e004b792bceaf4bca84d93&logout_redirect_uri=http://localhost:8090/kakao/logout'>
-				                		<small class="me-3 text-light"><i class="bi bi-box-arrow-right me-2"></i>로그아웃</small>
-				            		</a>
-                				</c:when>
 				            </c:choose>
 				        </c:when>
 				        <c:otherwise>
@@ -99,7 +94,7 @@
         <nav class="navbar navbar-expand-lg bg-light shadow-lg">
             <div class="container">
 
-                <a class="navbar-brand" href="/main">
+                <a class="navbar-brand" href="../main">
                     <img src="/resources/images/logo.png" class="logo img-fluid" alt="Kind Heart Charity" style="width:60px; margin:5px;">
                     <span style="margin-left: 15px; font-size: 1.8rem;">
                         동네26
