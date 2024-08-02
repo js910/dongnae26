@@ -87,7 +87,7 @@ input[type="file"] {
     background-color: #5a6268;
 }
 </style>
-<title>글 작성</title>
+<title>동네26 - 커뮤니티 게시판</title>
 
 
 </head>

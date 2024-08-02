@@ -144,19 +144,37 @@
     a{
         text-decoration: none;
     }
-    .form-group.input-group.search {
-        display: flex;
-        margin-top: 20px;
-    }
+    
+.form-group.input-group {
+    display: flex;
+    margin: 20px 0px 10px 5px;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    width: 200px;
+}
 
-    .form-group.input-group.search select.form-control {
-        flex: 1;
-        margin-right: 10px;
-    }
+.form-group.input-group label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 10px;
+}
 
-    .form-group.input-group.search input.form-control {
-        flex: 3;
-    }
+.form-group.input-group select {
+    padding: 5px 30px 5px 10px;
+    border: 1px solid #ddd;
+    background-color: #fff;
+    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E') no-repeat right 10px center;
+    background-size: 20px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    position: relative;
+}
+
     .form-table {
         width: 100%;
         border-collapse: collapse;

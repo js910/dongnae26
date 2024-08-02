@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>마이 페이지</title>
+    <title>동네26 - 마이페이지</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -108,7 +108,7 @@
 		    margin-top: 10px;
 		    border: none;
 		    border-radius: 5px;
-		    background-color: #007BFF;
+		    background-color: #5bc1ac;
 		    color: white;
 		    cursor: pointer;
 		}
@@ -117,7 +117,7 @@
 		}
 		
 		#openModal:hover {
-		    background-color: #0056b3;
+		    background-color: #4a9d8c;
 		}
 		
 		button[type="reset"]:hover {
