@@ -212,8 +212,7 @@
                 <div class="detail-item"><a href="https://job.seoul.go.kr/www/job_offer_info/JobOfferInfo.do?method=selectJobOfferInfo" class="back-link">지원하러 가기</a></div>
             </div>
         </div>
-
-                  <a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}&wageType=${cri.wageType}&career=${cri.career}&education=${cri.education}&workDay=${cri.workDay}" class="back-link">채용 목록으로 돌아가기</a>
+		<a href="${pageContext.request.contextPath}/job/list?pageNum=${cri.pageNum}&amount=${cri.amount}&type=${cri.type}&keyword=${cri.keyword}&district=${cri.district}&wageType=${cri.wageType}&career=${cri.career}&education=${cri.education}&workDay=${cri.workDay}" class="back-link">채용 목록으로 돌아가기</a>
     </div>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script type="text/javascript">
