@@ -3,6 +3,7 @@ package org.spring.service;
 import java.util.List;
 import java.util.Map;
 
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
 import org.spring.persistence.CultureBoardMapper;
@@ -29,8 +30,13 @@ public interface CultureBoardService {
 		// 북마크
 		public boolean bookmarkChk(int culture_bno, int user_num);
 
-		public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title);
+		public void bookmark(int culture_bno, int user_num, String culture_classify, String culture_title, String culture_place);
 
 		public void bookmarkDel(int culture_bno, int user_num, String culture_classify, String culture_title);
+		
+		List<BookmarkDTO> getBookmarkedPosts(int user_num);
+		
+		public List<BookmarkDTO> getUserBookmarks(int user_num);
 
 }
+

@@ -1,28 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@include file="../includes/header.jsp"%>
 
-        
-        <!-- Header Start -->
-        <div class="container-fluid bg-breadcrumb">
-            <div class="container text-center py-5" style="max-width: 900px;">
-                <h3 class="text-white display-3 mb-4">게시글 상세보기</h3>
-                <ol class="breadcrumb justify-content-center mb-0">
-                </ol>    
-            </div>
-        </div>
-        <!-- Header End -->
 <head>
 <style type="text/css">
+
+/* 전체 페이지 중앙 정렬 및 레이아웃 */
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     color: #333;
-    background-color: #f4f4f4;
+    background-color: #f4f4f4;\
 }
 
 .container2 {
@@ -64,6 +58,9 @@ h1 {
 }
 
 /* 게시글 상세 보기 */
+div {
+    margin-bottom: 10px;
+}
 
 label {
     font-weight: bold;
@@ -133,8 +130,14 @@ label {
     transition: background 0.3s ease;
 }
 
-.comment-item button:hover {
-    background: #c82333;
+	.container2 {
+    width: 80%;
+    max-width: 800px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
 }
 
 /* 댓글 작성 및 수정 모달 */
@@ -189,10 +192,25 @@ textarea {
 #cancelEditComment:hover {
     background: #5a6268;
 }
+
+.button-group a, .button-group button {
+    margin-right: 10px;
+}
+
+.comment-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
 </style>
 <head>
+
 <title>게시글 상세보기</title>
- 
 </head>
 <body>
     <div class="container2">
@@ -399,7 +417,7 @@ textarea {
             }
         });
     });
-</script>
-     <%@include file="../includes/footer.jsp"%>
-   </body>
+    </script>
+    <%@include file="../includes/footer.jsp"%>
+</body>
 </html>

@@ -62,7 +62,7 @@ public class CommunityBoardController {
             if (kakaoUser != null) {
                 // 카카오 사용자 정보에서 이름과 이메일을 추출합니다.
                 String email = kakaoUser.getKakao_account().getEmail();
-                String name = kakaoUser.getKakao_account().getName();
+                String name = kakaoUser.getKakao_account().getProfile().getNickname();
 
                 // 정보를 출력하거나 사용하세요.
                 System.out.println("Kakao User Email: " + email);

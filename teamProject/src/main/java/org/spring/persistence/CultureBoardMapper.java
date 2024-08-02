@@ -3,6 +3,7 @@ package org.spring.persistence;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.spring.domain.BookmarkDTO;
 import org.spring.domain.culture.Criteria;
 import org.spring.domain.culture.CultureBoardDTO;
 
@@ -54,7 +55,7 @@ public interface CultureBoardMapper {
         @Param("culture_area") String culture_area, @Param("culture_classify") String culture_classify);
 
     // 북마크 추가
-    public void bookmark(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num, @Param("culture_classify") String culture_classify, @Param("culture_title") String culture_title);
+    public void bookmark(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num, @Param("culture_classify") String culture_classify, @Param("culture_title") String culture_title, @Param("culture_place") String culture_place);
 
     // 북마크 삭제
     public void bookmarkDel(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num, @Param("culture_classify") String culture_classify, @Param("culture_title") String culture_title);
@@ -63,5 +64,9 @@ public interface CultureBoardMapper {
     public int bookmarkChk(@Param("culture_bno") int culture_bno, @Param("user_num") int user_num);
 
 	public int getTotalCount(Criteria cri);
+	
+	public List<BookmarkDTO> getBookmarkedPosts(@Param("user_num") int user_num);
+
+	List<BookmarkDTO> getUserBookmarks(@Param("user_num") int user_num);
 
 }

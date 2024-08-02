@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 	public class CultureBoardDTO {
+	
 	private int culture_bno;
 	private String culture_classify;
 	private String culture_title;

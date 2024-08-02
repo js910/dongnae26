@@ -31,4 +31,15 @@
     	FROM bookmark_policy_board
     	WHERE serviceID = #{serviceID} AND userNum = #{userNum}
 	</select>
+	
+	<select id="getUserBookmarks" resultType="org.spring.domain.BookmarkDTO">
+        SELECT 
+            serviceID,
+            serviceName,
+            serviceContent,
+            serviceDeadline
+        FROM bookmark_policy_board 
+        WHERE userNum = #{userNum}
+        LIMIT 5
+    </select>
 </mapper>

@@ -61,14 +61,15 @@ public class LoginController {
 			
 			session.setAttribute("user_info", user);
 			
-			redirectAttributes.addFlashAttribute("메세지","로그인 성공");
+			//redirectAttributes.addFlashAttribute("메세지","로그인 성공");
 			return "redirect:/user";
 		}else {
 			logger.info("로그인 실패");
-			redirectAttributes.addFlashAttribute("error","로그인 실패");
+	        //redirectAttributes.addFlashAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
+	        return "redirect:/login";
 		}
 		
-		return "redirect:/main";
+		
 	}
 	
 	@GetMapping("/logout")
