@@ -21,7 +21,42 @@ body {
     line-height: 1.6;
     margin: 0;
     padding: 0;
+    color: #333;
     background-color: #f4f4f4;
+}
+
+.container2 {
+    width: 70%;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header table {
+    width: 100%;
+    margin-bottom: 20px;
+    border-collapse: collapse;
+}
+
+.header td {
+    padding: 8px;
+    padding-right: 30px;
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+
+.header .title {
+    font-weight: bold;
+    background-color: #f0f0f0;
+    width: 15%;
+}
+
+.posting {
+	border-top: 1px solid #ddd; 
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 20px;
 }
 
 h1 {
@@ -42,7 +77,8 @@ label {
 }
 
 .button-group {
-    margin-top: 20px;
+    margin-top: 10px;
+    margin-bottom: 50px;
 }
 
 .button-group a, .button-group button {
@@ -155,77 +191,84 @@ textarea {
 }
 </style>
 <head>
-<title>동네26 - 커뮤니티 게시판</title>
+<title>게시글 상세보기</title>
  
 </head>
 <body>
-    <h1>게시글 상세보기</h1>
-    <div>
-        <label>글 번호:</label> <span>${board.community_bno}</span>
-    </div>
-    <div>
-        <label>제목:</label> <span>${board.community_title}</span>
-    </div>
-    <div>
-        <label>내용:</label> <span>${board.community_content}</span>
-    </div>
-    <div class="img-group">
-        <c:if test="${not empty board.community_filename}">
-            <img src="/image/${board.community_bno}/${board.community_filename}" alt="게시글 이미지" />
-        </c:if>
-    </div>
-    <div>
-        <label>작성일:</label> <span>${board.community_regdate}</span>
-    </div>
-    <div>
-        <label>작성자:</label> <span>${board.writer}</span>
-    </div>
-    <div>
-        <label>조회수:</label> <span>${board.community_viewcnt}</span>
-    </div>
+    <div class="container2">
+    	<div class="posting">
+	        <div class="header">
+	            <table>
+	                <tr>
+	                    <td class="title">제목</td>
+	                    <td>${board.community_title}</td>
+	                </tr>
+	            	<tr>
+	            		<td class="title">작성자</td>
+	            		<td>${board.writer}</td>
+	            		<td class="title">작성일</td>
+	            		<td>${board.community_regdate}</td>
+	            		<td class="title">조회수</td>
+	            		<td>${board.community_viewcnt}</td>
+	            	</tr>
+	            </table>
+	        </div>
+		
+		    <div class="content">
+	        	<span>${board.community_content}</span>
+	    	</div>
+	    	<div class="attachments">
+	        	<c:if test="${not empty board.community_filename}">
+	            <img src="/image/${board.community_bno}/${board.community_filename}" alt="게시글 이미지" />
+	        	</c:if>
+	    	</div>
+		</div>
+		
+	    <div class="button-group">
+			<a href="${pageContext.request.contextPath}/community/list?pageNum=${param.pageNum}&amount=${param.amount}&type=${param.type}&keyword=${param.keyword}&area=${param.area}">목록으로</a>
+	        <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
+	            <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
+	            <form id="deleteForm" action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
+	                <input type="hidden" name="community_bno" value="${board.community_bno}" />
+	                <button type="button" id="deleteButton">삭제하기</button>
+	            </form>
+	        </c:if>
+	    </div>
 
-    <div class="button-group">
-		<a href="${pageContext.request.contextPath}/community/list?pageNum=${param.pageNum}&amount=${param.amount}&type=${param.type}&keyword=${param.keyword}&area=${param.area}">목록으로</a>
-        <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
-            <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
-            <form id="deleteForm" action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
-                <input type="hidden" name="community_bno" value="${board.community_bno}" />
-                <button type="button" id="deleteButton">삭제하기</button>
-            </form>
-        </c:if>
-    </div>
+   		<!-- 댓글 목록 -->
+		<div id="commentList">
+			<c:forEach var="comment" items="${comments}">
+				<div class="comment-item">
+					<p class="comment-content">${comment.community_com_content}</p>
+					<span>작성자: ${comment.comment_writer}&nbsp</span> <span>작성일:
+						${comment.community_com_regdate}</span>
+					<c:if test="${comment.user_num == sessionScope.user_info.user_num}">
+						<button class="edit-comment-btn"
+							data-comment-id="${comment.community_cno}">수정</button>
+						<button class="delete-comment-btn"
+							data-comment-id="${comment.community_cno}">삭제</button>
+					</c:if>
+				</div>
+			</c:forEach>
+		</div>
+		<!-- 댓글 작성 폼 -->
+	    <div>
+	   	 <c:if test="${not empty user_email }">
+	   	         <h4>댓글 작성하기</h4>
+	        <textarea id="newCommentContent" rows="4" placeholder="댓글을 입력하세요"></textarea>
+	        <button id="submitComment">댓글 등록</button>
+	     </c:if>
+	    </div>
 
-   <!-- 댓글 목록 -->
-   <div id="commentList">
-      <c:forEach var="comment" items="${comments}">
-        <div class="comment-item">
-            <p class="comment-content">${comment.community_com_content}</p>
-            <span>작성자: ${comment.comment_writer}&nbsp</span>
-            <span>작성일: ${comment.community_com_regdate}</span>
-            <c:if test="${comment.user_num == sessionScope.user_info.user_num}">
-                <button class="edit-comment-btn" data-comment-id="${comment.community_cno}">수정</button>
-                <button class="delete-comment-btn" data-comment-id="${comment.community_cno}">삭제</button>
-            </c:if>
-        </div>
-    </c:forEach>
-</div>
-    <!-- 댓글 작성 폼 -->
-    <div>
-   	 <c:if test="${not empty user_email }">
-   	         <h3>댓글 작성하기</h3>
-        <textarea id="newCommentContent" rows="4" placeholder="댓글을 입력하세요"></textarea>
-        <button id="submitComment">댓글 등록</button>
-     </c:if>
-    </div>
-
-    <!-- 댓글 수정 모달 -->
-    <div id="editCommentModal">
-        <h2>댓글 수정하기</h2>
-        <input type="hidden" id="editCommentCno" />
-        <textarea id="editCommentContent" rows="4"></textarea>
-        <button id="submitEditComment">수정 완료</button>
-        <button id="cancelEditComment">취소</button>
-    </div>
+    	<!-- 댓글 수정 모달 -->
+	    <div id="editCommentModal">
+	        <h2>댓글 수정하기</h2>
+	        <input type="hidden" id="editCommentCno" />
+	        <textarea id="editCommentContent" rows="4"></textarea>
+	        <button id="submitEditComment">수정 완료</button>
+	        <button id="cancelEditComment">취소</button>
+	    </div>
+	</div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
