@@ -58,10 +58,6 @@ h1 {
 }
 
 /* 게시글 상세 보기 */
-div {
-    margin-bottom: 10px;
-}
-
 label {
     font-weight: bold;
 }
