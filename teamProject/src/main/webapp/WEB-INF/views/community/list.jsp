@@ -140,15 +140,10 @@
 	                <!-- /.panel -->
 	            </div>
 	        </div>
-<<<<<<< HEAD
 	        <div class="pagination-wrapper">
 	        	<div class="pagination" id="pagination">
 		            <!-- 페이지네이션 링크를 여기에 렌더링 -->
 		        </div>
-=======
-	        <div class="pagination" id="pagination">
-	            <!-- 페이지네이션 링크를 여기에 렌더링 -->
->>>>>>> refs/remotes/origin/jyn
 	        </div>
 	    </div>
 	    <a href="${pageContext.request.contextPath}/community/register" class="write-link">글 작성</a>

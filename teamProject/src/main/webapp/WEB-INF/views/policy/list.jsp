@@ -482,6 +482,15 @@ $(document).ready(function() {
         $("#pageForm input[name='pageNum']").val(1);
         loadTable();
     });
+    
+    const selectedType = $("#searchType").val();
+    if (selectedType) {
+        $('.service-icon-container').each(function() {
+            if ($(this).data('type') === selectedType) {
+                $(this).find('.service-icon').addClass('selected');
+            }
+        });
+    }
 
     // Bind form submit event
     $("#searchForm").on("submit", function(event) {

@@ -4,9 +4,16 @@
 	<!-- Header -->
 	<%@include file="includes/header.jsp"%>
 	<title> E1I4 - 동네26 </title>
-    
+   
+	<style>
+	.featured-block {
+		margin: 0px 30px;
+	}
+	.e-block {
+		margin: 10px 30px;
+	}
+	</style>
     <main>
-
         <section class="hero-section hero-section-full-height">
             <div class="container-fluid">
                 <div class="row">
@@ -117,40 +124,32 @@
 
                     <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
                         <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href="donate.html" class="d-block">
-                                <img src="#" class="featured-block-image img-fluid" alt="">
+                            <a href="http://www.gov.kr" class="d-block">
+                                <img src="/resources/images/gov24_logo.png" class="featured-block-image img-fluid" alt="">
+                            </a>
+                        </div>
+                    </div>
 
-                                <p class="featured-block-text"><strong>정부24</strong></p>
+                    <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
+                        <div class="featured-block d-flex justify-content-center align-items-center e-block">
+                            <a href="https://www.epeople.go.kr" class="d-block">
+                                <img src="/resources/images/ssinmungo2_logo.png" class="featured-block-image img-fluid" alt="">
                             </a>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
                         <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href="donate.html" class="d-block">
-                                <img src="#" class="featured-block-image img-fluid" alt="">
-
-                                <p class="featured-block-text"><strong>국민신문고</strong></p>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
-                        <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href="donate.html" class="d-block">
-                                <img src="#" class="featured-block-image img-fluid" alt="">
-
-                                <p class="featured-block-text"><strong>힘겨울때129</strong></p>
+                            <a href="https://www.129.go.kr" class="d-block">
+                                <img src="/resources/images/129_logo.png" class="featured-block-image img-fluid" alt="">
                             </a>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
                         <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href=# class="d-block">
-                                <img src="#" class="featured-block-image img-fluid" alt="">
-
-                                <p class="featured-block-text"><strong>다산콜센터</strong></p>
+                            <a href="https://www.120dasan.or.kr" class="d-block">
+                                <img src="/resources/images/dasan_logo.png" class="featured-block-image img-fluid" alt="">
                             </a>
                         </div>
                     </div>
