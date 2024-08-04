@@ -1,147 +1,140 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f4f7f6;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
+
         .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 360px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 460px; /* Consistent width for both registration and login windows */
+            margin: 20px;
         }
-        .container h1 {
-            text-align: center;
+
+        h1 {
             margin-bottom: 20px;
-            color: #03c75a;
+            font-size: 24px; /* Adjusted font size to match the image */
+            color: #333;
+            text-align: center;
         }
+        
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 15px; /* Adjusted spacing between form groups */
+            display: flex;
+            flex-direction: column;
         }
-        .form-group input, .form-group button {
-            width: calc(100% - 22px);
-            padding: 10px;
-            margin-left: 10px;
-            margin-right: 10px;
-            border: 1px solid #ddd;
+
+        .form-group input {
             border-radius: 4px;
-            font-size: 16px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 14px; /* Adjusted font size to match the image */
         }
+
+        .form-group input:focus {
+            border-color: #69DFC7;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+        }
+
         .form-group button {
-            background-color: #03c75a;
+            background-color: #69DFC7;
             color: white;
             border: none;
+            border-radius: 4px;
+            padding: 10px; /* Adjusted padding to match the image */
+            width: 100%;
             cursor: pointer;
+            box-sizing: border-box;
+            font-size: 14px; /* Adjusted font size to match the image */
+            transition: background-color 0.3s, transform 0.3s;
+            margin-top: 10px;
         }
+
         .form-group button:hover {
-            background-color: #02a74a;
+            background-color: #5bc1ac;
+            transform: scale(1.05); /* Slightly enlarge the button on hover */
         }
+
         .form-group span {
             display: block;
-            margin-left: 10px;
-            margin-right: 10px;
             margin-top: 5px;
-            font-size: 14px;
+            font-size: 12px; /* Adjusted font size for messages */
         }
-        #idCheckResult {
-            font-size: 14px;
+
+        .form-group .success {
+            color: #28a745;
         }
-        #checkIdBtn {
-            background-color: #03c75a;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            width: calc(100% - 22px);
-            border-radius: 4px;
-            font-size: 16px;
-            display: block;
-            margin: 10px auto 0;
+
+        .form-group .error {
+            color: #dc3545;
         }
-        #submitBtn{
-         background-color: #03c75a;
-            color: white;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            width: calc(100% - 22px);
-            border-radius: 4px;
-            font-size: 16px;
-            display: block;
-            margin: 10px auto 0;
+
+        /* Centering the submit button within the container */
+        #submitBtn {
+            margin-top: 20px; /* Space between the last input and the button */
+            text-align: center;
         }
     </style>
-
-    <meta charset="UTF-8">
-    <title>회원가입</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript">
-    	
-    	// 이메일 유효성 검사
-    	$(document).ready(function(){
-    		// 이메일 중복확인 여부
-        	var emailChecked = false;
-    		// 전화번호 중복 확인
-    		var phoneChecked = false;
-    		// 이메일 형식 정규화
-        	var PattenrnEmail = /^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-    		// 비밀번호 정규화
-        	var PatternPw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-        	// 전화번호 정규화
-        	var PatternPhone = /^01(0|1|[6-9])[0-9]{4}[0-9]{4}$/;
-        	
-	    	$("#checkIdBtn").on("click", function(event) {
-    			//console.log("키키");
-    			event.preventDefault(); // 폼 제출 방지
-				var user_email = $("#user_email").val().trim();
-				if(user_email === ""){
-					$("#idCheckResult").text("이메일을 입력해주세요.").css("color","red");
-					return;
-				}
-				if(!PattenrnEmail.test(user_email)){
-					$("#idCheckResult").text("유효하지 않은 이메일 형식입니다.").css("color","red");
-					return;
-				}
+        $(document).ready(function(){
+            var emailChecked = false;
+            var phoneChecked = false;
+            var PattenrnEmail = /^[a-zA-Z0-9.-_]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+            var PatternPw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+            var PatternPhone = /^01(0|1|[6-9])[0-9]{4}[0-9]{4}$/;
+            
+            $("#checkIdBtn").on("click", function(event) {
+                event.preventDefault();
+                var user_email = $("#user_email").val().trim();
+                if(user_email === ""){
+                    $("#idCheckResult").text("이메일을 입력해주세요.").removeClass("success").addClass("error");
+                    return;
+                }
+                if(!PattenrnEmail.test(user_email)){
+                    $("#idCheckResult").text("유효하지 않은 이메일 형식입니다.").removeClass("success").addClass("error");
+                    return;
+                }
 
-				$.ajax({
-					url: "/basic/checkId",
-					type:"post",
-					data:{user_email : user_email},
-					success:function(data){
-						 if(data == "duplicate"){
-	                            $("#idCheckResult").text("이미 사용 중인 아이디입니다.");
-	                            $("#idCheckResult").css("color", "red");
-	                            return;
-	                        } else{
-	                            $("#idCheckResult").text("사용 가능한 아이디입니다.");
-	                            $("#idCheckResult").css("color", "blue");
-	                            return emailChecked = true;
-	                        }
-						 if (user_email.trim() === "") {
-			                    $("#idCheckResult").text("이메일을 입력해주세요.");
-			                    $("#idCheckResult").css("color", "red");
-						 }
-					},
-					error: function(xhr, status, error) {
+                $.ajax({
+                    url: "/basic/checkId",
+                    type:"post",
+                    data:{user_email : user_email},
+                    success:function(data){
+                        if(data == "duplicate"){
+                            $("#idCheckResult").text("이미 사용 중인 아이디입니다.").removeClass("success").addClass("error");
+                        } else{
+                            $("#idCheckResult").text("사용 가능한 아이디입니다.").removeClass("error").addClass("success");
+                            emailChecked = true;
+                        }
+                    },
+                    error: function(xhr, status, error) {
                         console.log("AJAX error:", error);
                     }
-				});
-			});
-	    	
-	    	$("#phoneNum").on("input", function() {
+                });
+            });
+            
+            $("#phoneNum").on("input", function() {
                 var user_phone = $(this).val().trim();
-
-                // 숫자만 입력 받기
                 var onlyNumbers = user_phone.replace(/[^0-9]/g, '');
                 if (user_phone !== onlyNumbers) {
                     $(this).val(onlyNumbers);
@@ -149,15 +142,15 @@
                 }
 
                 if (user_phone === "") {
-                    $("#phoneCheckResult").text("전화번호를 입력해주세요.").css("color", "red");
+                    $("#phoneCheckResult").text("전화번호를 입력해주세요.").removeClass("success").addClass("error");
                     phoneChecked = false;
                     return;
                 } else if (!PatternPhone.test(user_phone)) {
-                    $("#phoneCheckResult").text("유효하지 않은 전화번호 형식입니다.").css("color", "red");
+                    $("#phoneCheckResult").text("유효하지 않은 전화번호 형식입니다.").removeClass("success").addClass("error");
                     phoneChecked = false;
                     return;
                 } else {
-                    $("#phoneCheckResult").text("사용 가능한 전화번호입니다.").css("color", "blue");
+                    $("#phoneCheckResult").text("사용 가능한 전화번호입니다.").removeClass("error").addClass("success");
                     phoneChecked = true;
                 }
 
@@ -167,46 +160,42 @@
                     data: { user_phone: user_phone },
                     success: function(data) {
                         if (data === "exists") {
-                            $("#phoneCheckResult").text("같은 번호가 존재합니다. 다시 입력해 주세요.").css("color", "red");
+                            $("#phoneCheckResult").text("같은 번호가 존재합니다. 다시 입력해 주세요.").removeClass("success").addClass("error");
                             phoneChecked = false;
                         } else {
-                            $("#phoneCheckResult").text("사용 가능한 전화번호입니다.").css("color", "blue");
+                            $("#phoneCheckResult").text("사용 가능한 전화번호입니다.").removeClass("error").addClass("success");
                             phoneChecked = true;
                         }
                     },
                     error: function() {
-                        $("#phoneCheckResult").text("전화번호 확인 중 오류가 발생했습니다.").css("color", "red");
+                        $("#phoneCheckResult").text("전화번호 확인 중 오류가 발생했습니다.").removeClass("success").addClass("error");
                         phoneChecked = false;
                     }
                 });
             });
-	    	
-	    	$("#password").on("input", function() {
+            
+            $("#password").on("input", function() {
                 var password = $(this).val().trim();
                 if(PatternPw.test(password)){
-                    $("#passwordMessage").text("사용가능한 비밀번호입니다.").css("color", "blue");
+                    $("#passwordMessage").text("사용가능한 비밀번호입니다.").removeClass("error").addClass("success");
                 } else {
-                    $("#passwordMessage").text("비밀번호는 8자 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.").css("color", "red");
+                    $("#passwordMessage").text("비밀번호는 8자 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.").removeClass("success").addClass("error");
                 }
             });
 
-            // 비밀번호 일치 검사
             $("#password, #passwordCheck").on("input", function() {
                 var password = $("#password").val().trim();
                 var passwordCheck = $("#passwordCheck").val().trim();
                 if(password === passwordCheck){
-                    $("#passwordCheckMessage").text("비밀번호가 일치합니다.").css("color", "blue");
+                    $("#passwordCheckMessage").text("비밀번호가 일치합니다.").removeClass("error").addClass("success");
                 } else {
-                    $("#passwordCheckMessage").text("비밀번호가 일치하지 않습니다.").css("color", "red");
+                    $("#passwordCheckMessage").text("비밀번호가 일치하지 않습니다.").removeClass("success").addClass("error");
                 }
             });
-            
 
-            // 폼 제출 시 최종 유효성 검사
             $("#registerForm").on("submit", function(event) {
                 var password = $("#password").val().trim();
                 var passwordCheck = $("#passwordCheck").val().trim();
-             
 
                 if(!PatternPw.test(password)){
                     alert("비밀번호는 8자 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.");
@@ -221,9 +210,9 @@
                 }
                 
                 if(!emailChecked){
-                	alert("이메일 중복확인 버튼을 눌러주세요.");
-                	event.preventDefault();
-                	return; 
+                    alert("이메일 중복확인 버튼을 눌러주세요.");
+                    event.preventDefault();
+                    return; 
                 }
                 
                 if(!phoneChecked) {
@@ -231,29 +220,14 @@
                     event.preventDefault();
                     return;
                 }
-                
             });
-    	});
-    	
-    	
-    	// 핸드폰 번호 숫자만 입력
-    	function onlyNumber() {
-    		  if((event.keyCode >= 48 && event.keyCode <= 57) 
-    		   || event.keyCode == 8 // backspace
-    		   || event.keyCode == 37 || event.keyCode == 39 // 방향키
-    		   || event.keyCode == 46 // delete키
-    		   || event.keyCode == 39){
-    		  }else{
-    			  event.returnValue=false;
-    		  }
-    		}
-
+        });
     </script>
 </head>
 
 <body>
 <div class="container">
-    <h1>회원가입 페이지</h1>
+    <h1><b>회원가입</b></h1>
     <form id="registerForm" action="${pageContext.request.contextPath}/basic/join" method="post">
        <div class="form-group">
             <input type="email" name="user_email" id="user_email" placeholder="이메일 입력" required>
@@ -266,19 +240,19 @@
         </div>
         <div class="form-group">
             <input type="password" id="passwordCheck" name="user_pw1" placeholder="비밀번호 확인" required>
-            <span class="successPwChk"></span>
+            <span id="passwordCheckMessage"></span>
         </div>
         <div class="form-group">
             <input type="text" name="user_name" placeholder="이름" required>
         </div>
         <div class="form-group">
-            <input type="text" id="phoneNum" onkeydown="onlyNumber();" name="user_phone" placeholder="휴대폰 번호" required>
+            <input type="text" id="phoneNum" name="user_phone" placeholder="휴대폰 번호" required>
             <span id="phoneCheckResult"></span>
         </div>
-        <button id="submitBtn" type="submit">회원가입</button>
-        <span id=""></span>
+        <div class="form-group" style="text-align: center;">
+            <button id="submitBtn" type="submit">회원가입</button>
+        </div>
     </form>
-    </div>
- 
+</div>
 </body>
 </html>

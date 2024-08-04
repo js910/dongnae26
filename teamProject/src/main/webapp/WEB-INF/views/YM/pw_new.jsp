@@ -6,16 +6,66 @@
 <meta charset="UTF-8">
 <title>비밀번호 변경</title>
 <style>
-    .error { color: red; }
-    .textbox { margin-bottom: 15px; position: relative; }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+    .container {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        max-width: 400px;
+        width: 100%;
+    }
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    .textbox {
+        margin-bottom: 15px;
+    }
+    .textbox label {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+    }
+    .textbox input {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+    }
+    #check {
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    #check:hover {
+        background-color: #0056b3;
+    }
     #pattern-error, #same {
         color: red;
         font-size: 0.875em; /* Reduce font size */
         display: block;
         margin-top: 5px;
     }
-    
-    /* Custom Modal Styles */
     .modal {
         display: none; 
         position: fixed; 
@@ -99,7 +149,7 @@
             isSame();
         });
 
-        $('#check').on('submit', function(event) {
+        $('check').on('submit', function(event) {
             if (!isSame() || !validatePassword()) {
                 event.preventDefault();
             } else {
@@ -118,7 +168,6 @@
         window.location.href = '<%=request.getContextPath()%>/login';
     }
 
-    // Close the modal when the user clicks anywhere outside of it
     window.onclick = function(event) {
         var modal = document.getElementById('messageModal');
         if (event.target == modal) {
@@ -127,7 +176,6 @@
         }
     }
 
-    // Close the modal when the user presses the escape key
     document.onkeydown = function(event) {
         if (event.key === "Escape") {
             document.getElementById('messageModal').style.display = "none";
@@ -136,7 +184,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Check if a success message exists and show the modal
         <% if (request.getAttribute("message") != null) { %>
             showModal('<%=request.getAttribute("message")%>');
         <% } %>
@@ -144,38 +191,39 @@
 </script>
 </head>
 <body>
-    <h1>비밀번호 변경</h1>
+    <div class="container">
+        <h1>비밀번호 변경</h1>
 
-    <!-- Display messages -->
-    <c:if test="${not empty error}">
-        <p class="error">${error}</p>
-    </c:if>
+        <!-- Display messages -->
+        <c:if test="${not empty error}">
+            <p class="error">${error}</p>
+        </c:if>
 
-    <form action="${pageContext.request.contextPath}/YM/pw_new.me" method="POST" class="content">
-        <div class="textbox">
-            <input id="pw" name="pw" type="password" placeholder="새 비밀번호" required />
-            <label for="pw">새 비밀번호</label>
-            <span id="pattern-error"></span>
-        </div>
-        <div class="textbox">
-            <input id="pw2" name="pw2" type="password" placeholder="새 비밀번호 확인" required />
-            <label for="pw2">새 비밀번호 확인</label>
-            <span id="same"></span>
-        </div>
-        <br><br>
-        <input type="submit" id="check" value="비밀번호변경">
-        <input type="hidden" name="email" value="${email}">
-    </form>
+        <form action="${pageContext.request.contextPath}/YM/pw_new.me" method="POST" class="content">
+            <div class="textbox">
+                <label for="pw">새 비밀번호</label>
+                <input id="pw" name="pw" type="password" placeholder="새 비밀번호" required />
+                <span id="pattern-error"></span>
+            </div>
+            <div class="textbox">
+                <label for="pw2">새 비밀번호 확인</label>
+                <input id="pw2" name="pw2" type="password" placeholder="새 비밀번호 확인" required />
+                <span id="same"></span>
+            </div>
+            <input type="submit" id="check" value="비밀번호변경">
+            <input type="hidden" name="email" value="${email}">
+        </form>
 
-    <!-- Custom Modal -->
-    <div id="messageModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="redirectToLogin()">&times;</span>
-        <p id="modalMessage"></p>
-        <div class="modal-footer">
-            <button onclick="redirectToLogin()">OK</button>
+        <!-- Custom Modal -->
+        <div id="messageModal" class="modal">
+          <div class="modal-content">
+            <span class="close" onclick="redirectToLogin()">&times;</span>
+            <p id="modalMessage"></p>
+            <div class="modal-footer">
+                <button onclick="redirectToLogin()">OK</button>
+            </div>
+          </div>
         </div>
-      </div>
     </div>
 </body>
 </html>

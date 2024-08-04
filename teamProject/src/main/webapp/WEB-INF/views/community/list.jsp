@@ -3,11 +3,10 @@
 <html>
 <head>
     <title>동네26 - 커뮤니티 게시판</title>
-    <title>커뮤니티 게시판</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .bg-breadcrumb {
-            background-color: #6c757d;
+            background-color: #f4f7f6; /* 문화 행사 게시판과 같은 배경색 */
             color: white;
             padding: 20px 0;
         }
@@ -24,6 +23,16 @@
         .write-link {
             display: inline-block;
             margin-top: 20px;
+        }
+        body {
+            background-color: #f5f5f5; /* Outer div background color */
+        }
+        .panel {
+            border: 1px solid #ddd; /* 문화 행사 게시판과 같은 테두리 */
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background: #fff;
+            padding: 20px;
         }
     </style>
 </head>
@@ -67,34 +76,31 @@
                 <div class="form-inline mb-4">
                     <label for="area" class="mr-2">지역:</label>
                     <select id="areaSelect" name="area" class="form-select form-control mr-2">
-                      <option value="" ${cri.area == '' ? 'selected' : ''}>지역 전체</option>
-                      <option value="강남구" ${cri.area == '강남구' ? 'selected' : ''}>강남구</option>
-	                  <option value="강남구" ${cri.area == '강남구' ? 'selected' : ''}>강남구</option>
-	                  <option value="강남구" ${cri.area == '강남구' ? 'selected' : ''}>강남구</option>
-				      <option value="강동구" ${cri.area == '강동구' ? 'selected' : ''}>강동구</option>
-				      <option value="강북구" ${cri.area == '강북구' ? 'selected' : ''}>강북구</option>
-				      <option value="강서구" ${cri.area == '강서구' ? 'selected' : ''}>강서구</option>
-				      <option value="관악구" ${cri.area == '관악구' ? 'selected' : ''}>관악구</option>
-				      <option value="광진구" ${cri.area == '광진구' ? 'selected' : ''}>광진구</option>
-				      <option value="구로구" ${cri.area == '구로구' ? 'selected' : ''}>구로구</option>
-				      <option value="금천구" ${cri.area == '금천구' ? 'selected' : ''}>금천구</option>
-				      <option value="노원구" ${cri.area == '노원구' ? 'selected' : ''}>노원구</option>
-				      <option value="도봉구" ${cri.area == '도봉구' ? 'selected' : ''}>도봉구</option>
-				      <option value="동대문구" ${cri.area == '동대문구' ? 'selected' : ''}>동대문구</option>
-				      <option value="동작구" ${cri.area == '동작구' ? 'selected' : ''}>동작구</option>
-				      <option value="마포구" ${cri.area == '마포구' ? 'selected' : ''}>마포구</option>
-				      <option value="서대문구" ${cri.area == '서대문구' ? 'selected' : ''}>서대문구</option>
-				      <option value="서초구" ${cri.area == '서초구' ? 'selected' : ''}>서초구</option>
-				      <option value="성북구" ${cri.area == '성북구' ? 'selected' : ''}>성북구</option>
-				      <option value="송파구" ${cri.area == '송파구' ? 'selected' : ''}>송파구</option>
-				      <option value="양천구" ${cri.area == '양천구' ? 'selected' : ''}>양천구</option>
-				      <option value="영등포구" ${cri.area == '영등포구' ? 'selected' : ''}>영등포구</option>
-				      <option value="용산구" ${cri.area == '용산구' ? 'selected' : ''}>용산구</option>
-				      <option value="은평구" ${cri.area == '은평구' ? 'selected' : ''}>은평구</option>
-				      <option value="종로구" ${cri.area == '종로구' ? 'selected' : ''}>종로구</option>
-				      <option value="중구" ${cri.area == '중구' ? 'selected' : ''}>중구</option>
-				      <option value="중랑구" ${cri.area == '중랑구' ? 'selected' : ''}>중랑구</option>
-	                  <option value="중랑구" ${cri.area == '중랑구' ? 'selected' : ''}>중랑구</option>
+                        <option value="" ${cri.area == '' ? 'selected' : ''}>지역 전체</option>
+                        <option value="강남구" ${cri.area == '강남구' ? 'selected' : ''}>강남구</option>
+                        <option value="강동구" ${cri.area == '강동구' ? 'selected' : ''}>강동구</option>
+                        <option value="강북구" ${cri.area == '강북구' ? 'selected' : ''}>강북구</option>
+                        <option value="강서구" ${cri.area == '강서구' ? 'selected' : ''}>강서구</option>
+                        <option value="관악구" ${cri.area == '관악구' ? 'selected' : ''}>관악구</option>
+                        <option value="광진구" ${cri.area == '광진구' ? 'selected' : ''}>광진구</option>
+                        <option value="구로구" ${cri.area == '구로구' ? 'selected' : ''}>구로구</option>
+                        <option value="금천구" ${cri.area == '금천구' ? 'selected' : ''}>금천구</option>
+                        <option value="노원구" ${cri.area == '노원구' ? 'selected' : ''}>노원구</option>
+                        <option value="도봉구" ${cri.area == '도봉구' ? 'selected' : ''}>도봉구</option>
+                        <option value="동대문구" ${cri.area == '동대문구' ? 'selected' : ''}>동대문구</option>
+                        <option value="동작구" ${cri.area == '동작구' ? 'selected' : ''}>동작구</option>
+                        <option value="마포구" ${cri.area == '마포구' ? 'selected' : ''}>마포구</option>
+                        <option value="서대문구" ${cri.area == '서대문구' ? 'selected' : ''}>서대문구</option>
+                        <option value="서초구" ${cri.area == '서초구' ? 'selected' : ''}>서초구</option>
+                        <option value="성북구" ${cri.area == '성북구' ? 'selected' : ''}>성북구</option>
+                        <option value="송파구" ${cri.area == '송파구' ? 'selected' : ''}>송파구</option>
+                        <option value="양천구" ${cri.area == '양천구' ? 'selected' : ''}>양천구</option>
+                        <option value="영등포구" ${cri.area == '영등포구' ? 'selected' : ''}>영등포구</option>
+                        <option value="용산구" ${cri.area == '용산구' ? 'selected' : ''}>용산구</option>
+                        <option value="은평구" ${cri.area == '은평구' ? 'selected' : ''}>은평구</option>
+                        <option value="종로구" ${cri.area == '종로구' ? 'selected' : ''}>종로구</option>
+                        <option value="중구" ${cri.area == '중구' ? 'selected' : ''}>중구</option>
+                        <option value="중랑구" ${cri.area == '중랑구' ? 'selected' : ''}>중랑구</option>
                     </select>
 
                     <label for="select1" class="mr-2">게시글 개수:</label>
@@ -134,8 +140,6 @@
         </div>
     </div>
 
-
-        
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
