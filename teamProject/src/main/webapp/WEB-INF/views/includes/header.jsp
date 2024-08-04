@@ -95,7 +95,7 @@
         </div>
     </header>
 
-    <div id="sticky-wrapper" class="sticky-wrapper" style="height: 150px;">
+    <div id="sticky-wrapper" class="sticky-wrapper">
         <nav class="navbar navbar-expand-lg bg-light shadow-lg">
             <div class="container">
 

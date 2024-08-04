@@ -1,22 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%@include file="../includes/header.jsp"%>
 
+        
+        <!-- Header Start -->
+        <div class="container-fluid bg-breadcrumb">
+            <div class="container text-center py-5" style="max-width: 900px;">
+                <h3 class="text-white display-3 mb-4">게시글 상세보기</h3>
+                <ol class="breadcrumb justify-content-center mb-0">
+                </ol>    
+            </div>
+        </div>
+        <!-- Header End -->
 <head>
 <style type="text/css">
-
-/* 전체 페이지 중앙 정렬 및 레이아웃 */
 body {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
     color: #333;
-    background-color: #f4f4f4;\
+    background-color: #f4f4f4;
 }
 
 .container2 {
@@ -58,8 +64,15 @@ h1 {
 }
 
 /* 게시글 상세 보기 */
+
+.content{
+	white-space: pre-wrap; /* 줄바꿈과 공백을 유지합니다. */
+    word-wrap: break-word;
+}
+
 label {
     font-weight: bold;
+    
 }
 
 .img-group img {
@@ -70,7 +83,9 @@ label {
 }
 
 .button-group {
-    margin-top: 10px;
+    display: flex;
+    align-items: center; /* 수직 정렬을 위해 */
+    margin-top: 5px;
     margin-bottom: 50px;
 }
 
@@ -79,16 +94,20 @@ label {
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 10px 15px;
+    padding: 10px 10px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
-    margin-right: 10px;
+    margin-right: 5px;
     transition: background 0.3s ease;
 }
 
 .button-group a:hover, .button-group button:hover {
     background: #0056b3;
+}
+
+#button-group1 {
+    margin-left: auto; /* 오른쪽으로 배치 */
 }
 
 /* 댓글 목록 */
@@ -97,54 +116,73 @@ label {
 }
 
 .comment-item {
-    background: #fafafa;
-    padding: 10px;
+    padding: 8px; /* 패딩 조정 */
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 20px; /* 아이템 간 간격 조정 */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* 배경 색상 흰색으로 설정 */
+    position: relative; /* 버튼 그룹을 절대 위치로 배치하기 위한 설정 */
 }
 
 .comment-content {
-    font-size: 14px;
-    margin-bottom: 5px;
+    font-size: 13px; /* 폰트 사이즈 줄이기 */
+    margin-top: 15px;
+    margin-left:15px;
+    color: #333; /* 글자 색상 */
+    white-space: pre-line; 
 }
 
 .comment-item span {
     display: block;
-    color: #666;
+    margin-top: 15px;
+    margin-left:15px;
+    margin-bottom:15px;
+    font-size: 13px; /* 폰트 사이즈 줄이기 */
+    color: #666; /* 글자 색상 */
+     white-space: pre-line; 
 }
 
 .comment-item button {
-    background: #dc3545;
+    background: #5bc1ac; /* 버튼 배경 색상 변경 */
     color: #fff;
     border: none;
     border-radius: 4px;
     padding: 5px 10px;
-    font-size: 14px;
+    font-size: 12px; /* 폰트 사이즈 줄이기 */
     cursor: pointer;
-    margin-right: 5px;
+    margin-bottom: 10px; /* 버튼 그룹 간 간격 */
     transition: background 0.3s ease;
 }
 
-	.container2 {
-    width: 80%;
-    max-width: 800px;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background: #fff;
+.comment-item button:hover {
+    background: #4a9e94; /* 호버 시 색상 변경 */
 }
+
+.comment-divider {
+    border-top: 1px solid #ddd; /* 연한 구분선 */
+    margin-top: 10px; /* 위쪽 간격 추가 */
+}
+
+/* 버튼 그룹을 오른쪽으로 정렬 */
+.button-group {
+    display: flex;
+    justify-content: flex-end; /* 버튼들을 오른쪽으로 정렬 */
+    gap: 5px; /* 버튼 간 간격 */
+    margin-bottom: 5px; /* 버튼 그룹의 아래쪽 여백 */
+}
+
+
 
 /* 댓글 작성 및 수정 모달 */
 textarea {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
+    padding: 8px; /* 줄여서 패딩을 조정 */
+    border: 1px solid #5A6F80; /* 색상 변경 */
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 12px; /* 폰트 사이즈를 줄임 */
     box-sizing: border-box;
     margin-bottom: 10px;
+    white-space: pre-line; 
 }
 
 #editCommentModal {
@@ -163,50 +201,67 @@ textarea {
 
 #editCommentModal h2 {
     margin-top: 0;
+    font-size: 18px; /* 헤딩 폰트 사이즈 조정 */
+    color: #007bff; /* 헤딩 색상 변경 */
 }
 
 #submitEditComment, #cancelEditComment {
-    background: #007bff;
+    background: #007bff; /* 버튼 배경 색상 변경 */
     color: #fff;
     border: none;
     border-radius: 4px;
-    padding: 10px 15px;
-    font-size: 16px;
+    padding: 8px 12px; /* 패딩 조정 */
+    font-size: 14px; /* 폰트 사이즈 조정 */
     cursor: pointer;
     margin-right: 10px;
     transition: background 0.3s ease;
 }
 
-#submitEditComment:hover, #cancelEditComment:hover {
-    background: #0056b3;
+#submitEditComment:hover {
+    background: #0056b3; /* 호버 시 색상 변경 */
 }
 
 #cancelEditComment {
-    background: #6c757d;
+    background: #5A6F80; /* 버튼 배경 색상 변경 */
 }
 
 #cancelEditComment:hover {
-    background: #5a6268;
+    background: #4a5d6e; /* 호버 시 색상 변경 */
 }
 
-.button-group a, .button-group button {
-    margin-right: 10px;
+/* 버튼 기본 스타일 */
+.btn-info {
+  	background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 14px;
+    cursor: pointer;
+    margin-right: 5px;
+    transition: background 0.3s ease;
 }
 
-.comment-item {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 10px;
+.custom-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 기본적으로 왼쪽 정렬 */
 }
 
-.comment-item:last-child {
-    border-bottom: none;
+.custom-form button {
+    align-self: flex-end; /* 버튼을 오른쪽으로 정렬 */
+    margin-top: 10px; /* 버튼과 위의 텍스트 영역 사이의 여백 */
+}
+
+.content {
+    margin-left: 20px; /* 왼쪽 여백 20px */
 }
 
 </style>
 <head>
-
 <title>게시글 상세보기</title>
+ 
 </head>
 <body>
     <div class="container2">
@@ -221,7 +276,7 @@ textarea {
 	            		<td class="title">작성자</td>
 	            		<td>${board.writer}</td>
 	            		<td class="title">작성일</td>
-	            		<td>${board.community_regdate}</td>
+	            		<td>${board.formattedRegdate}</td>
 	            		<td class="title">조회수</td>
 	            		<td>${board.community_viewcnt}</td>
 	            	</tr>
@@ -238,39 +293,41 @@ textarea {
 	    	</div>
 		</div>
 		
-	    <div class="button-group">
-			<a href="${pageContext.request.contextPath}/community/list?pageNum=${param.pageNum}&amount=${param.amount}&type=${param.type}&keyword=${param.keyword}&area=${param.area}">목록으로</a>
+	    <div class="button-group"> 
+			<a href="${pageContext.request.contextPath}/community/list?pageNum=${param.pageNum}&amount=${param.amount}&type=${param.type}&keyword=${param.keyword}&area=${param.area}">목록으로</a>    
 	        <c:if test="${board.user_num eq sessionScope.user_info.user_num}">
+	            <div id="button-group1">
 	            <a href="${pageContext.request.contextPath}/community/modify?community_bno=${board.community_bno}">수정하기</a>
 	            <form id="deleteForm" action="${pageContext.request.contextPath}/community/remove" method="post" style="display: inline;">
 	                <input type="hidden" name="community_bno" value="${board.community_bno}" />
-	                <button type="button" id="deleteButton">삭제하기</button>
+	                <a href="#" id="deleteButton">삭제하기</a>
 	            </form>
+	            </div>
 	        </c:if>
 	    </div>
 
    		<!-- 댓글 목록 -->
 		<div id="commentList">
-			<c:forEach var="comment" items="${comments}">
-				<div class="comment-item">
-					<p class="comment-content">${comment.community_com_content}</p>
-					<span>작성자: ${comment.comment_writer}&nbsp</span> <span>작성일:
-						${comment.community_com_regdate}</span>
-					<c:if test="${comment.user_num == sessionScope.user_info.user_num}">
-						<button class="edit-comment-btn"
-							data-comment-id="${comment.community_cno}">수정</button>
-						<button class="delete-comment-btn"
-							data-comment-id="${comment.community_cno}">삭제</button>
-					</c:if>
-				</div>
-			</c:forEach>
+		<div class="comment-item">
+    		<c:forEach var="comment" items="${comments}">
+          		  <span><b>작성자: ${comment.comment_writer}&nbsp&nbsp작성일: ${comment.formattedRegdate}</b></span>
+          		   <p class="comment-content">${comment.community_com_content}</p>
+         	   <c:if test="${comment.user_num == sessionScope.user_info.user_num}">
+           	   	 <div class="button-group"> 
+           	   	    <button class="btn btn-info" id="edit-comment-btn" data-comment-id="${comment.community_cno}">수정</button>
+            	    <button class="btn btn-info" id="delete-comment-btn" data-comment-id="${comment.community_cno}">삭제</button>
+            	 </div>   
+            </c:if>
+      		 <div class="comment-divider"></div> <!-- 구분선 추가 -->
+   			 </c:forEach>
+   			 </div>
 		</div>
 		<!-- 댓글 작성 폼 -->
-	    <div>
+	    <div class="custom-form subscribe-form">
 	   	 <c:if test="${not empty user_email }">
-	   	         <h4>댓글 작성하기</h4>
+
 	        <textarea id="newCommentContent" rows="4" placeholder="댓글을 입력하세요"></textarea>
-	        <button id="submitComment">댓글 등록</button>
+	        <button class="btn btn-info" id="submitComment">댓글 등록</button>
 	     </c:if>
 	    </div>
 
@@ -346,26 +403,37 @@ textarea {
             });
         }
 
+        
         function updateCommentList(comments) {
-            var commentListHtml = "";
+            var commentListHtml = "<div class='comment-item'>"; // 전체 div 시작
             $.each(comments, function(index, comment) {
                 var date = new Date(comment.community_com_regdate);
-                var formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                var year = date.getFullYear();
+                var month = ('0' + (date.getMonth() + 1)).slice(-2);
+                var day = ('0' + date.getDate()).slice(-2);
+                var hours = ('0' + date.getHours()).slice(-2);
+                var minutes = ('0' + date.getMinutes()).slice(-2);
 
-                commentListHtml += "<div class='comment-item'>" +
-                    "<p class='comment-content'>" + comment.community_com_content + "</p>" +
-                    "<span>작성자: " + (comment.comment_writer ? comment.comment_writer : 'Unknown') + "</span>" +
-                    "<span>작성일: " + formattedDate + "</span>";
+                var formattedDate = year + '-' + month + '-' + day + " " + hours + ':' + minutes;
 
-                if (comment.user_num == userNum) {
-                    commentListHtml += "<button class='edit-comment-btn' data-comment-id='" + comment.community_cno + "'>수정</button>" +
-                        "<button class='delete-comment-btn' data-comment-id='" + comment.community_cno + "'>삭제</button>";
-                }
+                commentListHtml += 
+                	 "<span><b>작성자:</b> <b>" + (comment.comment_writer ? comment.comment_writer : 'Unknown') + 
+                	    "</b>&nbsp;&nbsp;<b>작성일:</b> <b>" + formattedDate + "</b></span>" +
+                    "<p class='comment-content'>" + comment.community_com_content + "</p>";
 
-                commentListHtml += "</div>";
+                    if (comment.user_num == userNum) {
+                        commentListHtml +=  
+                            "<div class='button-group'>" + 
+                            "<button class='btn btn-info edit-comment-btn' data-comment-id='" + comment.community_cno + "'>수정</button>" +
+                            "<button class='btn btn-info delete-comment-btn' data-comment-id='" + comment.community_cno + "'>삭제</button>" +
+                            "</div>" +
+                            "<div class='comment-divider'></div>"; // 구분선 추가
+                    }
             });
+            commentListHtml += "</div>"; // 전체 div 끝
             $("#commentList").html(commentListHtml);
         }
+
 
         $("#commentList").on("click", ".edit-comment-btn", function() {
             var commentId = $(this).data("comment-id");
@@ -413,7 +481,7 @@ textarea {
             }
         });
     });
-    </script>
-    <%@include file="../includes/footer.jsp"%>
-</body>
+</script>
+     <%@include file="../includes/footer.jsp"%>
+   </body>
 </html>
