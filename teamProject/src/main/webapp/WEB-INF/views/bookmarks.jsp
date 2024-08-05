@@ -105,9 +105,9 @@
             if (selectedIds.length > 0) {
                 // 서버에 선택된 북마크 ID를 전송하는 로직 추가 가능
                 console.log('Removing bookmarks with IDs:', selectedIds);
-                alert('Removing bookmarks with IDs: ' + selectedIds.join(', '));
+                alert('정상적으로 삭제되었습니다');
             } else {
-                alert('No bookmarks selected for removal.');
+                alert('삭제할 게시글이 없습니다');
             }
         }
     </script>

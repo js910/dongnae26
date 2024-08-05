@@ -36,7 +36,7 @@
 	<context:component-scan base-package="org.spring.controller" />
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/image/**" location="file:///C:/Users/bcy12/git/Team_E1I4/teamProject/src/main/webapp/resources/images/"/>
+	<resources mapping="/image/**" location="file:///C:/Users/wlghk/git/Team_E1I4/teamProject/src/main/webapp/resources/images/"/>
 	<resources mapping="/resources/**" location="/resources/" />
 	
 </beans:beans>

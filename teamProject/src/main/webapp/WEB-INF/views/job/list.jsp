@@ -31,6 +31,12 @@
         color: #333;
         text-align: center;
     }
+    .backcolor{
+		background-color: #5A6F80;
+	}
+	.backcolor a{
+		color: white;
+	}
     .form-table select {
 	    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"%3E%3Cpath d="M7 10l5 5 5-5z"/%3E%3C/svg%3E') no-repeat right 10px center;
     	background-size: 20px;
@@ -248,7 +254,7 @@
 
 
 <!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
+<div class="backcolor">
     <div class="container text-center py-5" style="max-width: 900px;">
         <h3 class="text-white display-3 mb-4" style="color: #336B60;">일자리 정보 게시판</h3>
         <ol class="breadcrumb justify-content-center mb-0">

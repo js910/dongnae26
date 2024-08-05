@@ -16,10 +16,16 @@
 	padding: 20px 0;
 }
 
-.form-select, .form-control, .form-control-file {
+.form-select, .form-control, .preview{
 	width: 100%;
-	max-width: 400px;
+	max-width: 800px;
 	margin: 0 auto;
+}
+
+#preview {
+	max-width: 30%;
+	height: auto;
+	display: inline-block;
 }
 
 .content-display {
@@ -29,12 +35,14 @@
 
 .form-group {
 	margin-bottom: 15px;
+	display: flex;
 }
 
 .button-group {
 	display: flex;
 	justify-content: center;
 	gap: 10px;
+	margin: 20px 0px;
 }
 
 .button-group button {
@@ -44,6 +52,14 @@
 .content-display {
 	white-space: pre-wrap; /* 줄바꿈과 공백을 유지합니다. */
 	word-wrap: break-word; /* 긴 단어가 줄바꿈을 유지하도록 합니다. */
+}
+.container form{
+	width: 70%;
+	margin: 0 auto;
+	background: #fff;
+	padding: 20px;
+	border: 1px solid #ddd;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 </style>
 </head>
@@ -105,8 +121,9 @@
             </div>
            <div class="form-group">
                 <label for="file"></label>
+                <div class="preview">
                 <input type="file" name="file" class="form-control-file" placeholder="이미지 첨부파일" onchange="readURL(this);">
-                <img id="preview" src="#" alt="" class="mt-2" style="max-width: 20%; height: auto;">
+                <img id="preview" src="#" alt="" class="mt-2"></div>
             </div>
             <div class="button-group">
                 <button type="button" class="btn btn-secondary" onclick="goBack()">돌아가기</button>

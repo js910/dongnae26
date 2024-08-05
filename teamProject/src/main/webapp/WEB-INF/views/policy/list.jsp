@@ -46,7 +46,12 @@ body {
     background-color: white;
 }
 
-
+.backcolor{
+		background-color: #5A6F80;
+	}
+.backcolor a{
+		color: white;
+	}
 /* Header Styling */
 .page-header {
     margin: 25px 20px;
@@ -260,7 +265,7 @@ table th:nth-child(5), table td:nth-child(5) {
 </style>
         
 	<!-- Header Start -->
-	<div class="container-fluid bg-breadcrumb">
+	<div class="backcolor">
 	    <div class="container text-center py-5" style="max-width: 900px;">
 	        <h3 class="text-white display-3 mb-4">정책 게시판</h3>
 	        <ol class="breadcrumb justify-content-center mb-0">

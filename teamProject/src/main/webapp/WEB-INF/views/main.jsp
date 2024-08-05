@@ -24,22 +24,14 @@
 					                <video src="/resources/videos/dongnae_banner.mp4" class="carousel-image img-fluid" autoplay muted loop></video>                
 					            </div>                                
 					            <div class="carousel-item">
-					                <img src="/resources/images/banner1.png" class="carousel-image img-fluid" alt="...">
-					
-					                <div class="carousel-caption d-flex flex-column justify-content-end">
-					                    <h1>be a Kind Heart</h1>
-					
-					                    <p>Professional charity theme based on Bootstrap 5.2.2</p>
-					                </div>
+					            	<a href="http://localhost:8090/policy/get?serviceID=611000000144&pageNum=3&amount=10&type=%EA%B3%A0%EC%9A%A9%C2%B7%EC%B0%BD%EC%97%85&keyword=&district=">
+					                	<img src="/resources/images/banner1.png" class="carousel-image img-fluid" alt="...">
+									</a>
 					            </div>					
 					            <div class="carousel-item">
-					                <img src="/resources/images/banner2.png" class="carousel-image img-fluid" alt="...">
-					
-					                <div class="carousel-caption d-flex flex-column justify-content-end">
-					                    <h1>Non-profit</h1>
-					
-					                    <p>You can support us to grow more</p>
-					                </div>
+					            	<a href="http://localhost:8090/culture/get/63?pageNum=1&amount=10&area=&classify=&type=all&keyword=%EC%8B%B1%ED%81%AC%EB%84%A5">
+					                	<img src="/resources/images/banner2.png" class="carousel-image img-fluid" alt="...">
+									</a>
 					            </div>
 					        </div>					
 					        <button class="carousel-control-prev" type="button" data-bs-target="#hero-slide" data-bs-slide="prev">
@@ -69,10 +61,11 @@
                         
                         <div class="custom-text-box">
                             <h2 class="mb-2">Thanks to</h2>
-
-                            <p class="mb-0">This is a Bootstrap 5.2.2 CSS template for charity organization websites.
-                                You can feel free to use it. Please tell your friends about TemplateMo website. Thank
-                                you.</p>
+                            <p class="mb-0">편안한 교육환경을 만들어주신 한국정보교육원 직원분들과
+							항상 최선을 다해 진심으로 지도해 주신 이하민 선생님
+							마지막으로, 프로젝트를 함께 진행한 E1I4 팀원들에게 감사의 인사를 전합니다.
+							이 사이트를 이용하시는 모든 분들에게 항상 좋은 일들만 가득하길 기원합니다.
+							</p>
                         </div>
                     </div>
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0">

@@ -47,7 +47,7 @@ public class CommunityBoardController {
     @Autowired
     private CommunityBoardService service;
 
-    private final String uploadPath = "C:/Users/bcy12/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
+    private final String uploadPath = "C:/Users/wlghk/git/Team_E1I4/teamProject/src/main/webapp/resources/images/";
 
 
 
@@ -264,9 +264,9 @@ public class CommunityBoardController {
         	System.out.println(user.getUser_num());
         	System.out.println("remove: 유저번호 불일치");
             return "redirect:/community/list";
-        } else 
+        } else { 
             service.remove(community_bno);
-
+        }
         return "redirect:/community/list";
     }
 

@@ -7,7 +7,7 @@
 
 
 <!-- Header Start -->
-<div class="container-fluid bg-breadcrumb">
+<div class="backcolor">
     <div class="container text-center py-5" style="max-width: 900px;">
         <h3 class="text-white display-3 mb-4">문화·행사 게시판</h3>
         <ol class="breadcrumb justify-content-center mb-0">
@@ -130,6 +130,13 @@
 		align-items: center;
 		display: flex;
 		padding-bottom: 10px;
+	}
+	
+	.backcolor{
+		background-color: #5A6F80;
+	}
+	.backcolor a{
+		color: white;
 	}
 	
 	#searchForm {

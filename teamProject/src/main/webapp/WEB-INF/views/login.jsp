@@ -188,9 +188,9 @@
                     <a href='http://localhost:8090/naverlogin'>
                         <img src="/resources/images/naver_login_button.png" alt="Naver 로그인">
                     </a>
-                    <a href='https://kauth.kakao.com/oauth/authorize?client_id=57d63923a77bfe9b2640845383c5ee17&redirect_uri=http://localhost:8090/kakao/oauth&response_type=code'>
-                        <img src="/resources/images/kakao_login_button.png" alt="Kakao 로그인">
-                    </a>
+		            <a href='https://kauth.kakao.com/oauth/authorize?client_id=133dcac119e004b792bceaf4bca84d93&redirect_uri=http://localhost:8090/kakao/oauth&response_type=code'>
+		                <img width="230" src="/resources/images/kakao_login_button.png">
+		            </a>
                 </div>
             </c:otherwise>
         </c:choose>

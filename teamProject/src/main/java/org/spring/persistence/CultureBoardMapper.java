@@ -48,7 +48,7 @@ public interface CultureBoardMapper {
         "</otherwise>",
         "</choose>",
         "</if>",
-        "ORDER BY culture_bno DESC LIMIT #{cri.amount} OFFSET #{cri.offset}",
+        "ORDER BY culture_bno ASC LIMIT #{cri.amount} OFFSET #{cri.offset}",
         "</script>"
     })
     public List<CultureBoardDTO> selectPage(@Param("cri") Criteria cri,

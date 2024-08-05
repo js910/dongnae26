@@ -50,7 +50,7 @@
     #check {
         width: 100%;
         padding: 10px;
-        background-color: #007bff;
+        background-color: #69DFC7;
         border: none;
         border-radius: 5px;
         color: white;
@@ -58,7 +58,7 @@
         cursor: pointer;
     }
     #check:hover {
-        background-color: #0056b3;
+        background-color: #5bc1ac;
     }
     #pattern-error, #same {
         color: red;
@@ -117,18 +117,6 @@
 <script>
     $(document).ready(function() {
         var PatternPw = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.? ":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
-
-        function isSame() {
-            var pw1 = $('#pw').val();
-            var pw2 = $('#pw2').val();
-            if (pw1 !== pw2) {
-                $('#same').text('비밀번호가 일치하지 않습니다.');
-                return false;
-            } else {
-                $('#same').text('');
-                return true;
-            }
-        }
         
         function validatePassword() {
             var pw = $('#pw').val();
@@ -137,6 +125,18 @@
                 return false;
             } else {
                 $('#pattern-error').text('');
+                return true;
+            }
+        }
+        
+        function isSame() {
+            var pw1 = $('#pw').val();
+            var pw2 = $('#pw2').val();
+            if (pw1 !== pw2) {
+                $('#same').text('비밀번호가 일치하지 않습니다.');
+                return false;
+            } else {
+                $('#same').text('');
                 return true;
             }
         }
@@ -201,12 +201,10 @@
 
         <form action="${pageContext.request.contextPath}/YM/pw_new.me" method="POST" class="content">
             <div class="textbox">
-                <label for="pw">새 비밀번호</label>
                 <input id="pw" name="pw" type="password" placeholder="새 비밀번호" required />
                 <span id="pattern-error"></span>
             </div>
-            <div class="textbox">
-                <label for="pw2">새 비밀번호 확인</label>
+            <div class="textbox"> 
                 <input id="pw2" name="pw2" type="password" placeholder="새 비밀번호 확인" required />
                 <span id="same"></span>
             </div>

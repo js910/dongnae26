@@ -6,9 +6,12 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .bg-breadcrumb {
-            background-color: #f4f7f6; /* 문화 행사 게시판과 같은 배경색 */
+            background-color: #5A6F80; /* 문화 행사 게시판과 같은 배경색 */
             color: white;
             padding: 20px 0;
+        }
+        .breadcrumb-item a {
+            color: white;
         }
         .form-select {
             width: auto;
@@ -46,7 +49,6 @@
             <ol class="breadcrumb justify-content-center mb-0">
                 <li class="breadcrumb-item"><a href="../main">Home</a></li>
                 <li class="breadcrumb-item"><a href="/community/list">커뮤니티 게시판</a></li>
-                <li class="breadcrumb-item active text-white">About</li>
             </ol>
         </div>
     </div>
@@ -128,15 +130,15 @@
                         </tbody>
                     </table>
                 </div>
-            
+                
+                
                 <div class="text-right mt-3">
                     <a href="${pageContext.request.contextPath}/community/register" class="btn btn-primary write-link">글 작성</a>
                 </div>
+            <div class="pagination" id="pagination">
+                <!-- 페이지네이션 링크를 여기에 렌더링 -->
             </div>
-        </div>
-
-        <div class="pagination" id="pagination">
-            <!-- 페이지네이션 링크를 여기에 렌더링 -->
+        	</div>
         </div>
     </div>
 

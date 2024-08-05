@@ -21,22 +21,22 @@
 
         .container {
             background: #fff;
-            padding: 30px;
+            padding: 50px;
             border-radius: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 460px; /* Consistent width for both registration and login windows */
+            width: 600px; /* Consistent width for both registration and login windows */
             margin: 20px;
         }
 
         h1 {
             margin-bottom: 20px;
-            font-size: 24px; /* Adjusted font size to match the image */
+            font-size: 26px;
             color: #333;
             text-align: center;
         }
         
         .form-group {
-            margin-bottom: 15px; /* Adjusted spacing between form groups */
+            margin-bottom: 20px;
             display: flex;
             flex-direction: column;
         }
@@ -47,7 +47,6 @@
             padding: 10px;
             width: 100%;
             box-sizing: border-box;
-            font-size: 14px; /* Adjusted font size to match the image */
         }
 
         .form-group input:focus {
@@ -61,11 +60,11 @@
             color: white;
             border: none;
             border-radius: 4px;
-            padding: 10px; /* Adjusted padding to match the image */
+            padding: 12px; /* Increased padding for larger button */
             width: 100%;
             cursor: pointer;
             box-sizing: border-box;
-            font-size: 14px; /* Adjusted font size to match the image */
+            font-size: 16px; /* Increased font size for larger button */
             transition: background-color 0.3s, transform 0.3s;
             margin-top: 10px;
         }
@@ -78,7 +77,7 @@
         .form-group span {
             display: block;
             margin-top: 5px;
-            font-size: 12px; /* Adjusted font size for messages */
+            font-size: 14px;
         }
 
         .form-group .success {
@@ -194,34 +193,48 @@
             });
 
             $("#registerForm").on("submit", function(event) {
+                event.preventDefault();
+
                 var password = $("#password").val().trim();
                 var passwordCheck = $("#passwordCheck").val().trim();
 
                 if(!PatternPw.test(password)){
                     alert("비밀번호는 8자 이상, 대문자, 소문자, 숫자, 특수문자를 포함해야 합니다.");
-                    event.preventDefault();
                     return;
                 }
 
                 if(password !== passwordCheck){
                     alert("비밀번호가 일치하지 않습니다.");
-                    event.preventDefault();
                     return;
                 }
                 
                 if(!emailChecked){
                     alert("이메일 중복확인 버튼을 눌러주세요.");
-                    event.preventDefault();
                     return; 
                 }
                 
                 if(!phoneChecked) {
                     alert("올바른 번호를 입력해 주세요.");
-                    event.preventDefault();
                     return;
                 }
+
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/basic/join",
+                    type: "post",
+                    data: $("#registerForm").serialize(),
+                    success: function(data) {
+                        alert("회원가입이 완료되었습니다.");
+                        window.location.href = "${pageContext.request.contextPath}/login";
+                    },
+                    error: function(xhr, status, error) {
+                        alert("회원가입 중 오류가 발생했습니다. 다시 시도해주세요.");
+                    }
+                });
             });
+        
+        
         });
+
     </script>
 </head>
 
