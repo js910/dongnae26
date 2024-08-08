@@ -6,9 +6,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .bg-breadcrumb {
-            background-color: #5A6F80; /* 문화 행사 게시판과 같은 배경색 */
-            color: white;
-            padding: 20px 0;
+             background-image: url(/resources/images/list_background.png);
+		    background-size: contain; /* 배경 이미지가 컨테이너에 맞게 조정됩니다 /
+		    background-repeat: no-repeat; / 이미지가 반복되지 않도록 설정 /
+		    background-position: center center; / 배경 이미지의 위치를 가운데로 설정 /
+		    padding: 80px 0; / 위아래 패딩 추가 /
+		    margin: 0 auto; / 가운데 정렬 */
+		    opacity: .7;
+		
         }
         .breadcrumb-item a {
             color: white;

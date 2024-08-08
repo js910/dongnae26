@@ -31,9 +31,15 @@
         color: #333;
         text-align: center;
     }
-    .backcolor{
-		background-color: #5A6F80;
-	}
+    .backcolor {
+    background-image: url(/resources/images/list_background.png);
+    background-size: contain; /* 배경 이미지가 컨테이너에 맞게 조정됩니다 /
+    background-repeat: no-repeat; / 이미지가 반복되지 않도록 설정 /
+    background-position: center center; / 배경 이미지의 위치를 가운데로 설정 /
+    padding: 80px 0; / 위아래 패딩 추가 /
+    margin: 0 auto; / 가운데 정렬 */
+    opacity: .7;
+}
 	.backcolor a{
 		color: white;
 	}
