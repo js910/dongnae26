@@ -5,16 +5,17 @@
 서울시 행사, 일자리, 정책 정보들을 한 곳에서 확인 할 수 있으며, 각 구민들과의 커뮤니케이션을 도모하여 빠르게 정보를 얻을 수 있는 환경 조성
 
 ## 기술 아키텍쳐
-- 개발 언어 및 프레임워크: &nbsp;&nbsp;
+- 개발 언어 및 프레임워크&nbsp;
   <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white">
   <img src="https://img.shields.io/badge/Spring-6DB33F?style=for-the-badge&logo=Spring&logoColor=white">
-- 기술 스택:  &nbsp;&nbsp;
+- 기술 스택&nbsp;
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=HTML5&logoColor=white">
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
   <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
+- 서버&nbsp;
   <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=for-the-badge&logo=Apache Tomcat&logoColor=white">
-- 데이터베이스: &nbsp;&nbsp;
+- 데이터베이스&nbsp;
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
 
 ## 팀원 소개
