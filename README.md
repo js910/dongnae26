@@ -14,7 +14,8 @@
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=CSS3&logoColor=white">
   <img src="https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jQuery&logoColor=white">
 - 서버&nbsp;
-  <img src="https://img.shields.io/badge/Apache Tomcat-F8DC75?style=for-the-badge&logo=Apache Tomcat&logoColor=white">
+  <img src="https://img.shields.io/badge/ApacheTomcat-F8DC75?style=for-the-badge&logo=Apache%20Tomcat&logoColor=white">
+  <img src="">
 - 데이터베이스&nbsp;
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white">
 
